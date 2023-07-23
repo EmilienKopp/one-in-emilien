@@ -1,0 +1,31 @@
+import {
+    mdiAccount,
+    mdiApplicationCogOutline,
+    mdiClose,
+    mdiEmail,
+    mdiGithub,
+    mdiHandshake,
+    mdiLinkedin,
+    mdiMenu,
+    mdiPiggyBank,
+    mdiRobotHappy,
+    mdiRocket,
+    mdiTranslate,
+    mdiWeb,
+} from '@mdi/js'
+
+export const mdi: { [key: string]: string } = {
+    'account': mdiAccount,
+    'application-cog-outline': mdiApplicationCogOutline,
+    'close': mdiClose,
+    'handshake': mdiHandshake,
+    'menu': mdiMenu,
+    'piggy-bank': mdiPiggyBank,
+    'robot-happy': mdiRobotHappy,
+    'translate': mdiTranslate,
+    'web': mdiWeb,
+    'email': mdiEmail,
+    'rocket': mdiRocket,
+    'github': mdiGithub,
+    'linkedin': mdiLinkedin,
+}
