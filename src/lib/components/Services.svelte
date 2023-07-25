@@ -52,7 +52,7 @@ const features: Array<FeatureItem> = [
 
 <ContentSection title="Services" id="services">
   <svelte:fragment slot="lead">
-    Very likely the best option for small teams, startups, and individuals.
+    Very likely the best option for <span class="gradient-text">small teams, startups, and individuals</span>.
   </svelte:fragment>
   <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {#each features as { title, description, icon, pack } }

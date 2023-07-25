@@ -12,7 +12,7 @@
 
 <ContentSection title="Showcase" id="showcase">
   <svelte:fragment slot="lead">
-    Explore my work, my art, my passion. From enterprise tools to personal projects,
+    Explore my work, my art, my passion. From <span class="gradient-text">enterprise tools</span> to <span class="gradient-text">personal projects</span>,
     I love to build things. Let me do it for you.
   </svelte:fragment>
 

@@ -146,11 +146,12 @@
 	<div slot="lead">
 		
 		<dl class="max-w-xl text-left font-extrabold sm:text-2xl text-md grid grid-cols-5">
-			<div class="col-span-5 my-2"> I'm a developer who is:</div>
+			<div class="col-span-5 my-2">Here's me, in short:</div>
 			<dt>✅</dt> <dd>proficient in frontend</dd>
 			<dt>✅</dt> <dd>proficient in backend</dd>
-			<dt>✅</dt> <dd>a good communicator</dd>
-			<dt>✅</dt> <dd>able to lead a team</dd>
+			<dt>✅</dt> <dd>good communicator</dd>
+			<dt>✅</dt> <dd>can lead a team...</dd>
+			<dt>✅</dt> <dd>...and architect a project</dd>
 			<dt>✅</dt> <dd>speaks English, French, and Japanese</dd>
 			<div class="col-span-5 my-2">This is the developer you're looking for. 🤖</div>
 		</dl>
