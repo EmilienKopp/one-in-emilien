@@ -5,13 +5,14 @@
 	import { slide, fly } from "svelte/transition";
 	import { sineInOut } from "svelte/easing";
 	import { theme } from "$lib/stores";
-    import { onMount } from "svelte";
+    import { onMount, tick } from "svelte";
 	import { chatting, scrolled} from '$lib/stores';
     import ChatWithMeButton from "./ChatWithMeButton.svelte";
     import { goto } from "$app/navigation";
 
 	let menuModal, header, page, menu, openNavButton, closeNavButton;
 	let modalMenuOpen = false;
+	let main: HTMLElement | null;
 
 	const navItems: Array<NavItem> = [
 		{ title: "Services", url: "/#services" },
@@ -20,12 +21,7 @@
 	];
 
     onMount(() => {
-        const homeLink = document.querySelector('#home');
-        const main = document.querySelector('main');
-        homeLink?.addEventListener('click', (e) => {
-            e.preventDefault();
-            main?.scrollTo({top: 0, behavior: 'smooth'});
-        });
+        main = document.querySelector('main');
     });
 
 </script>
@@ -38,7 +34,7 @@
 	id="page-header"
 	class="z-[9999] {$scrolled ? 'fixed-header-top border-b' : 'fixed-header-bottom border-t'} flex w-full items-center justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:h-16 xl:h-20 2xl:h-28"
 >
-	<a href="/" id="home">
+	<a href="/" id="home" on:click={() => main?.scrollTo({top: 0, behavior: 'smooth'})}>
 		<svg id="one-in-emilien" class="h-12 xl:h-20 2xl:h-28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" viewBox="0 0 300 149.999998" preserveAspectRatio="xMidYMid meet" version="1.0" >
 			<defs>
 				<g />
@@ -301,7 +297,7 @@
 	id="page-header"
 	class="z-[9999] {$scrolled ? 'fixed-header-top border-b' : 'fixed-header-bottom border-t'} flex w-full items-center justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:h-16 xl:h-20 2xl:h-28"
 >
-	<a href="/" id="home">
+	<a href="/" id="home" on:click={() => main?.scrollTo({top: 0, behavior: 'smooth'})}>
 		<svg id="one-in-emilien" class="h-12 xl:h-20 2xl:h-28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" viewBox="0 0 300 149.999998" preserveAspectRatio="xMidYMid meet" version="1.0" >
 			<defs>
 				<g />
@@ -522,7 +518,7 @@
 											class="block py-4 text-center text-xl"
 											href={url}
 											on:click|preventDefault={() =>
-												{ (modalMenuOpen = false); }}
+												{ (modalMenuOpen = false); goto(url); }}
 										>
 											{title}
 										</a>

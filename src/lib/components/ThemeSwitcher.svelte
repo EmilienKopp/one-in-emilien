@@ -1,11 +1,20 @@
-<script>
+<script lang="ts">
 	import { onMount } from "svelte";
 	import Icon from "./Icon.svelte";
 	import { init } from "./ThemeSwitcher";
 	import { theme } from "$lib/stores";
     import { fade } from "svelte/transition";
 
+	console.log("ThemeSwitcher.svelte Store", $theme);
+	console.log("Storage", retrieve());
+	$theme = retrieve();
+	console.log("ThemeSwitcher.svelte Store", $theme);
+	// console.log("document.documentElement.dataset.theme", document.documentElement.dataset.theme);
+
 	async function toggle() {
+		
+		console.log($theme,'clicked');
+
 		$theme = ($theme == "dark") ? "light" : "dark";
 		document.documentElement.dataset.theme = $theme;
 		save();
@@ -18,15 +27,25 @@
             console.error("Failed to save theme to localStorage");
         }
     }
+
+	function retrieve(): "light" | "dark" {
+		try {
+			return localStorage?.getItem("one-in-emilien-theme") == "dark" ? "dark" : "light";
+		} catch (e) {
+			console.error("Failed to retrieve theme from localStorage");
+			return "light";
+		}
+	}
+
 </script>
 
 <button
 	id="theme-switcher"
 	type="button"
-	class="-ml-14 origin-[right_center] scale-0 transition-all duration-500"
+	class="origin-[right_center] transition-all duration-500"
 	on:click={toggle}
 >
-	{#if $theme === "light"}
+	{#if $theme === "dark"}
 	<div id="icon-theme-light">
 		<svg class="h-8 xl:h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 512 512">
 			<defs>

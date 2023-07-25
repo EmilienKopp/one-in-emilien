@@ -18,11 +18,6 @@
 
 	let { supabase, session } = data;
 
-
-	afterNavigate((navigation) => {
-		// console.log('Navigated!', navigation);
-	});
-
 	onMount(() => {
 		main = document.querySelector('main');
         main?.addEventListener('scroll', () => {
