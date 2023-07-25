@@ -40,14 +40,14 @@
         </div>
         <ul class="commands-list">
             <li>Hold Shift: Type something...</li>
-            <li>Shift + Enter: Validate</li>
+            <li>Shift + Enter: Validate... try to find the cheat code!</li>
             <li class="hidden md:block"><strong>S</strong>: Toggle <strong>S</strong>unglasses</li>
-            <li><strong>P or J</strong>: Display a <strong>J</strong>oke</li>
+            <li><strong>P or J</strong>: Display a <strong>J</strong>oke instead of background code</li>
             <li><strong>R</strong>: Change background to <strong>R</strong>andom color</li>
             <li><strong>G</strong>: Change background to random color <strong>G</strong>radient</li>
             <li><strong>B</strong>: Set <strong>B</strong>ackground to <strong>B</strong>lack</li>
+            <li><strong>T</strong>: <strong>T</strong>oggle Dark/Light mode</li>
             <li><strong>H</strong>: <strong>H</strong>ide controls</li>
-            <li><strong>D</strong>: Toggle <strong>D</strong>ark mode</li>
         </ul>
     </div>    
 {/if}

@@ -17,6 +17,7 @@
 
 		$theme = ($theme == "dark") ? "light" : "dark";
 		document.documentElement.dataset.theme = $theme;
+		
 		save();
 	}
 

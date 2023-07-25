@@ -4,8 +4,7 @@
     import { onMount } from 'svelte';    
     import * as Dialog from './dialog.js';
     import { typingBlockContent } from '$lib/stores';
-    import { chatting } from '$lib/stores';
-    import { scrolled } from '$lib/stores';
+    import { chatting, scrolled, theme } from '$lib/stores';
 
     let silentInput = '';
     let cheatcodes = ['SUDO'];
@@ -33,7 +32,7 @@
 
     onMount( () => {
         console.log('OnMount');
-        
+        const main = document.querySelector('main');
 
         let eyes = document.getElementById('eyes');
         eyes?.addEventListener('click', toggleSunglasses);
@@ -69,13 +68,10 @@
                     toggleSunglasses();
                     break;
                 case 'r':
-                    document.body.style.background = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
-                    break;
-                case 'b':
-                    document.body.style.background = 'black';
+                    if(main) main.style.background = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
                     break;
                 case 'g': //Change background to random color gradient
-                    document.body.style.background = `linear-gradient(90deg, rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}), rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}))`;
+                    if(main) main.style.background = `linear-gradient(90deg, rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}), rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}))`;
                     // document.getElementById('typing').color = '#0000';
                     break;
                 case 'c':
@@ -90,7 +86,12 @@
                     console.log('Calling programmer joke api');
                     $typingBlockContent = await Dialog.getProgrammerJoke();
                     break;
-
+                case 't':
+                    if(main) main.style.background = '';
+                    $theme = ($theme == "dark") ? "light" : "dark";
+                    document.documentElement.dataset.theme = $theme;
+                    localStorage?.setItem("one-in-emilien-theme", $theme)
+                    break;
             }
         });
     });
