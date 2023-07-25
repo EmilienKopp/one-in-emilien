@@ -2,11 +2,12 @@
     import { createClient } from '@supabase/supabase-js';
     import { Input, Select, Button, GradientButton, Textarea, Label, Helper } from 'flowbite-svelte';
     import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+    import { goto } from '$app/navigation';
 
 
     let formInput = {
-        customerName: '',
-        companyName: '',
+        customer_name: '',
+        company_name: '',
         email: '',
         inquiry: '',
         message: ''
@@ -16,8 +17,8 @@
 
     function clear() {
         formInput = {
-            customerName: '',
-            companyName: '',
+            customer_name: '',
+            company_name: '',
             email: '',
             inquiry: '',
             message: ''
@@ -26,6 +27,7 @@
 
     async function handleSubmit() {
         submitted = true;
+        console.log(formInput);
     }
 
     async function handleConfirm() {
@@ -43,13 +45,13 @@
         <fieldset title="Personal Information" class="flex flex-col md:grid md:grid-cols-2 gap-4 w-full">
             <legend>Personal Information</legend>
             <div class="w-full">
-                <Label for="customerName" class="mb-2 text-[--color-text]">Your name</Label>
-                <Input name="customerName" required placeholder="Neil Armstrong" bind:value={formInput.customerName}/>
+                <Label for="customer_name" class="mb-2 text-[--color-text]">Your name</Label>
+                <Input name="customer_name" required placeholder="Neil Armstrong" bind:value={formInput.customer_name}/>
             </div>
         
             <div class="w-full">
-                <Label for="companyName" class="mb-2 text-[--color-text]">Company name <i>(optional)</i></Label>
-                <Input name="companyName" placeholder="NASA" bind:value={formInput.companyName}/>
+                <Label for="company_name" class="mb-2 text-[--color-text]">Company name <i>(optional)</i></Label>
+                <Input name="company_name" placeholder="NASA" bind:value={formInput.company_name}/>
             </div>
             
             <div class="w-full">
@@ -82,18 +84,21 @@
     </form>
     {:else}
         {#if response?.status < 300}
-            Thanks for inquiring. I'll get back to you ASAP (usually within 48 hours). <br>
+            <p>
+                👋 Thanks for inquiring. I'll get back to you ASAP (usually within 48 hours). 
+            </p>
+            <Button on:click={() => goto('/') }>Go back</Button>
         {:else if response?.error}
             It seems like something went wrong. Please try again in a moment or <a href="mailto:emilien.kopp@gmail.com">email me</a>.<br>
             <Button on:click={() => {submitted = false}}>Try again</Button>
         {:else}
             <dl class="grid md:grid-cols-2">
                 <dt>Your name:</dt>
-                <dd>{formInput.customerName}</dd>
+                <dd>{formInput.customer_name}</dd>
 
-                {#if formInput.companyName}
+                {#if formInput.company_name}
                     <dt>Company name:</dt>
-                    <dd>{formInput.companyName}</dd>
+                    <dd>{formInput.company_name}</dd>
                 {/if}
 
                 <dt>Your email:</dt>
