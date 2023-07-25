@@ -5,17 +5,13 @@
     import GlowHoverButton from './GlowHoverButton.svelte';
     import { scrolled } from '$lib/stores';
     import { goto } from '$app/navigation';
-
-    export let show = false;
-    let scrolling = false;
-    let width = 'w-[47%]';
+    import { commandsVisible } from '$lib/stores';
 
     onMount( () => {
-
         document.addEventListener('keyup', (e) => {
             if( document.activeElement === document.getElementById('chatInput') ) return;
             if(e.key == 'h') {
-                show = !show;
+                $commandsVisible = !$commandsVisible;
             }
         });
     })
@@ -23,21 +19,21 @@
 </script>
 
 <div class="w-1/2 flex flex-col md:flex-row md:justify-end gap-8">
-    <GlowHoverButton on:click={ () => goto('/#services')}>
+    <GlowHoverButton on:click={ () => goto('/#intro')}>
         Work
     </GlowHoverButton>
-    <GlowHoverButton on:click={() => show = !show}>
+    <GlowHoverButton on:click={() => $commandsVisible = !$commandsVisible}>
         Play
     </GlowHoverButton>
 </div>
 
 <div class="hidden sm:block">
-{#if show}
+{#if $commandsVisible}
     <div id="controls" class="fixed w-fit {$scrolled ? 'bottom-0' : 'top-0 pr-80'} right-0 text-xs p-2 opacity-80 bg-white rounded-tl"
          role="button" tabindex="0"
          transition:slide={{duration: 500, easing: cubicInOut}}
-         on:click={ (e) => { show = e.target.tagName == 'INPUT'}}
-         on:keyup={ (e) => { show = e.key == 'enter' } }>
+         on:click={ (e) => { $commandsVisible = e.target.tagName == 'INPUT'}}
+         on:keyup={ (e) => { $commandsVisible = e.key == 'enter' } }>
         <div id="commands-title" class="flex flex-row items-center gap-2 font-bold">
             Commands 
             <input type="text" placeholder="Type a command here" class="block lg:hidden"/>
