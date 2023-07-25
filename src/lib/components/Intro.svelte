@@ -10,7 +10,7 @@
 		creative problem solver who loves to build things that make people's lives
 		easier.
 	</p>
-	<svg id="eyebrow" slot="eyebrow" class="h-32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  zoomAndPan="magnify" viewBox="0 0 300 149.999998" preserveAspectRatio="xMidYMid meet" version="1.0">
+	<svg id="eyebrow" slot="eyebrow" class="h-32 2xl:h56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  zoomAndPan="magnify" viewBox="0 0 300 149.999998" preserveAspectRatio="xMidYMid meet" version="1.0">
 		<defs>
 			<g />
 			<clipPath id="bb214a3457">

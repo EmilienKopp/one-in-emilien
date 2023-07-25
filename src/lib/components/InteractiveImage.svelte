@@ -3,9 +3,9 @@
     import {quintIn, cubicInOut} from 'svelte/easing';
     import { onMount } from 'svelte';    
     import * as Dialog from './dialog.js';
-    import { typingBlockContent } from './stores';
-    import { chatting } from './stores';
-    import { scrolled } from './stores';
+    import { typingBlockContent } from '$lib/stores';
+    import { chatting } from '$lib/stores';
+    import { scrolled } from '$lib/stores';
 
     let silentInput = '';
     let cheatcodes = ['SUDO'];
@@ -33,19 +33,14 @@
 
     onMount( () => {
         console.log('OnMount');
+        
+
         let eyes = document.getElementById('eyes');
         eyes?.addEventListener('click', toggleSunglasses);
 
         setTimeout(() => {
             loading = false;
         }, 1500);
-
-        // On scroll, set image's z-index so that it goes behind the navbar
-        document.addEventListener('scroll', () => {
-            console.log('scrolling');
-            scrolled.set(window.scrollY > 150);
-            console.log(scrolled);
-        });
 
         document.addEventListener('keyup', async (e) => {
             console.log(e.key);
@@ -134,14 +129,13 @@
 <style>
     * {
         box-sizing: border-box;
-        z-index: 8000;
     }
 
     svg {
         --container-height: 100vh;
         --container-width: 30vw;
         position: absolute;
-        top: 0;
+        top: -3.9rem;
         right: 0;
         height: var(--container-height);
         width: var(--container-width);

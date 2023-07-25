@@ -1,0 +1,25 @@
+[
+    {
+      "title": "Page Turner",
+      "image": "/images/page-turner-wide.png",
+      "url": "https://teach-buddy.vercel.app/",
+      "tags": [
+        "Web app",
+        "Educational",
+        "SvelteKit",
+        "AI"
+      ]
+    },
+    {
+      "title": "Laravel Blueprint Generator",
+      "image": "/images/blueprint-generator.png",
+      "url": "https://abroads-blueprint-generator.netlify.app/",
+      "tags": [
+        "Single Page App",
+        "Svelte",
+        "IT tools"
+      ]
+    }
+    
+  ]
+  

@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { createClient } from '@supabase/supabase-js'
+    import { createClient } from '@supabase/supabase-js';
     import { Input, Select, Button, GradientButton, Textarea, Label, Helper } from 'flowbite-svelte';
+    import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+
 
     let formInput = {
-        customer_name: '',
-        company_name: '',
+        customerName: '',
+        companyName: '',
         email: '',
         inquiry: '',
         message: ''
@@ -14,8 +16,8 @@
 
     function clear() {
         formInput = {
-            customer_name: '',
-            company_name: '',
+            customerName: '',
+            companyName: '',
             email: '',
             inquiry: '',
             message: ''
@@ -27,14 +29,13 @@
     }
 
     async function handleConfirm() {
-        const supabase = createClient(import.meta.env.PUBLIC_SUPABASE_URL, import.meta.env.PUBLIC_SUPABASE_ANON_KEY);
+        const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
         response = await supabase.from('inquiries').insert(formInput);
-        console.log(response);
     }
 
 </script>
 
-<div class="pt-20 mx-auto w-5/6 lg:w-3/5 text-[--color-text]">
+<div class="pt-4 mx-auto mb-12 w-5/6 lg:w-3/5 text-[--color-text]">
     <h1 class="text-xl mb-5 text-center"> Contact Form </h1>
 
     {#if !submitted}
@@ -42,13 +43,13 @@
         <fieldset title="Personal Information" class="flex flex-col md:grid md:grid-cols-2 gap-4 w-full">
             <legend>Personal Information</legend>
             <div class="w-full">
-                <Label for="customer_name" class="mb-2 text-[--color-text]">Your name</Label>
-                <Input name="customer_name" required placeholder="Neil Armstrong" bind:value={formInput.customer_name}/>
+                <Label for="customerName" class="mb-2 text-[--color-text]">Your name</Label>
+                <Input name="customerName" required placeholder="Neil Armstrong" bind:value={formInput.customerName}/>
             </div>
         
             <div class="w-full">
-                <Label for="company_name" class="mb-2 text-[--color-text]">Company name <i>(optional)</i></Label>
-                <Input name="company_name" placeholder="NASA" bind:value={formInput.company_name}/>
+                <Label for="companyName" class="mb-2 text-[--color-text]">Company name <i>(optional)</i></Label>
+                <Input name="companyName" placeholder="NASA" bind:value={formInput.companyName}/>
             </div>
             
             <div class="w-full">
@@ -84,14 +85,15 @@
             Thanks for inquiring. I'll get back to you ASAP (usually within 48 hours). <br>
         {:else if response?.error}
             It seems like something went wrong. Please try again in a moment or <a href="mailto:emilien.kopp@gmail.com">email me</a>.<br>
+            <Button on:click={() => {submitted = false}}>Try again</Button>
         {:else}
             <dl class="grid md:grid-cols-2">
                 <dt>Your name:</dt>
-                <dd>{formInput.customer_name}</dd>
+                <dd>{formInput.customerName}</dd>
 
-                {#if formInput.company_name}
+                {#if formInput.companyName}
                     <dt>Company name:</dt>
-                    <dd>{formInput.company_name}</dd>
+                    <dd>{formInput.companyName}</dd>
                 {/if}
 
                 <dt>Your email:</dt>

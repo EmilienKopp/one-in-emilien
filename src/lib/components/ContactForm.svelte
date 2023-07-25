@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createClient } from '@supabase/supabase-js'
+
     import { Input, Select, Button, GradientButton, Textarea, Label, Helper } from 'flowbite-svelte';
 
     let formInput = {

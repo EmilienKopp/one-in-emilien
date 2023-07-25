@@ -1,6 +1,6 @@
 <script>
     import {onMount} from 'svelte';
-    import { typingBlockContent } from './stores.ts';
+    import { typingBlockContent } from '$lib/stores';
     import AnimatedSVGTitle from './AnimatedSVGTitle.svelte';
         
     let foreground = false;

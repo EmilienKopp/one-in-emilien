@@ -1,71 +1,68 @@
----
-import { Icon } from "astro-icon";
-import ContentSection from "$lib/components/content-section.astro";
-import type { FeatureItem } from "~/types";
+<script lang="ts">
+import Icon from "./Icon.svelte";
+import ContentSection from "$lib/components/ContentSection.svelte";
+import type { FeatureItem } from "$lib";
 
 const features: Array<FeatureItem> = [
-  
-  // {
-  //   title: "100% Static HTML, No JS",
-  //   description:
-  //     "Astro renders your entire page to static HTML, removing all JavaScript from your final build by default.",
-  //   icon: "mdi:feather",
-  // },
-  
+
   {
     title: "Enterprise Applications",
     description:
       "Customer and stock management system, e-commerce, social media, web-scraping, ... you name it, I'll build it.",
-    icon: "mdi:application-cog-outline",
+    pack: "mdi",
+    icon: "application-cog-outline",
   },
   {
     title: "Personal or Business Websites",
     description:
       "Need a website to attract customers to your business or showcase your work? You're an email away from getting one.",
-    icon: "mdi:web",
+    pack: "mdi",
+    icon: "web",
   },
   {
     title: "AI Integration and Language Processing",
     description:
       "So you want to integrate AI language models like ChatGPT into your website or application? Can do.",
-    icon: "mdi:robot-happy",
+    pack: "mdi",
+    icon: "robot-happy",
   },
   {
     title: "Trilingual (EN, FR, JP) Translation",
     description:
       "Can work in many languages for you. I can also translate your website, your application, ... or your anything else. Feel free to ask!",
-    icon: "mdi:translate",
+    pack: "mdi",
+    icon: "translate",
   },
   {
     title: "Awesome communication",
     description:
       "From A to Z, I'll always keep you in the loop.",
-    icon: "mdi:handshake",
+    pack: "mdi",
+    icon: "handshake",
   },
   {
     title: "... and quite wallet friendly!",
     description:
       "Trust me. Or ask for a quote =)",
-    icon: "mdi:piggy-bank",
+    pack: "mdi",
+    icon: "piggy-bank",
   }
 ];
----
+</script>
 
 <ContentSection title="Services" id="services">
-  <Fragment slot="lead">
+  <svelte:fragment slot="lead">
     Very likely the best option for small teams, startups, and individuals.
-  </Fragment>
+  </svelte:fragment>
   <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    {
-      features.map(({ title, description, icon }) => (
+    {#each features as { title, description, icon, pack } }
         <li class="flex flex-col items-center gap-4 border border-default bg-offset p-6">
           <div class="h-16 w-16 rounded-full border-2 border-current p-3">
-            <Icon name={icon} />
+            <Icon pack={pack} name={icon} />
           </div>
           <p class="text-center font-extrabold text-xl">{title}</p>
           <p class="text-center text-offset text-sm">{description}</p>
         </li>
-      ))
-    }
+    {/each}
   </ul>
 </ContentSection>

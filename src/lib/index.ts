@@ -13,6 +13,7 @@ export interface CompatibilityItem {
     description: string;
     icon: string;
     title: string;
+    pack: string;
   }
   
   export interface FooterLink {

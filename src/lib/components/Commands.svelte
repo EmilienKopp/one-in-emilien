@@ -3,16 +3,14 @@
     import { onMount } from 'svelte';
     import { cubicInOut } from 'svelte/easing';
     import GlowHoverButton from './GlowHoverButton.svelte';
+    import { scrolled } from '$lib/stores';
+    import { goto } from '$app/navigation';
 
     export let show = false;
     let scrolling = false;
     let width = 'w-[47%]';
-    let scrollY = 0;
 
     onMount( () => {
-        document.addEventListener('scroll', (e) => {
-            scrolling = (window.scrollY > 150);
-        });
 
         document.addEventListener('keyup', (e) => {
             if( document.activeElement === document.getElementById('chatInput') ) return;
@@ -25,7 +23,7 @@
 </script>
 
 <div class="w-1/2 flex flex-col md:flex-row md:justify-end gap-8">
-    <GlowHoverButton on:click={ () => location.hash = 'services'}>
+    <GlowHoverButton on:click={ () => goto('/#services')}>
         Work
     </GlowHoverButton>
     <GlowHoverButton on:click={() => show = !show}>
@@ -35,7 +33,7 @@
 
 <div class="hidden sm:block">
 {#if show}
-    <div id="controls" class="fixed bottom-0 w-fit {scrolling ? '' : 'pr-80'} right-0 text-xs p-2 opacity-70 bg-white rounded-tl"
+    <div id="controls" class="fixed bottom-0 w-fit {$scrolled ? '' : 'pr-80'} right-0 text-xs p-2 opacity-70 bg-white rounded-tl"
          role="button" tabindex="0"
          transition:slide={{duration: 500, easing: cubicInOut}}
          on:click={ (e) => { show = e.target.tagName == 'INPUT'}}

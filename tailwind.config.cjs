@@ -5,6 +5,11 @@ module.exports = {
             "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}"],
   theme: {
     extend: {
+      screens: {
+        xs: "480px",
+        ...defaultTheme.screens,
+        
+      },
       fontFamily: {
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
       },

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useChat, useCompletion } from "ai/svelte";
   import { Input, Modal, SpeedDial, SpeedDialButton } from 'flowbite-svelte';
-  import { chatting, scrolled } from "./stores";
+  import { chatting, scrolled } from "$lib/stores";
   import { slide } from "svelte/transition";
 
 
@@ -30,16 +30,16 @@
 </script>
 
 
-<button on:click={() => $chatting = !$chatting } class="fixed bottom-3 right-3 sm:bottom-12 sm:right-12 z-[9999]">
+<!-- <button on:click={() => $chatting = !$chatting } class="fixed bottom-3 right-3 sm:bottom-12 sm:right-12 z-[9999]">
   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-chat-dots-fill {$scrolled ? '' : 'sm:fill-white'} transition-colors" viewBox="0 0 16 16" >
     <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
   </svg>
-</button>
+</button> -->
 
 
-<Modal bind:open={$chatting} size="sm" placement="bottom-center" outsideclose defaultClass="bg-gray-900 bg-opacity-50 sm:mb-auto mb-8">
+<Modal bind:open={$chatting} size="md" placement="{$scrolled ? 'center-right' : 'bottom-right'}" outsideclose defaultClass="bg-gray-900 bg-opacity-50 sm:mb-auto mb-8 sm:right-3">
 
-<div  transition:slide>
+<div  transition:slide class="{$scrolled ? 'pt-4' : 'mb-12 sm:mb-16 xl:mb-20 2xl:mb-28'}">
 
   <div class="mt-4 bg-gray-50 sm:p-6 p-4 rounded-lg overflow-auto flex flex-col-reverse h-[14em]">
     <ul class="text-xs sm:text-md">

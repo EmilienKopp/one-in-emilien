@@ -15,6 +15,7 @@ export const config = {
 }
 
 export async function POST({ params, request }: any) {
+    console.log(request);
     const body = await request.json();
     console.log('BODY', body)
 
@@ -90,6 +91,16 @@ export async function POST({ params, request }: any) {
         messages: messages
     });
 
+   // TODO: Handle errors
+    console.log(response);
+    if(response.status > 299) {
+        return {
+            status: response.status,
+            body: {
+                error: response.statusText
+            }
+        }
+    }
 
     let start: number, end: number;
     let word_count = 0;

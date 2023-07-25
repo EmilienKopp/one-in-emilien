@@ -1,24 +1,24 @@
----
-import { Picture } from "@astrojs/image/components";
-import type { ShowcaseSite } from "~/types";
-import ShowcaseBadge from "./ShowcaseBadge.svelte";
+<script lang="ts" context="module">
+  export interface Props {
+    site: ShowcaseSite;
+  }
+</script>
 
-export interface Props {
-  site: ShowcaseSite;
-}
+<script lang="ts">
+import Picture from "$lib/components/Picture.svelte";
+import type { ShowcaseSite } from "$lib";
+import ShowcaseBadges from "./ShowcaseBadges.svelte";
 
-const { site } = Astro.props;
+export let site: ShowcaseSite;
 
-const widths = [450, 800];
 const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
----
+</script>
 
 <a class="group aspect-video hover:!text-default" href={site.url}>
   <figure class="relative h-full w-full overflow-hidden">
     <Picture
-      class="h-full w-full bg-cover object-cover transition-all duration-300 group-hover:scale-110 group-hover:opacity-20 group-focus:scale-110 group-focus:opacity-20"
+      class="h-full w-full bg-cover object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-20 group-focus:scale-110 group-focus:opacity-20"
       src={site.image}
-      widths={widths}
       sizes={sizes}
       alt={`A screenshot of ${site.url}`}
     />
@@ -33,5 +33,5 @@ const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
       </div>
     </figcaption>
   </figure>
-  <ShowcaseBadge tags={site.tags}/>
+  <ShowcaseBadges tags={site.tags}/>
 </a>
