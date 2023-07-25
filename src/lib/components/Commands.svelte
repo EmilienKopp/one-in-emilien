@@ -33,7 +33,7 @@
 
 <div class="hidden sm:block">
 {#if show}
-    <div id="controls" class="fixed bottom-0 w-fit {$scrolled ? '' : 'pr-80'} right-0 text-xs p-2 opacity-70 bg-white rounded-tl"
+    <div id="controls" class="fixed w-fit {$scrolled ? 'bottom-0' : 'top-0 pr-80'} right-0 text-xs p-2 opacity-80 bg-white rounded-tl"
          role="button" tabindex="0"
          transition:slide={{duration: 500, easing: cubicInOut}}
          on:click={ (e) => { show = e.target.tagName == 'INPUT'}}

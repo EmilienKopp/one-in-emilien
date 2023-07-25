@@ -101,7 +101,7 @@
 
 {#if !$scrolled}
 
-    <svg  id="image" class="hidden md:block fixed right-0 top-0" transition:fade={{duration: 1200, easing: cubicInOut}} 
+    <svg  id="image" class="hidden md:block fixed right-0 top-0 z-20" transition:fade={{duration: 1200, easing: cubicInOut}} 
     data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -300 1498 2246">
         <defs>
             <style>

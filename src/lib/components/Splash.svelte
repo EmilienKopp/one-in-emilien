@@ -24,12 +24,12 @@
   <div class="relative grid h-full sm:flex sm:flex-col sm:gap-3 pl-16 pt-2 md:pt-4  items-start">
     
     <AnimatedSVGTitle />
-    
+
     <Commands  />
 
     <InteractiveImage />
   </div>
-  <CodeBox />
+  
 </section>
 
 

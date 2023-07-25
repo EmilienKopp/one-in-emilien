@@ -7,7 +7,7 @@
     import Showcase from "$lib/components/Showcase.svelte";
     import Contact from "$lib/components/Contact.svelte";
     import Footer from "$lib/components/Footer.svelte";
-
+    import CodeBox from "$lib/components/CodeBox.svelte";
 
 </script>
 
@@ -21,5 +21,5 @@
     <Contact />
 
 </div>
-
+<CodeBox />
 <Footer />
