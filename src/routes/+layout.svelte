@@ -5,13 +5,16 @@
 	import { afterNavigate, goto, invalidate } from "$app/navigation";
 	import { onMount } from "svelte";
 	import Chat from "$lib/components/Chat.svelte";
-	import Header from "$lib/components/Header.svelte";
+	import { dev } from "$app/environment";
 	import { scrolled } from "$lib/stores";
     import { Button } from "flowbite-svelte";
 	import { AngleUpSolid } from "flowbite-svelte-icons";
     import { fade } from "svelte/transition";
+	import { inject } from "@vercel/analytics";
 
 	export let data;
+
+	inject({mode: dev ? 'development' : 'production'});
 
 	let scrollY: number;
 	let main: HTMLElement | null;
