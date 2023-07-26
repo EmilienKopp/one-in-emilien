@@ -1,34 +1,95 @@
 <script lang="ts">
-  import { useChat, useCompletion } from "ai/svelte";
-  import { Input, Modal, SpeedDial, SpeedDialButton } from 'flowbite-svelte';
-  import { chatting, scrolled } from "$lib/stores";
-  import { slide } from "svelte/transition";
+	import { useChat, useCompletion } from "ai/svelte";
+	import { Alert, ToolbarButton, Label, Drawer, Textarea, Checkbox, Button, GradientButton } from 'flowbite-svelte';
+	import { chatting, scrolled, theme } from "$lib/stores";
+	import { fade, slide } from "svelte/transition";
+    import { sineIn } from "svelte/easing";
 
 
-  const { input, handleSubmit, messages } = useChat({
-    api: "/API/chat",
-  });
+  	const { input, handleSubmit, messages } = useChat({
+    	api: "/API/chat",
+  	});
 
-  function linkify(inputText: string) {
-    let replacedText, replacePattern1;
-    const linkCSS = "text-blue-500 hover:text-lime-600 underline cursor-pointer";
+	let form: HTMLFormElement;
+	let drawerHidden = true;
+	let enterToSend = true;
+	let transitionParamsBottom = {
+		x: 320,
+		duration: 200,
+		easing: sineIn
+	};
 
-    //URLs starting with http://, https://, or ftp://
-    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    replacedText = inputText.replace(replacePattern1, '<a class="' + linkCSS +'" href="$1" target="_blank">$1</a>');
+	function handleKeyup(e: KeyboardEvent) {
+		if(e.key == 'Enter' && enterToSend) handleSubmit(e);
+	}
 
-    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
-    let replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-    replacedText = replacedText.replace(replacePattern2, '$1<a class="' + linkCSS +'" href="http://$2" target="_blank">$2</a>');
+  	function linkify(inputText: string) {
+    	let replacedText, replacePattern1;
+		const linkCSS = "text-blue-500 hover:text-lime-600 underline cursor-pointer";
 
-    //Change email addresses to mailto:: links.
-    let replacePattern3 = /(([a-zA-Z0-9\-.]+\@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+))/gim;
-    replacedText = replacedText.replace(replacePattern3, '<a class="' + linkCSS +'" href="mailto:$1">$1</a>');
-    
-    return replacedText;
-  }
+		//URLs starting with http://, https://, or ftp://
+		replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+		replacedText = inputText.replace(replacePattern1, '<a class="' + linkCSS +'" href="$1" target="_blank">$1</a>');
+
+		//URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+		let replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+		replacedText = replacedText.replace(replacePattern2, '$1<a class="' + linkCSS +'" href="http://$2" target="_blank">$2</a>');
+
+		//Change email addresses to mailto:: links.
+		let replacePattern3 = /(([a-zA-Z0-9\-.]+\@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+))/gim;
+		replacedText = replacedText.replace(replacePattern3, '<a class="' + linkCSS +'" href="mailto:$1">$1</a>');
+		
+		return replacedText;
+  	}
+
+	$: drawerHidden = !$chatting;
 </script>
 
+
+<Drawer placement='right' class="bg-[--color-background] border-l border-default flex flex-col justify-end"
+		width='sm:w-1/3 md:w-2/5 xl:w-1/3 w-full' transitionType="fly" backdrop={false} transitionParams={transitionParamsBottom} bind:hidden={drawerHidden} id='chatDrawer'>
+	<div  transition:fade class="{$scrolled ? 'pt-12' : 'pb-12'} sm:py-20 lg:py-24 h-full w-full overflow-hidden flex flex-col">
+
+		<div class="mt-4 sm:p-6 p-4 rounded-lg overflow-auto flex flex-col-reverse h-full bg-slate-200">
+		  <ul class="text-xs sm:text-md">
+			{#if !$messages.length}
+				<li class="text-slate-800 text-opacity-60 text-xs"> Try and write something ! <br/> (Except your personal information 🙂)</li>
+			{/if}
+			{#each $messages as message,index}
+				{#if index >= $messages.length - 4}
+					<li class="text-xs text-slate-900">
+						{#if message?.role == "user"}
+						  <span class="font-semibold">You:</span> {message?.content}
+						{:else}
+						  <span class="font-semibold">Emilien:</span> {@html linkify(message?.content)}
+						{/if}
+					</li>
+				{/if}
+			{/each}
+		  </ul>
+		</div>
+	  
+		<form on:submit={handleSubmit} class="flex flex-col items-end justify-center mt-2 gap-2" bind:this={form}>
+			<label for="chatInput" class="sr-only">Your message</label>
+			<Alert color="dark" class="px-1 py-2 w-full">
+				<svelte:fragment slot="icon">
+				<Textarea id="chatInput" class="mx-1 text-xs" rows="3" placeholder="Your message..." on:keyup={handleKeyup} bind:value={$input}/>
+				<ToolbarButton type="submit" color="blue" class="rounded-full text-indigo-600">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg>
+					<span class="sr-only">Send message</span>
+				</ToolbarButton>
+				</svelte:fragment>
+			</Alert>
+			<div class="flex">
+				<Label class="mt-1 flex items-center font-thin text-[--color-text]">
+					Enter to send <Checkbox bind:checked={enterToSend} class="ml-1"/>
+				</Label>
+				<GradientButton class="sm:hidden" size="xs" pill color="red" on:click={() => $chatting = !$chatting}>Close chat</GradientButton>
+			</div>
+		</form>
+		
+	  </div>
+</Drawer>
 
 <!-- <button on:click={() => $chatting = !$chatting } class="fixed bottom-3 right-3 sm:bottom-12 sm:right-12 z-[9999]">
   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-chat-dots-fill {$scrolled ? '' : 'sm:fill-white'} transition-colors" viewBox="0 0 16 16" >
@@ -37,7 +98,9 @@
 </button> -->
 
 
-<Modal bind:open={$chatting} size="md" placement="{$scrolled ? 'center-right' : 'bottom-right'}" outsideclose defaultClass="bg-gray-900 bg-opacity-50 sm:mb-auto mb-8 sm:right-3">
+
+
+<!-- <Modal bind:open={$chatting} size="md" placement="{$scrolled ? 'center-right' : 'bottom-right'}" outsideclose defaultClass="bg-gray-900 bg-opacity-50 sm:mb-auto mb-8 sm:right-3">
 
 <div  transition:slide class="{$scrolled ? 'pt-4' : 'mb-12 sm:mb-16 xl:mb-20 2xl:mb-28'}">
 
@@ -73,4 +136,4 @@
 </div>
 
 
-</Modal>
+</Modal> -->

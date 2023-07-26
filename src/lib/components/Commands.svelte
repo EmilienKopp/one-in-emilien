@@ -5,7 +5,7 @@
     import GlowHoverButton from './GlowHoverButton.svelte';
     import { scrolled } from '$lib/stores';
     import { goto } from '$app/navigation';
-    import { commandsVisible } from '$lib/stores';
+    import { commandsVisible, chatting } from '$lib/stores';
 
     onMount( () => {
         document.addEventListener('keyup', (e) => {
@@ -28,7 +28,7 @@
 </div>
 
 <div class="hidden sm:block">
-{#if $commandsVisible}
+{#if $commandsVisible && !$chatting}
     <div id="controls" class="fixed w-fit {$scrolled ? 'bottom-0' : 'top-0 pr-80'} right-0 text-xs p-2 opacity-80 bg-white rounded-tl"
          role="button" tabindex="0"
          transition:slide={{duration: 500, easing: cubicInOut}}
@@ -45,9 +45,9 @@
             <li><strong>P or J</strong>: Display a <strong>J</strong>oke instead of background code</li>
             <li><strong>R</strong>: Change background to <strong>R</strong>andom color</li>
             <li><strong>G</strong>: Change background to random color <strong>G</strong>radient</li>
-            <li><strong>B</strong>: Set <strong>B</strong>ackground to <strong>B</strong>lack</li>
             <li><strong>T</strong>: <strong>T</strong>oggle Dark/Light mode</li>
             <li><strong>H</strong>: <strong>H</strong>ide controls</li>
+            <li>... or try clicking on parts of my face</li>
         </ul>
     </div>    
 {/if}

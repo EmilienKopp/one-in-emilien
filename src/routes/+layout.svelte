@@ -62,7 +62,7 @@
 <Chat />
 <!-- <main class="scroll-mt-24  mt-12 sm:mt-16 xl:mt-20 2xl:mt-28 h-full overflow-x-hidden bg-[--color-background] text-default text-base selection:bg-secondary selection:text-white"></main> -->
 <main
-	class="scroll-mt-24 2xl:pb-28 h-full overflow-x-hidden bg-[--color-background] text-default text-base selection:bg-secondary selection:text-white"
+	class="scroll-mt-24 2xl:pb-28 h-full overflow-x-hidden bg-[--color-background] text-default text-base selection:bg-secondary selection:text-white transition-colors duration-500"
 >
 	<slot />
 
@@ -76,3 +76,9 @@
 	{/if}
 	
 </main>
+
+<!-- <style>
+	* {
+		transition: color 0.3s ease;
+	}
+</style> -->

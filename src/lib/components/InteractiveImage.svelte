@@ -42,7 +42,6 @@
         }, 1500);
 
         document.addEventListener('keyup', async (e) => {
-            console.log(e.key);
             if(document.activeElement === document.getElementById('chatInput')) return;
             if(e.shiftKey) {
                 if(e.key == 'Backspace') {
