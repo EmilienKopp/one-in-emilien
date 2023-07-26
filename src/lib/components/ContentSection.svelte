@@ -8,7 +8,7 @@
 
 <section
   id={id}
-  class="flex scroll-mt-24 flex-col items-center space-y-8"
+  class="flex scroll-mt-24 flex-col items-center space-y-8 z-[50]"
 >
   <div class="flex flex-col items-center gap-4">
     
