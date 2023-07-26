@@ -18,7 +18,7 @@
 
 </script>
 
-<div class="w-1/2 flex flex-col md:flex-row md:justify-end gap-8">
+<div class="w-1/2 flex flex-col md:flex-row md:justify-end sm:gap-8 gap-2">
     <GlowHoverButton on:click={ () => goto('/#intro')}>
         Work
     </GlowHoverButton>
@@ -27,9 +27,10 @@
     </GlowHoverButton>
 </div>
 
-<div class="hidden sm:block">
+
 {#if $commandsVisible && !$chatting}
-    <div id="controls" class="fixed w-fit {$scrolled ? 'bottom-0' : 'top-0 pr-80'} right-0 text-xs p-2 opacity-80 bg-white rounded-tl"
+    <div id="controls" 
+        class="fixed w-fit {$scrolled ? 'sm:bottom-0 bottom-3 sm:pr-6' : 'top-0 sm:pr-80'} right-0 text-xs scale-75 sm:scale-100 p-2 sm:opacity-80 bg-white rounded-md shadow-md"
          role="button" tabindex="0"
          transition:slide={{duration: 500, easing: cubicInOut}}
          on:click={ (e) => { $commandsVisible = e.target.tagName == 'INPUT'}}
@@ -39,19 +40,20 @@
             <input type="text" placeholder="Type a command here" class="block lg:hidden"/>
         </div>
         <ul class="commands-list">
-            <li>Hold Shift: Type something...</li>
-            <li>Shift + Enter: Validate... try to find the cheat code!</li>
-            <li class="hidden md:block"><strong>S</strong>: Toggle <strong>S</strong>unglasses</li>
+            <li class="hidden md:block">Hold Shift: Type something...</li>
+            <li class="hidden md:block">Shift + Enter: Validate... try to find the cheat code!</li>
+            <li class="block md:hidden italic">Use the desktop version to try and discover the cheat code</li>
             <li><strong>P or J</strong>: Display a <strong>J</strong>oke instead of background code</li>
-            <li><strong>R</strong>: Change background to <strong>R</strong>andom color</li>
             <li><strong>G</strong>: Change background to random color <strong>G</strong>radient</li>
+            <li><strong>R</strong>: Change background to <strong>R</strong>andom color</li>
+            <li class="hidden md:block"><strong>S</strong>: Toggle <strong>S</strong>unglasses</li>
             <li><strong>T</strong>: <strong>T</strong>oggle Dark/Light mode</li>
             <li><strong>H</strong>: <strong>H</strong>ide controls</li>
-            <li>... or try clicking on parts of my face</li>
+            <li class="hidden md:block">... or try clicking on parts of my face</li>
         </ul>
     </div>    
 {/if}
-</div>
+
 
 
 
