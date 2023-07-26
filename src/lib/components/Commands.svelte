@@ -1,11 +1,10 @@
 <script>
-    import { fade, slide } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
     import { onMount } from 'svelte';
     import { cubicInOut } from 'svelte/easing';
-    import GlowHoverButton from './GlowHoverButton.svelte';
     import { scrolled } from '$lib/stores';
-    import { goto } from '$app/navigation';
     import { commandsVisible, chatting } from '$lib/stores';
+    import HoverMeButton from './HoverMeButton.svelte';
 
     onMount( () => {
         document.addEventListener('keyup', (e) => {
@@ -19,12 +18,13 @@
 </script>
 
 <div class="w-1/2 flex flex-col md:flex-row md:justify-end sm:gap-8 gap-2">
-    <GlowHoverButton on:click={ () => goto('/#intro')}>
+    <HoverMeButton href="#intro" >
+        <a class="sr-only" href="#intro" title="Go to intro section">Work</a>
         Work
-    </GlowHoverButton>
-    <GlowHoverButton on:click={() => $commandsVisible = !$commandsVisible}>
+    </HoverMeButton>
+    <HoverMeButton on:click={() => $commandsVisible = !$commandsVisible}>
         Play
-    </GlowHoverButton>
+    </HoverMeButton>
 </div>
 
 
