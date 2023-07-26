@@ -3,6 +3,7 @@
     import { typingBlockContent } from '$lib/stores';
     import AnimatedSVGTitle from './AnimatedSVGTitle.svelte';
         
+    export let propContent = "";
     let foreground = false;
     let typingBlock;
     let n = 478;
@@ -21,7 +22,9 @@
         <pre class="{$typingBlockContent ? "pt-[30vh] sm:pt-[52vh] lg:mt-2 md:w-4/6 text-xs lg:text-sm xl:text-xl" : "text-xs lg:text-md xl:text-4xl"} rounded-md px-4 pt-12 block w-full ">
         <code class="code-panel sm:text-xs md:text-lg lg:text-xl language-javascript">
             <span id="typing" class="type" style="--n:478" bind:this={typingBlock}>
-                {#if $typingBlockContent == ""}
+                {#if propContent}
+                    {propContent}  
+                {:else if $typingBlockContent == "" }
                     {`import { JavaScript, PHP, C#, CSS, MySQL } from 'languages';`}<br/>
                     {`import { Webflow, Figma, Illustrator, GIMP } from 'design';`}<br/>
                     {`import { SvelteKit, .NET, Laravel } from 'frameworks';`}<br/>
@@ -32,9 +35,9 @@
                     &emsp;&emsp;{`}`}<br/>
                     &emsp;&emsp;{` return GreatValue;`}<br/>
                     {`}`}<br/>
-                    {:else}
+                {:else}
                     {@html $typingBlockContent.replace(/\n/g, '<br/>')}
-                    {/if}
+                {/if}
                 </span>
             </code>
         </pre>
