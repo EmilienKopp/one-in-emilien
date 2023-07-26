@@ -4,6 +4,7 @@
 	import { chatting, scrolled, theme } from "$lib/stores";
 	import { fade, slide } from "svelte/transition";
     import { sineIn } from "svelte/easing";
+    import { MinimizeSolid, PapperPlaneSolid } from "flowbite-svelte-icons";
 
 
   	const { input, handleSubmit, messages } = useChat({
@@ -71,20 +72,26 @@
 	  
 		<form on:submit={handleSubmit} class="flex flex-col items-end justify-center mt-2 gap-2" bind:this={form}>
 			<label for="chatInput" class="sr-only">Your message</label>
-			<Alert color="dark" class="px-1 py-2 w-full">
-				<svelte:fragment slot="icon">
+			<Alert color="dark" class="px-1 py-2 w-full flex flex-col items-end">
+				<div slot="icon" class="flex flex-row w-full">
 				<Textarea id="chatInput" class="mx-1 text-xs" rows="3" placeholder="Your message..." on:keyup={handleKeyup} bind:value={$input}/>
-				<ToolbarButton type="submit" color="blue" class="rounded-full text-indigo-600">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg>
-					<span class="sr-only">Send message</span>
-				</ToolbarButton>
-				</svelte:fragment>
-			</Alert>
-			<div class="flex">
-				<Label class="mt-1 flex items-center font-thin text-[--color-text]">
+					<ToolbarButton type="submit" color="blue" class="rounded-full text-indigo-600">
+						 <PapperPlaneSolid class="w-6 h-6 rotate-45"/>
+						<span class="sr-only">Send message</span>
+					</ToolbarButton>
+				</div>
+				<Label class="mt-1 flex items-center font-thin text-xs text-orange-600">
 					Enter to send <Checkbox bind:checked={enterToSend} class="ml-1"/>
 				</Label>
-				<GradientButton class="sm:hidden" size="xs" pill color="red" on:click={() => $chatting = !$chatting}>Close chat</GradientButton>
+			</Alert>
+			<div class="flex">
+				<ToolbarButton type="button" color="red" class="rounded-full text-[--color-text]" on:click={() => $chatting = !$chatting}>
+					<svg class="w-6 h-6 text-[--color-text] opacity-80" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
+						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
+					  </svg>
+				   <span class="sr-only">Send message</span>
+			   </ToolbarButton>
+				
 			</div>
 		</form>
 		
