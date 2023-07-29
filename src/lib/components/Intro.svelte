@@ -26,7 +26,7 @@
 			</g>
 		</g>
 		<g clip-path="url(#bb214a3457)">
-			<path fill="var(--color-background)"
+			<path id="oie-path" fill="var(--color-background)"
 				d="M -40.050781 56.175781 L 323.234375 56.175781 L 323.234375 92.292969 L -40.050781 92.292969 Z M -40.050781 56.175781 "
 				fill-opacity="1" fill-rule="nonzero" />
 		</g>

@@ -27,7 +27,7 @@
 
     <Commands  />
 
-    <!-- <InteractiveImage /> -->
+    <InteractiveImage />
   </div>
   
 </section>

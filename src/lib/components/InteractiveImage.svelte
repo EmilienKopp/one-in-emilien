@@ -70,7 +70,8 @@
                     if(main) main.style.background = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
                     break;
                 case 'g': //Change background to random color gradient
-                    if(main) main.style.background = `linear-gradient(90deg, rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}), rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}))`;
+                    const gradient = `linear-gradient(90deg, rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}), rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}))`;
+                    if(main) main.style.background = gradient;
                     // document.getElementById('typing').color = '#0000';
                     break;
                 case 'c':
