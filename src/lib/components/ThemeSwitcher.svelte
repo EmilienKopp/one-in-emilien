@@ -5,19 +5,13 @@
 	import { theme } from "$lib/stores";
     import { fade } from "svelte/transition";
 
-	console.log("ThemeSwitcher.svelte Store", $theme);
-	console.log("Storage", retrieve());
 	$theme = retrieve();
-	console.log("ThemeSwitcher.svelte Store", $theme);
+
 	// console.log("document.documentElement.dataset.theme", document.documentElement.dataset.theme);
 
 	async function toggle() {
-		
-		console.log($theme,'clicked');
-
 		$theme = ($theme == "dark") ? "light" : "dark";
 		document.documentElement.dataset.theme = $theme;
-		
 		save();
 	}
 

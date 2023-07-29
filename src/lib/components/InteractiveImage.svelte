@@ -15,6 +15,7 @@
     let scrollY: number;
     let counter = 6;
     let loading = true;
+    let hugeImage: SVGImageElement;
 
     const toggleSunglasses = () => sunglasses = !sunglasses;
     const toggleChatting = () => $chatting = !$chatting;
@@ -31,15 +32,14 @@
     }
 
     onMount( () => {
-        console.log('OnMount');
         const main = document.querySelector('main');
-
-        let eyes = document.getElementById('eyes');
-        eyes?.addEventListener('click', toggleSunglasses);
 
         setTimeout(() => {
             loading = false;
-        }, 1500);
+        }, 3000);
+
+        let eyes = document.getElementById('eyes');
+        eyes?.addEventListener('click', toggleSunglasses);
 
         document.addEventListener('keyup', async (e) => {
             if(document.activeElement === document.getElementById('chatInput')) return;
@@ -111,10 +111,12 @@
             }
             </style>
         </defs>
-        {#if !loading}
-        <image width="1498" height="2246" transform="scale(1.16)" 
-                xlink:href="images/emilien_nobg.png" transition:fade={{duration: 600}}/>
-        {/if}
+        <!-- {#if !loading} -->
+        <!-- <image width="1498" height="2246" transform="scale(1.16)" 
+                xlink:href="images/emilien_nobg.png" transition:fade={{duration: 600}}/> -->
+        <image id="portrait" width="1498" height="2246" transform="scale(1.16)" bind:this={hugeImage} on:load={() => { console.log('img loaded ' + Date.now() ); } }
+                xlink:href="images/emilien_nobg.png" class="opacity-{loading ? '0' : '100'} transition-opacity duration-1000"/>
+        <!-- {/if} -->
         {#if sunglasses}
         <image id="sunglasses" transition:fly={{duration:800, y: -1000, easing: quintIn}} width="995" height="543" transform="translate(440.46 318.81) scale(.47)" xlink:href="images/sunglasses.png"/>
         {/if}
@@ -130,6 +132,7 @@
     * {
         box-sizing: border-box;
     }
+
 
     svg {
         --container-height: 100vh;

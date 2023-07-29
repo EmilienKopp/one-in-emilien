@@ -20,7 +20,7 @@
 	const navItems: Array<NavItem> = [
 		{ title: "Services", url: "#services" },
 		{ title: "Showcase", url: "#showcase" },
-		{ title: "Contact", url: "/contact" },
+		{ title: "Contact", url: "/dev/contact" },
 	];
 
     onMount(() => {

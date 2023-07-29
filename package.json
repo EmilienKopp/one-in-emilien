@@ -35,7 +35,6 @@
   "type": "module",
   "dependencies": {
     "@floating-ui/dom": "^1.4.5",
-    "@jamescoyle/svelte-icon": "^0.1.1",
     "@mdi/font": "^7.2.96",
     "@mdi/js": "^7.2.96",
     "@supabase/auth-helpers-sveltekit": "^0.10.1",
@@ -48,7 +47,6 @@
     "ai": "^2.1.25",
     "autoprefixer": "^10.4.14",
     "bootstrap-icons": "^1.10.5",
-    "drizzle-orm": "^0.27.2",
     "flowbite": "^1.7.0",
     "flowbite-svelte": "^0.40.1",
     "openai-edge": "^1.1.0",

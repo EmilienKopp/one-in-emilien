@@ -1,5 +1,17 @@
 <script lang="ts">
 	import { Presentation, Slide } from '@components'
+	import { onMount } from 'svelte'
+
+	onMount( () => {
+		document.addEventListener('click', (e) => {
+			console.log(e.target);
+		});
+		document.addEventListener('keyup', (e) => {
+			console.log(e.key);
+		});
+
+		(document.getElementById('microsoft') as HTMLIFrameElement).contentWindow.postMessage('test','*');
+	});
 
 
 	const tableSettings = {
@@ -77,7 +89,18 @@
 		<!-- Embed a PDF -->
 		<embed src="https://ghyahgdhvbdvblhjddkf.supabase.co/storage/v1/object/public/sandbox/Infra_Diagram.drawio.pdf?t=2023-07-25T01%3A17%3A12.842Z#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="600px" />
 	</Slide>
+	<Slide>
+		<h2>Google Slides Embed</h2>
+		<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQUqO4H2pK4YpRcdWVR_UWoibV-fwyOQnHg9fpInSM_jv1-6aAjm4C0DDE_CnaRpm4nNeyFrxantBc8/embed?start=false&loop=false&delayms=60000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+	</Slide>
+	<Slide>
+		<h2>Microsoft Embed</h2>
+		<iframe id="microsoft" on:click={()=>console.log('click')} src='https://view.officeapps.live.com/op/embed.aspx?src=https://ghyahgdhvbdvblhjddkf.supabase.co/storage/v1/object/public/sandbox/worksheet.pptx?t=2023-07-27T00%3A48%3A06.411Z' 
+		width='100%' height='565px' frameborder='0'> </iframe>
+	</Slide>
 </Presentation>
+
+<!-- https://ghyahgdhvbdvblhjddkf.supabase.co/storage/v1/object/public/sandbox/worksheet.pptx?t=2023-07-27T00%3A48%3A06.411Z -->
 
 <style>
 	h2 {
