@@ -11,7 +11,8 @@
     export let external: boolean = false;
     export let submit: boolean = false;
     export let color: "red" | "blue" | "orange" | "yellow" | "green" | "default" = "default";
-    
+    export let text: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" = "sm";
+
     let colorUtility: string = color == "default" ? "bg-[--color-background-offset]" : `bg-${color}-100`;
     
     let target: string | undefined = external ? "_blank" : undefined;
@@ -22,8 +23,8 @@
 <svelte:element 
         this={submit ? "button" : type} 
         class={ rounded
-            ?  `${colorUtility} ${width}  justify-center shadow-btn-round text-light-blue-light hover:text-light-blue-dark border-2 inline-flex items-center last-of-type:mr-0 p-2.5 border-transparent bg-light-secondary shadow-button-flat-nopressed hover:border-2 hover:shadow-button-flat-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-full text-sm text-center `
-            : `${colorUtility} ${width}  justify-center text-light-blue-light hover:text-light-blue-dark bg-light-secondary shadow-btn hover:border-2 hover:shadow-btn-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-md text-sm p-2.5 text-center inline-flex items-center last-of-type:mr-0 border-2 border-transparent `
+            ? `${colorUtility} ${width} text-${text} justify-center font-mono shadow-btn-round text-light-blue-light hover:text-light-blue-dark border-2 inline-flex items-center last-of-type:mr-0 p-2.5 border-transparent bg-light-secondary shadow-button-flat-nopressed hover:border-2 hover:shadow-button-flat-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-full text-center `
+            : `${colorUtility} ${width} text-${text} justify-center font-mono text-light-blue-light hover:text-light-blue-dark bg-light-secondary shadow-btn hover:border-2 hover:shadow-btn-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-md text-sm p-2.5 text-center inline-flex items-center last-of-type:mr-0 border-2 border-transparent `
         }
         on:click={() => dispatch("click")}
         tabindex="0"
@@ -58,7 +59,5 @@
 </a> -->
 
 <style>
-    button:hover::after {
-        content: "👆"
-    }
+
 </style>

@@ -163,7 +163,7 @@ justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:
 
 				</ul>
 			</nav>
-			<ThemeSwitcher />
+			
 			
 			<button
 				bind:this={openNavButton}
@@ -197,7 +197,7 @@ justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:
 								{#each navItems as { title, url }}
 									<li>
 										<a class="block py-4 text-center text-xl" href={url}
-										on:click|preventDefault={() => { (modalMenuOpen = false);  }}>
+										on:click={() => { (modalMenuOpen = false);  }}>
 											{title}
 										</a>
 									</li>
@@ -213,7 +213,7 @@ justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:
 	<div class="hidden gap-2 sm:flex items-center">
 		<h1 class="font-extralight hidden md:block text-red">emilien kopp</h1>
 		<ChatWithMeButton />
-		<ShadowButton external title="Visit my GitHub" type="a" href="https://github.com/EmilienKopp">
+		<ShadowButton external rounded title="Visit my GitHub" type="a" href="https://github.com/EmilienKopp">
 			<Icon
 				pack="mbi"
 				name="github"
@@ -221,7 +221,7 @@ justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:
 				fill="none"
 			/>
 		</ShadowButton>
-		<ShadowButton external title="Visit my LinkedIn" type="button" href="https://www.linkedin.com/in/emilien-kopp/">
+		<ShadowButton external rounded title="Visit my LinkedIn" type="button" href="https://www.linkedin.com/in/emilien-kopp/">
 			<Icon
 				pack="mbi"
 				name="linkedin"
@@ -229,7 +229,7 @@ justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:
 				fill="none"
 			/>
 		</ShadowButton>
-
+		<ThemeSwitcher />
 	</div>
 </header>
 
