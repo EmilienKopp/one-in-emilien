@@ -11,31 +11,37 @@
 
 </script>
 
-<div class="bg-[--color-background] h-full w-full flex flex-col items-center justify-start">
+<div class="bg-[--color-background] h-full w-full flex flex-col items-center justify-start lg:pt-auto ">
         {#await sleep(100) then}
-            <div transition:fade={{duration: 2500, easing: quadInOut}} class="-mb-20">
-                <Logo class="w-96 h-96" />
+            <div transition:fade={{duration: 2500, easing: quadInOut}} class="lg:-mb-20">
+                <Logo class="lg:w-96 lg:h-96 w-56" />
             </div>
     
-            <ul>
+            <ul class="text-left w-fit">
                 <li in:fly={{duration: 600, delay: 1500, x: -1500}}>
-                    <button on:click={() => goto("/dev")}> 
+                    <a href="/dev" class="lg:text-2xl text-[--color-text] text-sm font-bold mt-10 font-mono block w-fit"> 
                         /dev: Enter engineer portal 
-                    </button>
+                    </a>
                 </li>
                 <li in:fly={{duration: 600, delay: 1800, x: -1500}}>
-                    <button> 
+                    <span class="lg:text-2xl text-[--color-text-offset] text-sm font-bold mt-10 font-mono block w-fit"> 
+                        /blog: 🚧 Under construction 🚧
+                    </span>
+                </li>
+                <!-- <li in:fly={{duration: 600, delay: 1800, x: -1500}}>
+                    <a href="/teach" class="lg:text-2xl text-[--color-text] text-sm font-bold mt-10 font-mono block w-fit"> 
                         /teach: Enter teacher portal 
-                    </button>
+                    </a>
                 </li>
                 <li in:fly={{duration: 600, delay: 2100, x: -1500}}>
-                    <button> 
+                    <a href="/translate" class="lg:text-2xl text-[--color-text] text-sm font-bold mt-10 font-mono block w-fit"> 
                         /translate: Enter translator portal 
-                    </button>
-                </li>
+                    </a>
+                </li> -->
             </ul>
             
         {/await}
+        
 </div>
 
 <div class="fixed bottom-5 right-5">
@@ -43,11 +49,25 @@
 </div>
 
 <style>
-    li button {
-        @apply text-[--color-text] text-2xl font-bold mt-10 font-mono border-b-2 border-default;
+
+    li a::after {
+        display: block;
+        content: "";
+        width: 0;
+        border-bottom: 1px solid var(--color-text);
+        transition: width 0.4s ease-in-out;
     }
 
-    li button:hover {
-        @apply border-[--color-text];
+    li a:hover {
+        @apply scale-105 text-[--color-text];
     }
+
+    li a:hover::after {
+        width: 100%;
+        transition: width 0.4s ease-in-out;
+    }
+
+    
+
+    
 </style>
