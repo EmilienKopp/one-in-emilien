@@ -3,6 +3,9 @@ import {
     PUBLIC_SUPABASE_URL
 } from '$env/static/public';
 
+import {
+    EMAIL
+} from '$env/static/private';
 import type { Handle } from '@sveltejs/kit';
 import type { Session } from '@supabase/supabase-js';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
@@ -23,10 +26,17 @@ export const handle: Handle = async ({ event, resolve }) => {
         return session;
     }
 
-    if(event.url.pathname.startsWith('/private')) {
+    if(event.url.pathname.includes('/private')) {
         const session = await event.locals.getSession();
         if(!session) {
             throw redirect(303, '/login');
+        }
+    }
+
+    if(event.url.pathname.includes('/admin')) {
+        const session = await event.locals.getSession();
+        if(!session || session.user.email !== EMAIL) {
+            throw redirect(303, '/masterlogin');
         }
     }
 
