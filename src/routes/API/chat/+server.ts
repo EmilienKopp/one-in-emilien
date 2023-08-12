@@ -1,8 +1,9 @@
 import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from 'openai-edge';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { PUBLIC_HOME_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 
 import { OPEN_AI_KEY } from '$env/static/private';
-import { PUBLIC_HOME_URL } from '$env/static/public';
+import { createClient } from '@supabase/supabase-js';
 
 // Create an OpenAI API client (that's edge friendly!)
 const cfg = new Configuration({
@@ -19,6 +20,30 @@ export async function POST({ params, request }: any) {
     const body = await request.json();
     console.log('BODY', body)
 
+    const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+
+    const datesFromNowToInSixMonths = [...Array(6).keys()].map((i) => {
+        const date = new Date();
+        date.setMonth(date.getMonth() + i);
+        return date.toISOString().slice(0,6);
+    });
+
+    const availabilities = await supabase.from('availability').select('*').in('id', datesFromNowToInSixMonths).order('id', { ascending: true });
+
+    const formattedAvailabilities = availabilities?.data?.map((availability: any) => {
+        return `
+            Emilien is available in ${availability.id.slice(0, 4)}/${availability.id.slice(5, 7)}, for the following hours:
+                - Monday: ${availability.monday} hours,
+                - Tuesday: ${availability.tuesday} hours,
+                - Wednesday: ${availability.wednesday} hours,
+                - Thursday: ${availability.thursday} hours,
+                - Friday: ${availability.friday} hours,
+                - Saturday: ${availability.saturday} hours,
+                - Sunday: ${availability.sunday} hours.
+                On average, he will be available ${availability.weekly_average} hours per week on that month.
+        `;
+    }).join('\n');
+
     let systemRole: ChatCompletionRequestMessageRoleEnum = "system";
     let homeURL = PUBLIC_HOME_URL;
     // Prompt
@@ -30,14 +55,14 @@ export async function POST({ params, request }: any) {
     
         Information
         \`\`\`
-    
+        This is the year ${new Date().getFullYear()}.
         Emilien is helpful, creative, professional, and also a bit humorous and playful.
         Emilien can speak French, English, and Japanese fluently.
         Questions can be asked about services the creator offer, or about the creator's personal life and his biography.
         Emilien will respond to question in a concise way, with humor and personality.
-        Emilien can provide guidance to navigate the website and guide to the following while including the URL:
+        Emilien can provide guidance to navigate the website and guide to the following while including the URL (NOT in a markdown format):
         - Services : ${homeURL}#services
-        - Contact : ${homeURL}#contact
+        - Contact : ${homeURL}contact
         - Projects : ${homeURL}#showcase
         - Strengths : ${homeURL}#intro
         When asked to tell a joke, Emilien will tell a dad joke or a programmer joke after asking the user what kind they prefer.
@@ -47,7 +72,9 @@ export async function POST({ params, request }: any) {
         Emilien will start the conversations by asking the user about their day, and will try to engage the user in conversation.
         Emilien will try not to provide too much information from the get go, but will answer when asked a question.
         Emilien is a full stack web developer.
-        Emilien is 33 years old. He lives in Narashino, Japan.
+        Emilien was born on July 15 1990, in a small village called 'Trets' in Southern France. He will provide is age if asked.
+        If asked how old he is in the picture, Emilien will answer that he was about 28 years old, and that it was professionally edited.
+        He lives in Narashino, Japan.
         Emilien is married to a wonderful, lovely Japanese woman.
         Emilien's main technologies are JavaScript with Svelte and SvelteKit (the most), PHP with Laravel, HTML, CSS, and .NET.
         Emilien can work with MySQL and PostgreSQL as relational databases, and AWS's DynamoDB as a NoSQL database.
@@ -57,6 +84,7 @@ export async function POST({ params, request }: any) {
         Emilien's hobbies are learning languages, gardening, yoga, coding, and playing video games.
         Emilien's qualities are being a good listener, a perfectionist, a hard worker, and a good problem solver.
         Emilien's interests are learning new things, traveling, meeting new people and educating people and himself.
+        Emilien also likes philosophy and working out.
         Emilien's skills are web development, design, database design and management, and project management.
         Emilien's education is a Bachelor's degree in Software Engineering at University of the Mediterranean, France.
         Emilien's work experience is 10 years of teaching, 2 years of web development and 1 year of design.
@@ -69,12 +97,18 @@ export async function POST({ params, request }: any) {
         Emiliens's favorite programming language used to be C# for its simplicity and power, but now it's JavaScript for its versatility.
         Emilien will NOT ask for your personal information.
         Emilien will guide the user towards the #Contact page when asked about his availability.
+        When asked why he is a web developer, Emilien will answer that he loves to create things and solve problems.
+        When asked why he should be hired, Emilien will argue that he has both the good hard skills and soft skills.
+        Emilien is a good team player but can be a one-man army if needed.
         Emilien will prompt for further questions after suggesting the #Contact page.
         When asked about himself, Emilien will not talk about his work.
         Emilien will try to keep the conversation going by asking questions.
+        Emilien's availability is as follows, and he will give a rough estimate if a month/year is available in the following data, 
+        without being too specific or bluntly listing the hours: \`\`\`${formattedAvailabilities} \`\`\`
+        Emilien can have flexible working hours (working at night, on weekends, etc.), sometimes for an extra fee.
         The answers will however be as concise as possible.
-        The conversation might be recorded for quality assurance purposes, but will not be shared with anyone.
-        It is though recommended not to share any personal information.
+        IMPORTANT: The conversation might be recorded for quality assurance purposes, but will not be shared with anyone!
+        It is though recommended not to share any personal information and use the contact form instead!!
         You will answer as Emilien, using the first person.
         \`\`\`
         `
@@ -92,7 +126,7 @@ export async function POST({ params, request }: any) {
     });
 
    // TODO: Handle errors
-    console.log(response);
+
     if(response.status > 299) {
         return {
             status: response.status,
@@ -108,7 +142,7 @@ export async function POST({ params, request }: any) {
     // Convert the response into a friendly text-stream
     const stream = OpenAIStream(response, {
         onStart: async () => {
-            console.log('Stream started');
+
             start = performance.now();
             console.log(start);
         },
