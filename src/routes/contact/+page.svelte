@@ -143,12 +143,6 @@
     
 </div>
 
-{#if !process?.env?.VERCEL }
-<div class="fixed bottom-2 left-2">
-    <SuperDebug data={$form} />
-</div>
-{/if}
-
 <style>
     a {
         color: orangered;
