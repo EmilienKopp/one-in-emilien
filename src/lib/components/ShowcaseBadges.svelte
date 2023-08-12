@@ -5,7 +5,7 @@
 
 </script>
 
-<div class="flex gap-2">
+<div class="flex gap-2 flex-wrap">
     {#each tags as tag}
         <Badge color="primary">#{tag}</Badge>
     {/each}

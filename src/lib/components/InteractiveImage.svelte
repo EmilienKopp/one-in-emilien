@@ -63,17 +63,19 @@
                     silentInput += e.key;
                 }
             }
-
+            let header = document.querySelector('header');
             switch (e.key) {
                 case 's':
                     toggleSunglasses();
                     break;
                 case 'r':
                     if(main) main.style.background = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
+                    if(header) header.style.background = 'transparent';
                     break;
                 case 'g': //Change background to random color gradient
                     const gradient = `linear-gradient(90deg, rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}), rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)}))`;
                     if(main) main.style.background = gradient;
+                    if(header) header.style.background = 'transparent';
                     // document.getElementById('typing').color = '#0000';
                     break;
                 case 'c':
@@ -92,6 +94,8 @@
                     if(main) main.style.background = '';
                     $theme = ($theme == "dark") ? "light" : "dark";
                     document.documentElement.dataset.theme = $theme;
+                    document.documentElement.classList.remove("dark", "light");
+                    document.documentElement.classList.add($theme);
                     localStorage?.setItem("one-in-emilien-theme", $theme)
                     break;
             }

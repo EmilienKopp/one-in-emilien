@@ -19,23 +19,14 @@
 
 </script>
 
-<!-- <div class="w-1/2 flex flex-col md:flex-row md:justify-end sm:gap-8 gap-2">
-    <HoverMeButton href="#intro" >
-        Work
-    </HoverMeButton>
-    <HoverMeButton on:click={() => $commandsVisible = !$commandsVisible}>
-        Play
-    </HoverMeButton>
-</div> -->
-<ShadowBox width="sm:w-1/3 w-2/3">
-        <ShadowButton href="#intro" title="Work with me">
+<ShadowBox width="sm:w-1/3 w-3/4">
+        <ShadowButton href="#intro" title="Work with me" width="w-28" text="xl">
             Work
         </ShadowButton>
-        <ShadowButton on:click={() => $commandsVisible = !$commandsVisible} title="Play with me" width="w-24">
+        <ShadowButton on:click={() => $commandsVisible = !$commandsVisible} title="Play with me" width="w-28" text="xl">
             Play
         </ShadowButton>
 </ShadowBox>
-
 
 {#if $commandsVisible && !$chatting}
     <div id="controls" 

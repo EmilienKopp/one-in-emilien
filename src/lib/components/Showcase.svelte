@@ -18,7 +18,7 @@
     I love to build things. Let me do it for you.
   </svelte:fragment>
 
-  <ShadowBox>
+  <!-- <ShadowBox>
   	<ShadowButton external rounded title="Visit my GitHub" type="a" href="https://github.com/EmilienKopp">
 			<Icon
 				pack="mbi"
@@ -27,7 +27,7 @@
 				fill="none"
 			/>
 		</ShadowButton>
-  </ShadowBox>
+  </ShadowBox> -->
 
   <div class="max-w-6xl space-y-2">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

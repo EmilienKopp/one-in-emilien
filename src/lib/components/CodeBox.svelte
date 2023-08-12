@@ -19,7 +19,7 @@
    
     {#key $typingBlockContent}
     <div class="opacity-80 z-[1] pointer-events-none select-none">
-        <pre class="{$typingBlockContent ? "pt-[30vh] sm:pt-[52vh] lg:mt-2 md:w-4/6 text-xs lg:text-sm xl:text-xl" : "text-xs lg:text-md xl:text-4xl"} rounded-md px-4 pt-12 block w-full ">
+        <pre class="{$typingBlockContent ? "pt-[10vh] sm:pt-[52vh] lg:mt-2 md:w-4/6 text-xs lg:text-sm xl:text-xl" : "text-xs lg:text-md xl:text-4xl"} rounded-md px-4 pt-12 block w-full ">
         <code class="code-panel sm:text-xs md:text-lg lg:text-xl language-javascript">
             <span id="typing" class="type font-mono" style="--n:478" bind:this={typingBlock}>
                 {#if propContent}

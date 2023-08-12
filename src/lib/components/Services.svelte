@@ -52,20 +52,23 @@ const features: Array<FeatureItem> = [
 </script>
 
 <ContentSection title="Services" id="services">
+
   <svelte:fragment slot="lead">
     Very likely the best option for <span class="gradient-text">small teams, startups, and individuals</span>.
   </svelte:fragment>
-  <ShadowBox width="w-full">
+
+  <ShadowBox width="w-3/4">
     <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#each features as { title, description, icon, pack } }
           <li class="flex flex-col items-center gap-4 border border-default bg-transparent p-6 hover:shadow-inner">
-            <div class="h-16 w-16 rounded-full border-2 border-current p-3">
+            <div class="h-12 sm:h-16 w-12 sm:w-16 rounded-full border-2 border-current p-3">
               <Icon pack={pack} name={icon} />
             </div>
-            <p class="text-center font-extrabold text-xl">{title}</p>
-            <p class="text-center text-offset text-sm">{description}</p>
+            <p class="text-center font-extrabold text-md sm:text-xl">{title}</p>
+            <p class="text-center text-offset hidden text-xs sm:text-sm sm:block">{description}</p>
           </li>
       {/each}
     </ul>
   </ShadowBox>
+
 </ContentSection>

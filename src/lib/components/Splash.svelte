@@ -21,7 +21,7 @@
 <section class="relative h-full bg-transparent">
   
 
-  <div class="relative grid h-full sm:flex sm:flex-col sm:gap-3 pl-16 pt-2 md:pt-4  items-start">
+  <div class="relative grid h-full sm:flex sm:flex-col sm:gap-3 p-4 md:pt-4 sm:items-center sm:justify-center place-content-center place-items-center gap-8">
     
     <AnimatedSVGTitle />
 
