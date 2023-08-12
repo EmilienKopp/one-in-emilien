@@ -28,7 +28,7 @@
     </HoverMeButton>
 </div> -->
 <ShadowBox width="sm:w-1/3 w-2/3">
-        <ShadowButton href="#intro" title="Work with me" width="w-24">
+        <ShadowButton href="#intro" title="Work with me">
             Work
         </ShadowButton>
         <ShadowButton on:click={() => $commandsVisible = !$commandsVisible} title="Play with me" width="w-24">
@@ -42,7 +42,7 @@
         class="fixed w-fit {$scrolled ? 'sm:bottom-0 bottom-3 sm:pr-6' : 'top-0 sm:pr-80'} right-0 text-xs scale-75 sm:scale-100 p-2 sm:opacity-80 bg-white rounded-md shadow-md"
          role="button" tabindex="0"
          transition:slide={{duration: 500, easing: cubicInOut}}
-         on:click={ (e) => { $commandsVisible = e.target.tagName == 'INPUT'}}
+         on:click={ (e) => { $commandsVisible = e.target?.tagName == 'INPUT'}}
          on:keyup={ (e) => { $commandsVisible = e.key == 'enter' } }>
         <div id="commands-title" class="flex flex-row items-center gap-2 font-bold">
             Commands 
