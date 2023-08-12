@@ -14,7 +14,7 @@ export let site: ShowcaseSite;
 const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 </script>
 
-<a class="group aspect-video hover:!text-default" href={site.url}>
+<a class="group aspect-video hover:!text-default" href={site.url} target="_blank">
   <figure class="relative h-full w-full overflow-hidden">
     <Picture
       class="h-full w-full bg-cover object-contain transition-all duration-300 group-hover:scale-110 group-hover:opacity-20 group-focus:scale-110 group-focus:opacity-20"

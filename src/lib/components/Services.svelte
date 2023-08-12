@@ -2,6 +2,7 @@
 import Icon from "./Icon.svelte";
 import ContentSection from "$lib/components/ContentSection.svelte";
 import type { FeatureItem } from "$lib";
+    import ShadowBox from "./ShadowBox.svelte";
 
 const features: Array<FeatureItem> = [
 
@@ -54,15 +55,17 @@ const features: Array<FeatureItem> = [
   <svelte:fragment slot="lead">
     Very likely the best option for <span class="gradient-text">small teams, startups, and individuals</span>.
   </svelte:fragment>
-  <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    {#each features as { title, description, icon, pack } }
-        <li class="flex flex-col items-center gap-4 border border-default bg-offset p-6">
-          <div class="h-16 w-16 rounded-full border-2 border-current p-3">
-            <Icon pack={pack} name={icon} />
-          </div>
-          <p class="text-center font-extrabold text-xl">{title}</p>
-          <p class="text-center text-offset text-sm">{description}</p>
-        </li>
-    {/each}
-  </ul>
+  <ShadowBox>
+    <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {#each features as { title, description, icon, pack } }
+          <li class="flex flex-col items-center gap-4 border border-default bg-transparent p-6 hover:shadow-inner">
+            <div class="h-16 w-16 rounded-full border-2 border-current p-3">
+              <Icon pack={pack} name={icon} />
+            </div>
+            <p class="text-center font-extrabold text-xl">{title}</p>
+            <p class="text-center text-offset text-sm">{description}</p>
+          </li>
+      {/each}
+    </ul>
+  </ShadowBox>
 </ContentSection>

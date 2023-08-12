@@ -26,6 +26,7 @@ export interface CompatibilityItem {
   export interface NavItem {
     title: string;
     url: string;
+    external?: boolean;
   }
   
   export interface ShowcaseSite {

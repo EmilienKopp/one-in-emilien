@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Icon from "./Icon.svelte";
+	import ShadowBox from "./ShadowBox.svelte";
+	import ShadowButton from "./ShadowButton.svelte";
 
 	import type { FooterLink } from "$lib";
 
@@ -20,13 +22,20 @@
 </script>
 
 <footer class="relative flex h-64 items-center justify-center">
-	<ul class="flex flex-row gap-4 z-[999]">
-		{#each links as link}
-			<li>
-				<Icon pack="mdi" cssClass="w-16" name={link.icon} href={link.url} circled>
-					<span class="sr-only">{link.description}</span>
-				</Icon>
-			</li>
-		{/each}
-	</ul>
+	<ShadowBox>
+		<ul class="flex flex-row gap-4 z-[999]">
+			{#each links as link}
+				<li>
+					<ShadowButton rounded title={link.description} type="a" href={link.url} external>
+						<Icon
+							pack="mbi"
+							name="{link.icon}"
+							cssClass="h-6"
+							fill="none"
+						/>
+					</ShadowButton>
+				</li>
+			{/each}
+		</ul>
+	</ShadowBox>
 </footer>

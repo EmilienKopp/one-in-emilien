@@ -2,3 +2,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.shadow-btn {
+    @apply text-gray-500;
+    --tw-bg-opacity: 1;
+    --tw-shadow: -4px -2px 16px #FFFFFF, 4px 2px 16px rgba(136, 165, 191, .48);
+    --tw-shadow-colored: -4px -2px 16px var(--tw-shadow-color), 4px 2px 16px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #17191C), var(--tw-ring-shadow, 0 0 #17191C), var(--tw-shadow);
+    border-left: inset 1px solid var(--color-background);
+    border-top: inset 1px solid var(--color-background);
+}
+
+.shadow-btn:hover, .shadow-btn-round:hover {
+    @apply text-gray-700;
+    --tw-shadow: inset -3px -3px 7px #FFFFFF, inset 3px 3px 7px rgba(136, 165, 191, .48);
+    --tw-shadow-colored: inset -3px -3px 7px var(--tw-shadow-color), inset 3px 3px 7px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow);
+}
+
+.shadow-btn-round {
+    @apply text-gray-500 rounded-full;
+    --tw-bg-opacity: 1;
+    --tw-shadow: -4px -2px 16px #FFFFFF, 4px 2px 16px rgba(136, 165, 191, .48);
+    --tw-shadow-colored: -4px -2px 16px var(--tw-shadow-color), 4px 2px 16px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #17191C), var(--tw-ring-shadow, 0 0 #17191C), var(--tw-shadow);
+    border-left: inset 1px solid var(--color-background);
+    border-top: inset 1px solid var(--color-background);
+}
+
+.dark .shadow-btn, .dark .shadow-btn-round {
+    @apply text-gray-200;
+    background-image: linear-gradient(146.19deg,var(--color-background-reverse-offset) -6.95%, var(--color-background-offset) 91.44%);
+    --tw-shadow: -4px -4px 16px rgba(195, 200, 205, .06), 4px 4px 18px rgba(0, 0, 0, .6);
+    --tw-shadow-colored: -4px -4px 16px var(--tw-shadow-color), 4px 4px 18px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow);
+}
+
+
+
+.dark .shadow-btn:hover, .dark .shadow-btn-round:hover {
+    @apply text-gray-400;
+    box-shadow: inset -3px -3px 7px var(--color-background), inset 3px 3px 7px #121212;
+
+}
+
+.dark .shadow-box {
+        background-image: radial-gradient(51.95% 152.6% at 26.24% -102.6%,rgba(252,119,23,.32) 0%, rgba(238,131,53,0) 100%),
+                          linear-gradient(144.05deg,#32383E -69.07%,#17191C 122.22%);
+}
+
+.shadow-box {
+    @apply p-4 bg-[--color-background] z-50;
+    --tw-shadow: 0px -6px 24px #FFFFFF, 0px 7px 16px rgba(104, 132, 157, .5);
+    --tw-shadow-colored: 0px -6px 24px var(--tw-shadow-color), 0px 7px 16px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow);
+    border-left: 1px solid var(--color-border-offset);
+    border-top: 1px solid var(--color-border-offset);
+}
+
+.dark .shadow-box {
+    @apply p-4 bg-[--color-background] z-50;
+    --tw-shadow: 0px -6px 24px var(--color-background-reverse-offset), 0px 4px 10px #000;
+    --tw-shadow-colored: 0px -6px 24px var(--tw-shadow-color), 0px 7px 16px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow)
+}

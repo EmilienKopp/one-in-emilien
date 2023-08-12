@@ -5,6 +5,8 @@
     import { scrolled } from '$lib/stores';
     import { commandsVisible, chatting } from '$lib/stores';
     import HoverMeButton from './HoverMeButton.svelte';
+    import ShadowBox from './ShadowBox.svelte';
+    import ShadowButton from './ShadowButton.svelte';
 
     onMount( () => {
         document.addEventListener('keyup', (e) => {
@@ -17,15 +19,22 @@
 
 </script>
 
-<div class="w-1/2 flex flex-col md:flex-row md:justify-end sm:gap-8 gap-2">
+<!-- <div class="w-1/2 flex flex-col md:flex-row md:justify-end sm:gap-8 gap-2">
     <HoverMeButton href="#intro" >
-        <a class="sr-only" href="#intro" title="Go to intro section">Work</a>
         Work
     </HoverMeButton>
     <HoverMeButton on:click={() => $commandsVisible = !$commandsVisible}>
         Play
     </HoverMeButton>
-</div>
+</div> -->
+<ShadowBox width="w-1/3">
+        <ShadowButton href="#intro" title="Work with me">
+            Work
+        </ShadowButton>
+        <ShadowButton on:click={() => $commandsVisible = !$commandsVisible} title="Play with me">
+            Play
+        </ShadowButton>
+</ShadowBox>
 
 
 {#if $commandsVisible && !$chatting}

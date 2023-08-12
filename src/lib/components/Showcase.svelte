@@ -2,7 +2,9 @@
 	import ContentSection from "$lib/components/ContentSection.svelte";
 	import ShowcaseCard from "$lib/components/ShowcaseCard.svelte";
 	import Icon from "$lib/components/Icon.svelte";
+  import ShadowButton from "$lib/components/ShadowButton.svelte";
 	import * as sitesJSON from "../sites.json";
+    import ShadowBox from "./ShadowBox.svelte";
 	
 
 	console.log(sitesJSON);
@@ -16,9 +18,16 @@
     I love to build things. Let me do it for you.
   </svelte:fragment>
 
-  	<Icon	cssClass="h-full" circled name="github" pack="mdi" href="https://github.com/EmilienKopp/">
-		<span class="sr-only">"View GitHub"</span>
-	</Icon>
+  <ShadowBox>
+  	<ShadowButton external rounded title="Visit my GitHub" type="a" href="https://github.com/EmilienKopp">
+			<Icon
+				pack="mbi"
+				name="github"
+				cssClass="h-6"
+				fill="none"
+			/>
+		</ShadowButton>
+  </ShadowBox>
 
   <div class="max-w-6xl space-y-2">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -29,7 +38,7 @@
     
     {#if sites.length > 6 }
       <p class="text-right text-sm">
-        <a class="text-primary" href="https://astro.build/showcase/">
+        <a class="text-primary" href="/dev/showcase">
           ...and more &rarr;
         </a>
       </p>
