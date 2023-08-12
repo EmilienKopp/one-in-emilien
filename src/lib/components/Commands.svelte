@@ -27,7 +27,7 @@
         Play
     </HoverMeButton>
 </div> -->
-<ShadowBox width="w-1/3">
+<ShadowBox width="sm:w-1/3 w-2/3">
         <ShadowButton href="#intro" title="Work with me">
             Work
         </ShadowButton>
