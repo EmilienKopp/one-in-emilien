@@ -36,7 +36,7 @@
 
         setTimeout(() => {
             loading = false;
-        }, 3000);
+        }, 1000);
 
         let eyes = document.getElementById('eyes');
         eyes?.addEventListener('click', toggleSunglasses);
@@ -102,7 +102,7 @@
 
 {#if !$scrolled}
 
-    <svg  id="image" class="hidden md:block fixed right-0 top-0 z-20" transition:fade={{duration: 1200, easing: cubicInOut}} 
+    <svg  id="image" class="hidden md:block fixed right-0 top-0 z-20"  transition:fly={{duration: 800, x:2000, easing: cubicInOut}}
     data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -300 1498 2246">
         <defs>
             <style>
@@ -112,12 +112,17 @@
             }
             </style>
         </defs>
-        <!-- {#if !loading} -->
+
+        {#if !loading}
         <!-- <image width="1498" height="2246" transform="scale(1.16)" 
                 xlink:href="images/emilien_nobg.png" transition:fade={{duration: 600}}/> -->
-        <image id="portrait" width="1498" height="2246" transform="scale(1.16)" bind:this={hugeImage} on:load={() => { console.log('img loaded ' + Date.now() ); } }
-                xlink:href="images/emilien_nobg.png" class="opacity-{loading ? '0' : '100'} transition-opacity duration-1000"/>
-        <!-- {/if} -->
+        
+        <image id="portrait" width="1498" height="2246" transform="scale(1.16)" bind:this={hugeImage} 
+                transition:fly={{duration: 800, x:2000, easing: cubicInOut, opacity: 0}}
+                on:load={() => { console.log('img loaded ' + Date.now() ); } }
+                xlink:href="images/emilien_nobg.png" class="opacity-{loading ? '0' : '100'} transition duration-1000"/>
+        {/if}
+
         {#if sunglasses}
         <image id="sunglasses" transition:fly={{duration:800, y: -1000, easing: quintIn}} width="995" height="543" transform="translate(440.46 318.81) scale(.47)" xlink:href="images/sunglasses.png"/>
         {/if}
