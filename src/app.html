@@ -17,11 +17,15 @@
 			console.log('saved theme found', themeSaved, localStorage);
 			if (themeSaved) {
 			  document.documentElement.dataset.theme = themeSaved;
+			  document.documentElement.classList.remove("light", "dark");
+			  document.documentElement.classList.add(themeSaved);
 			} else {
 			  const prefersDark = window.matchMedia(
 				"(prefers-color-scheme: light)"
 			  ).matches;
 			  document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
+			  document.documentElement.classList.remove("light", "dark");
+			  document.documentElement.classList.add(prefersDark ? "dark" : "light");
 			}
 	  
 			window

@@ -4,6 +4,7 @@
 	import { init } from "./ThemeSwitcher";
 	import { theme } from "$lib/stores";
     import { fade } from "svelte/transition";
+    import ShadowButton from "./ShadowButton.svelte";
 
 	$theme = retrieve();
 
@@ -12,6 +13,9 @@
 	async function toggle() {
 		$theme = ($theme == "dark") ? "light" : "dark";
 		document.documentElement.dataset.theme = $theme;
+		$theme == "dark" 
+				? document.documentElement.classList.add("dark")
+				: document.documentElement.classList.remove("dark");
 		save();
 	}
 
@@ -34,15 +38,15 @@
 
 </script>
 
-<button
+<ShadowButton
+	rounded
 	id="theme-switcher"
-	type="button"
-	class="origin-[right_center] transition-all duration-500"
+	title="Toggle dark/light mode"
 	on:click={toggle}
 >
 	{#if $theme === "dark"}
 	<div id="icon-theme-light">
-		<svg class="h-8 xl:h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 512 512">
+		<svg class="h-5 xl:h-8" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 512 512">
 			<defs>
 			  <linearGradient
 				id="a"
@@ -95,7 +99,7 @@
 	</div>
 	{:else}
 	<div id="icon-theme-dark">
-		<svg class="h-8 xl:h-12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
+		<svg class="h-5 xl:h-8" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">
 			<defs>
 			  <linearGradient
 				id="a"
@@ -254,7 +258,7 @@
 		<span class="sr-only">Use dark theme</span>
 	</div>
 	{/if}
-</button>
+</ShadowButton>
 
 <style>
 	:global(.fixed-header) #theme-switcher {

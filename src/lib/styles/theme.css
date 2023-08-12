@@ -3,8 +3,9 @@
   --color-secondary: theme("colors.indigo.500");
   --color-text: theme("colors.gray.900");
   --color-text-offset: theme("colors.gray.600");
-  --color-background: theme("colors.gray.50");
-  --color-background-offset: theme("colors.gray.100");
+  --color-background: rgb(239, 241, 245);
+  --color-background-offset: rgb(235, 236, 240);
+  --color-border-offset: rgb(239, 241, 245, 0.5);
   --color-border: theme("colors.gray.900" / 10%);
 }
 
@@ -13,7 +14,9 @@
   --color-secondary: theme("colors.indigo.400");
   --color-text: theme("colors.gray.50");
   --color-text-offset: theme("colors.gray.400");
-  --color-background: theme("colors.gray.900");
-  --color-background-offset: theme("colors.gray.800");
+  --color-background: rgb(17, 24, 39);
+  --color-background-reverse-offset: rgb(19, 26, 41);
+  --color-background-offset: rgb(12, 19, 34);
   --color-border: theme("colors.gray.50" / 10%);
+  --color-border-offset: theme("colors.gray.50" / 20%);
 }
