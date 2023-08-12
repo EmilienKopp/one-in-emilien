@@ -50,7 +50,7 @@
     <h1 class="text-xl mb-5 text-center"> Contact Form </h1>
 
     {#if !submitted}
-    <form method="POST" class="flex flex-col items-end pb-8" use:enhance>
+    <form method="POST" class="flex flex-col items-center sm:items-end pb-8" use:enhance>
         <fieldset title="Personal Information" class="flex flex-col md:grid md:grid-cols-2 gap-4 w-full ">
             <legend>Personal Information</legend>
             <div class="w-full">
@@ -86,7 +86,7 @@
             <Label for="message" class="text-[--color-text]">Message</Label>
             <Textarea  name="message" bind:value={$form.message} placeholder="Fly me to the moon, and ..."/>
         </fieldset>
-        <div id="buttons" class="mt-2 flex gap-3">
+        <div id="buttons" class="mt-2 flex gap-3 justify-center px-5">
             <ShadowButton title="Go back" href="/">
                 <span class="text-[--color-text]">Go back</span>
             </ShadowButton>

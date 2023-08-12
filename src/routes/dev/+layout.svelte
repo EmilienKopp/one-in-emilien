@@ -55,7 +55,7 @@
 	{#if $scrolled}
 	<div transition:fade>
 
-		<Button id="backtotop" pill class="!p-2 fixed bottom-8 right-8" on:click={() => main?.scrollTo({top:0, behavior: "smooth"})}>
+		<Button id="backtotop" pill class="!p-2 fixed bottom-8 right-8 z-[9000]" on:click={() => main?.scrollTo({top:0, behavior: "smooth"})}>
 			<span class="sr-only">Back to top</span>
 			<AngleUpSolid class="w-6 h-6" />
 		</Button>
