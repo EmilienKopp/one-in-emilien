@@ -42,7 +42,9 @@
         eyes?.addEventListener('click', toggleSunglasses);
 
         document.addEventListener('keyup', async (e) => {
-            if(document.activeElement === document.getElementById('chatInput')) return;
+            if(document.activeElement === document.getElementById('chatInput')
+                || document.activeElement?.tagName == 'TEXTAREA'
+                || (document.activeElement?.tagName == 'INPUT' && document.activeElement.id != 'command-text-input') ) return;
             if(e.shiftKey) {
                 if(e.key == 'Backspace') {
                     e.preventDefault();
