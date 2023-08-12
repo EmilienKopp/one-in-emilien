@@ -1,6 +1,8 @@
 import {
     mdiAccount,
     mdiApplicationCogOutline,
+    mdiChatProcessing,
+    mdiChatQuestionOutline,
     mdiClose,
     mdiEmail,
     mdiGithub,
@@ -28,4 +30,5 @@ export const mdi: { [key: string]: string } = {
     'rocket': mdiRocket,
     'github': mdiGithub,
     'linkedin': mdiLinkedin,
+    'chat-question-outline': mdiChatQuestionOutline,
 }

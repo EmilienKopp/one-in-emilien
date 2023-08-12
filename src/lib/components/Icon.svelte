@@ -10,6 +10,7 @@
     export let size: string | undefined = undefined;
     export let href: string | undefined = undefined;
     export let circled: boolean = false;
+    export let fill: string | "none" = "var(--color-text)";
 
     let svgContent: string | undefined = undefined;
     let svg: any = undefined;
@@ -59,7 +60,7 @@
     <slot />
     {#if pack}
         <svg viewBox="0 0 24 24" class={cssClass} in:fade>
-            <path d={iconPath} fill="var(--color-text)"/>
+            <path d={iconPath} fill={ fill == "none" ? 'currentColor' : fill}/>
         </svg>
     {:else}
         <div bind:this={container} in:fade>
