@@ -27,11 +27,11 @@
         Play
     </HoverMeButton>
 </div> -->
-<ShadowBox width="w-1/3">
-        <ShadowButton href="#intro" title="Work with me">
+<ShadowBox width="sm:w-1/3 w-2/3">
+        <ShadowButton href="#intro" title="Work with me" width="w-24">
             Work
         </ShadowButton>
-        <ShadowButton on:click={() => $commandsVisible = !$commandsVisible} title="Play with me">
+        <ShadowButton on:click={() => $commandsVisible = !$commandsVisible} title="Play with me" width="w-24">
             Play
         </ShadowButton>
 </ShadowBox>
@@ -46,7 +46,7 @@
          on:keyup={ (e) => { $commandsVisible = e.key == 'enter' } }>
         <div id="commands-title" class="flex flex-row items-center gap-2 font-bold">
             Commands 
-            <input type="text" placeholder="Type a command here" class="block lg:hidden"/>
+            <input id="command-text-input" type="text" placeholder="Type a command here" class="block lg:hidden"/>
         </div>
         <ul class="commands-list">
             <li class="hidden md:block">Hold Shift: Type something...</li>

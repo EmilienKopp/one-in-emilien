@@ -6,6 +6,7 @@
     export let type: "button" | "a" = "a";
     export let title: string;
     export let href: string | undefined =  type == "a" ? "#" : undefined;
+    export let width: string | undefined = undefined;
     export let rounded: boolean = false;
     export let external: boolean = false;
     export let submit: boolean = false;
@@ -21,8 +22,8 @@
 <svelte:element 
         this={submit ? "button" : type} 
         class={ rounded
-            ?  `${colorUtility} shadow-btn-round text-light-blue-light hover:text-light-blue-dark border-2 inline-flex items-center last-of-type:mr-0 p-2.5 border-transparent bg-light-secondary shadow-button-flat-nopressed hover:border-2 hover:shadow-button-flat-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-full text-sm text-center `
-            : `${colorUtility} text-light-blue-light hover:text-light-blue-dark bg-light-secondary shadow-btn hover:border-2 hover:shadow-btn-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-md text-sm p-2.5 text-center inline-flex items-center last-of-type:mr-0 border-2 border-transparent `
+            ?  `${colorUtility} ${width}  justify-center shadow-btn-round text-light-blue-light hover:text-light-blue-dark border-2 inline-flex items-center last-of-type:mr-0 p-2.5 border-transparent bg-light-secondary shadow-button-flat-nopressed hover:border-2 hover:shadow-button-flat-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-full text-sm text-center `
+            : `${colorUtility} ${width}  justify-center text-light-blue-light hover:text-light-blue-dark bg-light-secondary shadow-btn hover:border-2 hover:shadow-btn-pressed focus:opacity-100 focus:outline-none active:border-2 active:shadow-button-flat-pressed font-medium rounded-md text-sm p-2.5 text-center inline-flex items-center last-of-type:mr-0 border-2 border-transparent `
         }
         on:click={() => dispatch("click")}
         tabindex="0"
@@ -55,3 +56,9 @@
     </path>
     </svg>
 </a> -->
+
+<style>
+    button:hover::after {
+        content: "👆"
+    }
+</style>
