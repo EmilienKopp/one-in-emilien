@@ -46,12 +46,12 @@
 
 </script>
 
-<div class="pt-4 mx-auto mb-12 w-5/6 lg:w-3/5 text-[--color-text] pb-32">
+<div class="pt-4 mx-auto mb-12 w-5/6 lg:w-3/5 text-[--color-text] pb-32 max-h-screen overflow-auto">
     <h1 class="text-xl mb-5 text-center"> Contact Form </h1>
 
     {#if !submitted}
     <form method="POST" class="flex flex-col items-end pb-8" use:enhance>
-        <fieldset title="Personal Information" class="flex flex-col md:grid md:grid-cols-2 gap-4 w-full">
+        <fieldset title="Personal Information" class="flex flex-col md:grid md:grid-cols-2 gap-4 w-full ">
             <legend>Personal Information</legend>
             <div class="w-full">
                 <Label for="customer_name" class="mb-2 text-[--color-text]">Your name</Label>
