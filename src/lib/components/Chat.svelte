@@ -5,10 +5,27 @@
 	import { fade, slide } from "svelte/transition";
     import { sineIn } from "svelte/easing";
     import { MinimizeSolid, PapperPlaneSolid } from "flowbite-svelte-icons";
+	import { nanoid } from "ai";
+    import ShadowButton from "./ShadowButton.svelte";
+    import ShadowBox from "./ShadowBox.svelte";
 
+	export let data: any;
+
+	// random string of 12 characters
+	const uuid = nanoid(32);
 
   	const { input, handleSubmit, messages } = useChat({
     	api: "/API/chat",
+		onFinish: async () => {
+			const contentAsText = $messages.map((message: any) => message.role + ': ' + message.content);
+			const response = await data.supabase.from('bot_conversations').upsert(
+			{
+				id: uuid,
+				json: $messages,
+				text_content: contentAsText,
+			}).select();
+			console.log(response);
+		}
   	});
 
 	let form: HTMLFormElement;
@@ -47,7 +64,7 @@
 </script>
 
 
-<Drawer placement='right' class="bg-[--color-background] border-l border-default flex flex-col justify-end"
+<Drawer placement='right' class="bg-[--color-background-offset] border-l border-default flex flex-col justify-end z-[8000]"
 		width='sm:w-1/3 md:w-2/5 xl:w-1/3 w-full' transitionType="fly" backdrop={false} transitionParams={transitionParamsBottom} bind:hidden={drawerHidden} id='chatDrawer'>
 	<div  transition:fade class="{$scrolled ? 'pt-12' : 'pb-12'} sm:py-20 lg:py-24 h-full w-full overflow-hidden flex flex-col">
 
@@ -69,8 +86,8 @@
 			{/each}
 		  </ul>
 		</div>
-	  
-		<form on:submit={handleSubmit} class="flex flex-col items-end justify-center mt-2 gap-2" bind:this={form}>
+		
+		<form on:submit={handleSubmit} class="w-full flex flex-col items-end justify-center mt-2 gap-2" bind:this={form}>
 			<label for="chatInput" class="sr-only">Your message</label>
 			<Alert color="dark" class="px-1 py-2 w-full flex flex-col items-end">
 				<div slot="icon" class="flex flex-row w-full">
@@ -84,17 +101,15 @@
 					Enter to send <Checkbox bind:checked={enterToSend} class="ml-1"/>
 				</Label>
 			</Alert>
-			<div class="flex">
-				<ToolbarButton type="button" color="red" class="rounded-full text-[--color-text]" on:click={() => $chatting = !$chatting}>
+			<div class="flex mx-5 self-start">
+				<ShadowButton title="Close chat window" type="button" on:click={() => $chatting = !$chatting}>
 					<svg class="w-6 h-6 text-[--color-text] opacity-80" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
 						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
 					  </svg>
-				   <span class="sr-only">Send message</span>
-			   </ToolbarButton>
-				
+			   </ShadowButton>
 			</div>
 		</form>
-		
+
 	  </div>
 </Drawer>
 
