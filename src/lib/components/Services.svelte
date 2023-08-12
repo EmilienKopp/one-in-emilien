@@ -55,7 +55,7 @@ const features: Array<FeatureItem> = [
   <svelte:fragment slot="lead">
     Very likely the best option for <span class="gradient-text">small teams, startups, and individuals</span>.
   </svelte:fragment>
-  <ShadowBox width={"w-full"}>
+  <ShadowBox width="w-full">
     <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {#each features as { title, description, icon, pack } }
           <li class="flex flex-col items-center gap-4 border border-default bg-transparent p-6 hover:shadow-inner">
