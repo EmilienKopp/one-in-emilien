@@ -13,7 +13,7 @@
 
 <div class="bg-[--color-background] h-full w-full flex flex-col items-center justify-center lg:pt-auto ">
         {#await sleep(100) then}
-            <div transition:fade={{duration: 2500, easing: quadInOut}} class="lg:-mb-20">
+            <div transition:fade={{duration: 2000, easing: quadInOut}} class="lg:-mb-20">
                 <Logo class="lg:w-96 lg:h-96 w-56" />
             </div>
     
