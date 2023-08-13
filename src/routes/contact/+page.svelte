@@ -8,6 +8,7 @@
     import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
     import ShadowButton from '$lib/components/ShadowButton.svelte';
     import ShadowBox from '$lib/components/ShadowBox.svelte';
+    import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
     import { tick } from 'svelte';
 
     export let data: PageData;
@@ -46,13 +47,13 @@
 
 </script>
 
-<div class="pt-4 mx-auto mb-12 w-5/6 lg:w-3/5 text-[--color-text] pb-32 max-h-screen overflow-auto">
-    <h1 class="text-xl mb-5 text-center"> Contact Form </h1>
+<div class="pt-4 mx-auto mb-12 w-full h-full sm:px-56 md:px-72 px-2 text-[--color-text] pb-32 max-h-screen overflow-auto bg-[--color-background]">
+    <h1 class="text-xl mb-5 text-center text-[--color-text]"> Contact Form </h1>
 
     {#if !submitted}
     <form method="POST" class="flex flex-col items-center sm:items-end pb-8" use:enhance>
         <fieldset title="Personal Information" class="flex flex-col md:grid md:grid-cols-2 gap-4 w-full ">
-            <legend>Personal Information</legend>
+            <legend class="text-[--color-text]">Personal Information</legend>
             <div class="w-full">
                 <Label for="customer_name" class="mb-2 text-[--color-text]">Your name</Label>
                 <Input name="customer_name" size="sm" required placeholder="Neil Armstrong" bind:value={$form.customer_name}/>
@@ -74,8 +75,8 @@
                 </Helper>
             </div>
         </fieldset>
-        <hr class="my-2 w-full text-white">
-        <fieldset  title="Inquiry" class="flex flex-col gap-3 w-full">
+        <hr class="my-2 w-full text-[--color-text]">
+        <fieldset  title="Inquiry" class="flex flex-col gap-3 w-full text-[--color-text]">
             <legend>What do you need?</legend>
             <Select bind:value={$form.inquiry} name="inquiry" size="sm" required>
                 <option value="I'like to hire you for a website.">I'like to hire you for a website.</option>
@@ -140,7 +141,12 @@
         {/if}
     {/if}
 
-    
+    <div class="fixed bottom-3 right-3 sm:bottom-6 sm:right-6">
+        <ShadowBox>
+            <ThemeSwitcher />
+        </ShadowBox>
+    </div>
+
 </div>
 
 <style>
