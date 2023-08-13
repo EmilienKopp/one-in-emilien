@@ -164,6 +164,9 @@ justify-between border-transparent px-8 py-2 text-[--color-text]  mr-16 h-12 sm:
 				</ul>
 			</nav>
 			
+			<div class="block sm:hidden">
+				<ChatWithMeButton />
+			</div>
 			
 			<button
 				bind:this={openNavButton}
