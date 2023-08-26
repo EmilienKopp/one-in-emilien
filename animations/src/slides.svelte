@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Presentation, Slide } from '@components'
 	import { onMount } from 'svelte'
+	import { fade } from 'svelte/transition'
 
 	onMount( () => {
 		document.addEventListener('click', (e) => {
@@ -13,6 +14,7 @@
 		(document.getElementById('microsoft') as HTMLIFrameElement).contentWindow.postMessage('test','*');
 	});
 
+	let page = 1;
 
 	const tableSettings = {
 		rows: 3,
@@ -31,6 +33,8 @@
 	function updateContent(event: any, x: number, y: number) {
 		contents.data[x][y] = event.target.innerText;
 	}
+
+
 
 	$: console.log(contents);
 </script>
@@ -91,7 +95,14 @@
 	</Slide>
 	<Slide>
 		<h2>Google Slides Embed</h2>
-		<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQUqO4H2pK4YpRcdWVR_UWoibV-fwyOQnHg9fpInSM_jv1-6aAjm4C0DDE_CnaRpm4nNeyFrxantBc8/embed?start=false&loop=false&delayms=60000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+		<button on:click={() => page = page - 1 ?? 0}> 戻る</button>
+		<button on:click={() => page = page + 1 }> 次へ　</button>
+		<iframe transition:fade={{duration: 1000}}
+			title="Google Slides Embed"
+			src="https://docs.google.com/presentation/d/e/2PACX-1vQUqO4H2pK4YpRcdWVR_UWoibV-fwyOQnHg9fpInSM_jv1-6aAjm4C0DDE_CnaRpm4nNeyFrxantBc8/embed?start=false&loop=false&delayms=60000#slide={page}" 
+			frameborder="0" width="960" height="500" 
+			allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+		</iframe>
 	</Slide>
 	<Slide>
 		<h2>Microsoft Embed</h2>
