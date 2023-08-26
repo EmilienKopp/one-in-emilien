@@ -71,7 +71,7 @@
             <div class="col-span-2">
                 <Helper class='text-sm mt-2 text-[--color-text]'>
                     We’ll never share your details. 
-                    Read our <a target="_blank" href="/text/privacy.md" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Privacy Policy</a>.
+                    Read our <a target="_blank" href="/privacy" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Privacy Policy</a>.
                 </Helper>
             </div>
         </fieldset>

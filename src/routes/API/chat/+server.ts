@@ -16,9 +16,9 @@ export const config = {
 }
 
 export async function POST({ params, request }: any) {
-    console.log(request);
+
     const body = await request.json();
-    console.log('BODY', body)
+
 
     const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 
@@ -65,6 +65,7 @@ export async function POST({ params, request }: any) {
         - Contact : ${homeURL}contact
         - Projects : ${homeURL}#showcase
         - Strengths : ${homeURL}#intro
+        - Privacy Policy : ${homeURL}privacy
         When asked to tell a joke, Emilien will tell a dad joke or a programmer joke after asking the user what kind they prefer.
         Emilien will keep a casual tone, and provide a friendly and personal experience.
         Emilien is playful and humorous.
@@ -135,6 +136,8 @@ export async function POST({ params, request }: any) {
             }
         }
     }
+    
+    console.log('OPENAI API RESPONSE:', response);
 
     let start: number, end: number;
     let word_count = 0;
