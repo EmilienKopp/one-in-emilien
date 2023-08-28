@@ -6,6 +6,8 @@
     import { fade } from "svelte/transition";
     import ShadowButton from "./ShadowButton.svelte";
 
+	export let width: string | undefined = undefined;
+
 	$theme = retrieve();
 
 	// console.log("document.documentElement.dataset.theme", document.documentElement.dataset.theme);
@@ -42,6 +44,7 @@
 	rounded
 	id="theme-switcher"
 	title="Toggle dark/light mode"
+	{width}
 	on:click={toggle}
 >
 	{#if $theme === "dark"}

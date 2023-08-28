@@ -19,7 +19,6 @@
 
 </script>
 
-
 <svelte:element 
         this={submit ? "button" : type} 
         class={ rounded
