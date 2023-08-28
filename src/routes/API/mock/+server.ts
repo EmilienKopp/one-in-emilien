@@ -16,7 +16,9 @@ export async function POST ({ params, request, locals }: any) {
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
     }
-    console.log('POST', body);
+    
+    console.log('POST', request.headers.get('origin'));
+    const sender = request.headers.get('origin')
 
     let response;
     if(body.message) {
@@ -25,7 +27,7 @@ export async function POST ({ params, request, locals }: any) {
             { headers: headersWithCORS, status: 200 });
         
         const url: URL = new URL(request.url);
-        const {data, error} = await locals.supabase.from('public_posting').insert([{content: body.message, sender: url.origin}]);
+        const {data, error} = await locals.supabase.from('public_posting').insert([{content: body.message, sender}]);
 
     } else {
         response = new Response(
