@@ -2,9 +2,13 @@
     import { onMount } from "svelte";
     import type { PageData } from "./types";
     import ShadowBox from "$lib/components/ShadowBox.svelte";
+    import {Howl } from 'howler';
 
     export let data: PageData;
 
+    const sound = new Howl({
+        src: ['/sounds/notif.mp3']
+    })
 
     type Message = {
         id: string;
@@ -23,6 +27,7 @@
             console.log(payload);
             if(payload?.new?.content) {
                 messages = [...messages, payload.new];
+                sound.play();
             }
         })
         .subscribe();
