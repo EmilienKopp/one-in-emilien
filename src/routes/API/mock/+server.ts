@@ -4,6 +4,7 @@ export async function OPTIONS ({ params, request }: any) {
     const headersWithCORS = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
     }
     return new Response(null, { headers: headersWithCORS });
 }
