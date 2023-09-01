@@ -22,8 +22,14 @@ export async function POST ({ params, request, locals }: any) {
 
     let response;
     if(body.message) {
+        if(!body.message.includes('!')) {
+            return new Response(
+                JSON.stringify({ message: '💣 Your message should include an exclamation mark! ' }), 
+                { headers: headersWithCORS, statusText: 'Bad Request', status: 400 });
+        }
+        
         response = new Response(
-            JSON.stringify({ message: 'Hello from the API' }), 
+            JSON.stringify({ message: 'Hello from the API 😎' }), 
             { headers: headersWithCORS, status: 200 });
         
         const url: URL = new URL(request.url);
