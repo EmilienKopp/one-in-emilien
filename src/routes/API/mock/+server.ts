@@ -35,6 +35,8 @@ export async function POST ({ params, request, locals }: any) {
             { headers: headersWithCORS, statusText: 'Bad Request: "message" parameter was expected.', status: 400 });
     }
 
+    //Sleep for .5s
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     return response;
 }
