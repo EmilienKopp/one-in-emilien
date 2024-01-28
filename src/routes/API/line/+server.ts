@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 export async function POST({ params, request }: any) {
     const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
     console.log("RECEIVER LINE WEBHOOK", params, request);
-    const {events} = request.body();
+    const {events} = request.json();
     for(const {message,source: {userId}} of events){
         
         const {error} = await supabase.from("line_inquiries").insert({
