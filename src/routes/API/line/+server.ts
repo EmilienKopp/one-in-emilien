@@ -10,7 +10,7 @@ export async function POST({ params, request }: any) {
         
         const {error} = await supabase.from("line_inquiries").insert({
             user_line_id: userId,
-            message: message.text ? message.text : message.type
+            message_content: message.text ? message.text : message.type
         }).select();
         if(error){
             console.error("RECEIVER LINE WEBHOOK", error);
