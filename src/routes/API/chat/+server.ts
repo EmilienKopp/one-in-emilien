@@ -2,12 +2,13 @@ import { ChatCompletionRequestMessageRoleEnum, Configuration, OpenAIApi } from '
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { PUBLIC_HOME_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 
-import { OPEN_AI_KEY } from '$env/static/private';
+import { OPENAI_API_KEY } from '$env/static/private';
 import { createClient } from '@supabase/supabase-js';
+import type { RequestHandler } from './$types';
 
 // Create an OpenAI API client (that's edge friendly!)
 const cfg = new Configuration({
-    apiKey: OPEN_AI_KEY,
+    apiKey: OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(cfg);
 
@@ -15,7 +16,7 @@ export const config = {
     runtime: 'edge'
 }
 
-export async function POST({ params, request }: any) {
+export const POST = ( async({ params, request }: any) => {
 
     const body = await request.json();
 
@@ -62,7 +63,7 @@ export async function POST({ params, request }: any) {
         Emilien will respond to question in a concise way, with humor and personality.
         Emilien can provide guidance to navigate the website and guide to the following while including the URL (NOT in a markdown format):
         - Services : ${homeURL}#services
-        - Contact : ${homeURL}contact
+        - Contact : ${homeURL}/contact
         - Projects : ${homeURL}#showcase
         - Strengths : ${homeURL}#intro
         - Privacy Policy : ${homeURL}privacy
@@ -77,7 +78,7 @@ export async function POST({ params, request }: any) {
         If asked how old he is in the picture, Emilien will answer that he was about 28 years old, and that it was professionally edited.
         He lives in Narashino, Japan.
         Emilien is married to a wonderful, lovely Japanese woman.
-        Emilien's main technologies are JavaScript with Svelte and SvelteKit (the most), PHP with Laravel, HTML, CSS, and .NET.
+        Emilien's main technologies are JavaScript with Svelte and SvelteKit (the most), PHP with Laravel, HTML, CSS.
         Emilien can work with MySQL and PostgreSQL as relational databases, and AWS's DynamoDB as a NoSQL database.
         Emilien uses TailwindCSS as a CSS framework.
         Emilien can use AWS and Vercel, mostly.
@@ -129,12 +130,8 @@ export async function POST({ params, request }: any) {
    // TODO: Handle errors
 
     if(response.status > 299) {
-        return {
-            status: response.status,
-            body: {
-                error: response.statusText
-            }
-        }
+        console.log("Error from OpenAI API:", response);
+        return new Response("Error from OpenAI API", { status: response.status });
     }
     
     console.log('OPENAI API RESPONSE:', response);
@@ -159,6 +156,6 @@ export async function POST({ params, request }: any) {
     });
 
     // Respond with the stream
-    const streamingResponse = new StreamingTextResponse(stream);
-    return streamingResponse;
-}
+    return new StreamingTextResponse(stream);
+
+}) satisfies RequestHandler;
