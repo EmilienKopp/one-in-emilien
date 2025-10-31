@@ -1,0 +1,62 @@
+[
+    {
+      "title": "Page Turner",
+      "image": "/images/page-turner-wide.png",
+      "url": "https://teach-buddy.vercel.app/",
+      "tags": [
+        "Web app",
+        "Educational",
+        "SvelteKit",
+        "AI"
+      ],
+      "personal": true
+    },
+    {
+      "title": "Laravel Blueprint Generator",
+      "image": "/images/blueprint-generator.png",
+      "url": "https://abroads-blueprint-generator.netlify.app/",
+      "tags": [
+        "Single Page App",
+        "Svelte",
+        "IT tools"
+      ],
+      "personal": true
+    },
+    {
+      "title": "Asphelt - Svelte Component Library",
+      "image": "/images/asphelt.png",
+      "url": "https://asphelt.vercel.app",
+      "tags": [
+        "Component Library",
+        "Svelte",
+        "UI",
+        "Storybook"
+      ],
+      "personal": true
+    },
+    {
+      "title": "NAiN",
+      "url": "https://nain.studio",
+      "image": "/images/nain.png",
+      "tags": [
+        "Web app",
+        "Educational",
+        "SvelteKit",
+        "AI",
+        "Realtime"
+      ],
+      "client": "AiO株式会社",
+      "responsibilities": [
+        "Technical Lead",
+        "Frontend Development",
+        "Backend Development",
+        "Database Design",
+        "AI Integration",
+        "Client Hearing and Feedback"
+      ],
+      "description": "A solution to provide enhanced corporate training experience with AI and realtime communication."
+    }
+    
+    
+  ]
+  
