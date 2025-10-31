@@ -39,8 +39,13 @@ class WebhookController extends Controller
                 'payload' => $request->all(),
             ]);
 
-            // Read the "ref" from the payload if available
             $ref = $request->input('ref', 'unknown');
+            
+            if(str($ref)->contains('main')) {
+                \Log::info('Deployment for ref skipped as it matches the main branch', ['ref' => $ref]);
+                return;
+            }
+
             Log::info('Deployment triggered for ref', ['ref' => $ref]);
 
             $refCached = Cache::get('last_deployment_ref');
