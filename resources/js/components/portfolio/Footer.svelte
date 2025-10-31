@@ -13,7 +13,7 @@
 			icon: "github",
 		},
 		{
-			url: "https://www.linkedin.com/in/emilien-kopp/",
+			url: "https://www.linkedin.com/in/one-in-emilien/",
 			description: "View LinkedIn",
 			pack: "mdi",
 			icon: "linkedin",
