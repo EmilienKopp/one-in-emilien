@@ -3,6 +3,7 @@
 @setup
     $devDir = '/home/ec2k/code/one-in-emilien';
     $prodDir = '/var/www/portfolio';
+    $startTime = time();
 @endsetup
 
 @story('deploy')
@@ -66,3 +67,10 @@
     chown -R 1000:1000 {{ $prodDir }}/storage {{ $prodDir }}/bootstrap/cache {{ $prodDir }}/resources {{ $prodDir }}/public
     echo "✅ Done!"
 @endtask
+
+@finished
+    $duration = time() - $startTime;
+    $formatted = \Carbon\CarbonInterval::seconds($duration)->cascade()->forHumans();
+    echo "⏱ Deployment took: {$formatted}\n";
+    echo "🎉 Deployment finished successfully!\n";
+@endfinished
