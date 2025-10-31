@@ -27,7 +27,6 @@
     --exclude 'storage/framework/sessions/*' \
     --exclude 'storage/framework/views/*' \
     --exclude 'compose.yaml' \
-    --exclude 'Envoy.blade.php' \
     {{ $devDir }}/ {{ $prodDir }}/
     echo "✅ Files synced!"
 

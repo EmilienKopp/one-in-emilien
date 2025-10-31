@@ -35,6 +35,7 @@ class DeployCommand extends Command
         }
 
         // Check if Envoy is installed
+        // Check if Envoy is installed
         $envoyPath = base_path('vendor/bin/envoy');
         if (!file_exists($envoyPath)) {
             $this->error('Envoy is not installed. Please run: composer require laravel/envoy');
@@ -50,6 +51,7 @@ class DeployCommand extends Command
             'deploy',
             '--path=' . base_path()
         ]);
+
 
         $process->setTimeout(600); // 10 minutes timeout
         $process->setIdleTimeout(60); // 1 minute idle timeout

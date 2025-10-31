@@ -60,14 +60,6 @@ class WebhookController extends Controller
 
             Cache::forever('last_deployment_ref', $ref);
 
-            return response()->json([
-                'message' => 'Deployment triggered successfully',
-                'ref' => $ref,
-                'refCached' => $refCached,
-                'isMain' => str($ref)->contains('main'),
-                'timestamp' => now()->toISOString(),
-            ]);
-
             // Run the deployment command in the background
             Artisan::call('deploy', ['--force' => true]);
 
