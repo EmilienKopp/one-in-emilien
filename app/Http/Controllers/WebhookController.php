@@ -53,16 +53,24 @@ class WebhookController extends Controller
             Log::info('Deployment triggered for ref', ['ref' => $ref]);
 
             $refCached = Cache::get('last_deployment_ref');
-            if ($ref === $refCached) {
-                Log::info('Deployment for ref skipped as it matches the last deployed ref', ['ref' => $ref]);
-                return response()->json([
-                    'message' => 'Deployment skipped: ref already deployed',
-                    'ref' => $ref,
-                    'timestamp' => now()->toISOString(),
-                ]);
-            }
+            // if ($ref === $refCached) {
+            //     Log::info('Deployment for ref skipped as it matches the last deployed ref', ['ref' => $ref]);
+            //     return response()->json([
+            //         'message' => 'Deployment skipped: ref already deployed',
+            //         'ref' => $ref,
+            //         'timestamp' => now()->toISOString(),
+            //     ], Response::HTTP_NO_CONTENT);
+            // }
 
             Cache::forever('last_deployment_ref', $ref);
+
+            return response()->json([
+                'message' => 'Deployment triggered successfully',
+                'ref' => $ref,
+                'refCached' => $refCached,
+                'isMain' => str($ref)->contains('main'),
+                'timestamp' => now()->toISOString(),
+            ]);
 
             // Run the deployment command in the background
             Artisan::call('deploy', ['--force' => true]);
