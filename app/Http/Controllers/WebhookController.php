@@ -43,24 +43,20 @@ class WebhookController extends Controller
 
             if(str($ref)->contains('main')) {
                 \Log::info('Deployment for ref skipped as it matches the main branch', ['ref' => $ref]);
-                return response()->json([
-                    'message' => 'Deployment skipped: main branch deployment is disabled',
-                    'ref' => $ref,
-                    'timestamp' => now()->toISOString(),
-                ], Response::HTTP_NO_CONTENT);
+                return response()->json(['the_cake' => 'is not here'], 419);
             }
 
             Log::info('Deployment triggered for ref', ['ref' => $ref]);
 
             $refCached = Cache::get('last_deployment_ref');
-            // if ($ref === $refCached) {
-            //     Log::info('Deployment for ref skipped as it matches the last deployed ref', ['ref' => $ref]);
-            //     return response()->json([
-            //         'message' => 'Deployment skipped: ref already deployed',
-            //         'ref' => $ref,
-            //         'timestamp' => now()->toISOString(),
-            //     ], Response::HTTP_NO_CONTENT);
-            // }
+            if ($ref === $refCached) {
+                Log::info('Deployment for ref skipped as it matches the last deployed ref', ['ref' => $ref]);
+                return response()->json([
+                    'message' => 'Deployment skipped: ref already deployed',
+                    'ref' => $ref,
+                    'timestamp' => now()->toISOString(),
+                ], Response::HTTP_NO_CONTENT);
+            }
 
             Cache::forever('last_deployment_ref', $ref);
 
