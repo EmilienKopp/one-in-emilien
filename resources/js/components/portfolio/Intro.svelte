@@ -6,7 +6,7 @@
 
 <ContentSection title="Only one in a million" id="intro">
 	<p class="text-sm mb-4 max-w-xl text-left font-extrabold sm:text-md" slot="pretext">
-		Hi, I'm Emilien, a full-stack developer based near Tokyo, Japan. I'm a
+		Hi! I'm Emilien, a full-stack developer based near Tokyo, Japan. I'm a
 		creative problem solver who loves to build things that make people's lives
 		easier.
 	</p>
