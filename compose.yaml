@@ -9,7 +9,7 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-80}:80'
+            - '${APP_PORT:-8001}:80'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
@@ -21,6 +21,7 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
+            - traefik_network
         depends_on:
             - pgsql
             - redis
@@ -28,7 +29,7 @@ services:
     pgsql:
         image: 'postgres:17-alpine'
         ports:
-            - '${FORWARD_DB_PORT:-5433}:5432'
+            - '${FORWARD_DB_PORT:-5434}:5432'
         environment:
             PGPASSWORD: '${DB_PASSWORD:-secret}'
             POSTGRES_DB: '${DB_DATABASE}'
@@ -68,13 +69,16 @@ services:
     mailpit:
         image: 'axllent/mailpit:latest'
         ports:
-            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
-            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+            - '${FORWARD_MAILPIT_PORT:-1026}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8026}:8025'
         networks:
             - sail
 networks:
     sail:
         driver: bridge
+    traefik_network:
+        external: true
+
 volumes:
     sail-pgsql:
         driver: local
