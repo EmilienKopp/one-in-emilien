@@ -107,6 +107,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Webhook Token
+    |--------------------------------------------------------------------------
+    |
+    | This token is used to secure webhook endpoints. Set this to a secure
+    | random string in your .env file as WEBHOOK_TOKEN.
+    |
+    */
+
+    'webhook_token' => env('WEBHOOK_TOKEN'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Maintenance Mode Driver
     |--------------------------------------------------------------------------
     |
