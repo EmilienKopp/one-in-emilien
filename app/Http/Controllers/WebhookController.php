@@ -15,6 +15,7 @@ class WebhookController extends Controller
      */
     public function deploy(Request $request)
     {
+        return response()->json(['message' => 'Deployment skipped: feature under development'], Response::HTTP_OK);
         // Validate the webhook token
         $token = $request->header('X-Webhook-Token') ?? $request->input('token');
         $expectedToken = config('app.webhook_token');
@@ -40,7 +41,7 @@ class WebhookController extends Controller
             ]);
 
             $ref = $request->input('ref', 'unknown');
-            
+
             if(str($ref)->contains('main')) {
                 \Log::info('Deployment for ref skipped as it matches the main branch', ['ref' => $ref]);
                 return;
