@@ -14,7 +14,9 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
-        ...(process.env.NODE_ENV !== 'production' ? [wayfinder({ formVariants: true })] : []),
+        ...(process.env.NODE_ENV !== 'production'
+            ? [wayfinder({ formVariants: true })]
+            : []),
         svelte({
             preprocess: vitePreprocess(),
         }),
@@ -33,13 +35,12 @@ export default defineConfig({
         },
     },
     server: {
-        hmr: {
-            host: 'localhost',
-        },
         host: '0.0.0.0',
-        port: 5173,
-        watch: {
-            usePolling: true,
+        port: 5174,
+        hmr: {
+            host: 'vite.one-in-emilien.com',
+            protocol: 'wss',
+            clientPort: 443,
         },
     },
 });

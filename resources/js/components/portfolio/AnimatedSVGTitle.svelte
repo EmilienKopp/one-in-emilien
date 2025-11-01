@@ -32,7 +32,7 @@
 <svelte:window bind:innerWidth={windowWidth}/>
 
 <div class="lg:w-2/3 w-5/6 max-h-50vh lg:-ml-28">
-    <h2 class="text-sm xl:text-lg 2xl:text-2xl mt-10 sm:mt-0 font-mono sm:-mb-5"> Hi, I'm Emilien, a </h2>
+    <h2 class="text-sm xl:text-lg 2xl:text-2xl mt-10 sm:mt-0 font-mono sm:-mb-5"> Hi! I'm Emilien, a </h2>
     {#key reset}
     <svg  class="w-full" bind:this={SVG}  on:click={resetAnimation} fill="none"xmlns="http://www.w3.org/2000/svg" 
         xmlns:xlink="http://www.w3.org/1999/xlink"  zoomAndPan="magnify" viewBox="0 0 300 89.999999" preserveAspectRatio="xMidYMid meet" version="1.0">

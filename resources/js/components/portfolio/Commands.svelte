@@ -22,7 +22,7 @@
         <ShadowButton href="#intro" title="Work with me" width="w-28" text="xl">
             Work
         </ShadowButton>
-        <ShadowButton on:click={() => stores.commandsVisible = !stores.commandsVisible} title="Play with me" width="w-28" text="xl">
+        <ShadowButton onclick={() => stores.commandsVisible = !stores.commandsVisible} title="Play with me" width="w-28" text="xl">
             Play
         </ShadowButton>
 </ShadowBox>
