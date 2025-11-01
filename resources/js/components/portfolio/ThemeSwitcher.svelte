@@ -38,6 +38,7 @@
 
     function toggleTheme() {
         stores.theme = stores.theme === 'dark' ? 'light' : 'dark';
+        stores.toggleSunglasses(stores.theme);
         updateTheme();
         localStorage.setItem('one-in-emilien-theme', stores.theme);
     }

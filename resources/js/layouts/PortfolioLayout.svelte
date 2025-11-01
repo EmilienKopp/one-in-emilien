@@ -42,7 +42,7 @@
         <div transition:fade>
             <button
                 id="backtotop"
-                class="fixed right-8 bottom-8 z-9000 rounded-full bg-blue-500 p-2! text-white hover:bg-blue-600"
+                class="fixed right-8 bottom-8 z-7000 rounded-full bg-blue-500 p-2! text-white hover:bg-blue-600"
                 onclick={scrollToTop}
             >
                 <span class="sr-only">Back to top</span>

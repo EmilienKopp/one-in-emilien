@@ -24,8 +24,8 @@ Route::prefix('webhook')->group(function () {
     Route::get('/health', [WebhookController::class, 'healthCheck'])->name('api.webhook.health');
 });
 
-// Chat endpoints (to be implemented in Phase 4)
-// Route::post('/chat', [ChatController::class, 'message'])->name('api.chat.message');
+// Chat endpoints
+Route::post('/chat', [\App\Http\Controllers\Api\ChatController::class, 'message'])->name('api.chat.message');
 
 // Site data endpoints (to be implemented in Phase 4)
 // Route::get('/site', [SiteController::class, 'show'])->name('api.site.show');
