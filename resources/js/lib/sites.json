@@ -55,6 +55,29 @@
         "Client Hearing and Feedback"
       ],
       "description": "A solution to provide enhanced corporate training experience with AI and realtime communication."
+    },
+    {
+      "title": "123 Surveys",
+      "url": "https://123surveys.com/",
+      "image": "/images/123surveys.png",
+      "tags": [
+        "SaaS",
+        "Laravel",
+        "Svelte",
+        "AI",
+        "Realtime",
+        "Analytics"
+      ],
+      "client": "123Surveys",
+      "responsibilities": [
+        "Sole Architect",
+        "Full-stack Development",
+        "AI Integration",
+        "Payment System",
+        "Analytics Engine",
+        "Email Infrastructure"
+      ],
+      "description": "A full-featured survey platform with AI-powered question suggestions, real-time analytics dashboards, and credit-based monetization—built solo with 60k lines of code over 6 months."
     }
     
     
