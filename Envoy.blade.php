@@ -26,7 +26,8 @@
     --exclude 'storage/framework/cache/*' \
     --exclude 'storage/framework/sessions/*' \
     --exclude 'storage/framework/views/*' \
-    --exclude 'compose.yaml' \
+    --exclude 'compose.local.yaml' \
+    --exclude 'compose.vps.yaml' \
     {{ $devDir }}/ {{ $prodDir }}/
     echo "✅ Files synced!"
 
