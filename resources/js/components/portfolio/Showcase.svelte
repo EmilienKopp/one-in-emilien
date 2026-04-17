@@ -22,7 +22,7 @@
 
   <div class="max-w-6xl space-y-2">
     <h4 class="gradient-text">Client Stories</h4>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-2">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-2 mb-8">
       {#each enterpriseSites as site}
         <ShowcaseCard {site} />
         <ShowcaseDescription
@@ -34,12 +34,12 @@
       {/each}
     </div>
 
-    <h4 class="gradient-text">Personal Projects</h4>
+    <!-- <h4 class="gradient-text">Personal Projects</h4>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {#each personalSites as site}
         <ShowcaseCard {site} />
       {/each}
-    </div>
+    </div> -->
 
     {#if sites.length > 6}
       <p class="text-right text-sm">

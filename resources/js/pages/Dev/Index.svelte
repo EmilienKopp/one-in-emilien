@@ -9,6 +9,11 @@
     import CodeBox from "@/components/portfolio/CodeBox.svelte";
 </script>
 
+<svelte:head>
+    <title>OneInEmilien - Developer Portfolio</title>
+    <meta name="description" content="Welcome to my developer portfolio! I'm Emilien, a passionate software engineer specializing in building innovative web applications. Explore my projects, skills, and experience in full-stack development, and see how I can help bring your ideas to life." />
+</svelte:head>
+
 <PortfolioLayout>
     <Splash />
 
