@@ -11,9 +11,19 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/dev', function () {
-    return Inertia::render('Dev/Index');
-})->name('dev');
+// Route::get('/dev', function () {
+//     return Inertia::render('Dev/Index');
+// })->name('dev');
+
+Route::prefix('dev')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Dev/Index');
+    })->name('dev.index');
+
+    Route::get('/showcase', function () {
+        return Inertia::render('Dev/Showcase');
+    })->name('dev.showcase');
+});
 
 Route::get('/contact', function () {
     return Inertia::render('Contact');

@@ -6,9 +6,7 @@
     import ShowcaseDescription from './ShowcaseDescription.svelte';
 
     const sites = JSON.parse(JSON.stringify(sitesJSON)).default;
-    const samples = sites.slice(0, 6);
 
-    let personalSites = sites.filter((site: ShowcaseSite) => site.personal);
     let enterpriseSites = sites.filter((site: ShowcaseSite) => !site.personal);
 </script>
 
@@ -41,11 +39,13 @@
       {/each}
     </div> -->
 
-        <!-- {#if sites.length > 6}
-      <p class="text-right text-sm">
-        <a class="text-primary" href="/dev/showcase"> ...and more &rarr; </a>
-      </p>
-    {/if} -->
+        {#if enterpriseSites.length > 6}
+            <p class="text-right text-sm">
+                <a class="text-primary" href="/dev/showcase">
+                    ...and more &rarr;
+                </a>
+            </p>
+        {/if}
     </div>
 </ContentSection>
 
