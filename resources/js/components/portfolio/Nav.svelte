@@ -24,6 +24,7 @@
     const navItems: Array<NavItem> = [
         { title: 'Services', url: '#services' },
         { title: 'Showcase', url: '#showcase' },
+        { title: 'Open Source', url: '#oss' },
         { title: 'Contact', url: '/contact' },
     ];
 

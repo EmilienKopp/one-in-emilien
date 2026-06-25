@@ -4,6 +4,7 @@
     import Intro from "@/components/portfolio/Intro.svelte";
     import Services from "@/components/portfolio/Services.svelte";
     import Showcase from "@/components/portfolio/Showcase.svelte";
+    import OpenSource from "@/components/portfolio/OpenSource.svelte";
     import Contact from "@/components/portfolio/Contact.svelte";
     import Footer from "@/components/portfolio/Footer.svelte";
     import CodeBox from "@/components/portfolio/CodeBox.svelte";
@@ -21,6 +22,7 @@
         <Intro />
         <Services />
         <Showcase />
+        <OpenSource />
         <Contact />
     </div>
 

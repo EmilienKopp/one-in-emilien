@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OssController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -23,6 +24,17 @@ Route::prefix('dev')->group(function () {
     Route::get('/showcase', function () {
         return Inertia::render('Dev/Showcase');
     })->name('dev.showcase');
+});
+
+if (! app()->isProduction()) {
+    Route::get('/dev/snippets', function () {
+        return Inertia::render('Dev/Snippets');
+    })->name('dev.snippets');
+}
+
+Route::prefix('oss')->group(function () {
+    Route::get('/', [OssController::class, 'index'])->name('oss.index');
+    Route::get('/{package}', [OssController::class, 'show'])->name('oss.show');
 });
 
 Route::get('/contact', function () {
