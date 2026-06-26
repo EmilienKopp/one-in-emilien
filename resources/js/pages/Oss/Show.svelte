@@ -91,7 +91,7 @@
                                     target.style.display = 'none';
                                 }}
                             /> -->
-                            <div class="mockup-code">
+                            <div class="mockup-code shiki-mockup">
                                 {#await codeToHtml( section.code, { theme: 'github-dark', lang: 'php' }, ) then html}
                                     {@html html}
                                 {/await}
@@ -114,3 +114,17 @@
         </ContentSection>
     </div>
 </PortfolioLayout>
+
+<style>
+    .shiki-mockup :global(pre.shiki) {
+        margin: 0;
+        padding: 1.25rem 1.5rem;
+        background-color: transparent !important;
+        overflow-x: auto;
+    }
+
+    .shiki-mockup :global(pre.shiki code) {
+        display: inline-block;
+        min-width: 100%;
+    }
+</style>
