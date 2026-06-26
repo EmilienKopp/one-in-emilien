@@ -2,6 +2,7 @@
     import PortfolioLayout from '@/layouts/PortfolioLayout.svelte';
     import ContentSection from '@/components/portfolio/ContentSection.svelte';
     import { codeToHtml } from 'shiki';
+    import { formatDownloads } from '@/lib/utils';
 
     interface OssSection {
         image: string;
@@ -17,6 +18,7 @@
         description: string;
         repository?: string;
         packagist?: string;
+        downloads: number | null;
         sections: OssSection[];
     }
 
@@ -55,6 +57,11 @@
                         >
                             Packagist
                         </a>
+                    {/if}
+                    {#if pkg.downloads !== null}
+                        <span class="px-4 py-2 opacity-70">
+                            {formatDownloads(pkg.downloads)} downloads
+                        </span>
                     {/if}
                 </div>
             </svelte:fragment>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -38,7 +40,9 @@ class OssController extends Controller
                 'slug' => $slug,
                 'name' => $package['name'],
                 'tagline' => $package['tagline'],
+                'downloads' => $this->downloads($package['packagist'] ?? null),
             ])
+            ->sortByDesc('downloads')
             ->values()
             ->all();
 
@@ -53,7 +57,40 @@ class OssController extends Controller
 
         return Inertia::render('Oss/Show', [
             'slug' => $package,
-            'package' => $data,
+            'package' => [
+                ...$data,
+                'downloads' => $this->downloads($data['packagist'] ?? null),
+            ],
         ]);
+    }
+
+    /**
+     * Fetch the total Packagist download count for a package, cached daily.
+     *
+     * Returns null when the package has no Packagist URL or the API is
+     * unreachable, so the frontend can simply hide the badge.
+     */
+    protected function downloads(?string $packagistUrl): ?int
+    {
+        if ($packagistUrl === null) {
+            return null;
+        }
+
+        $name = trim(parse_url($packagistUrl, PHP_URL_PATH) ?? '', '/');
+        $name = preg_replace('#^packages/#', '', $name);
+
+        if ($name === '' || $name === null) {
+            return null;
+        }
+
+        return Cache::remember("oss.downloads.{$name}", now()->addDay(), function () use ($name): ?int {
+            $response = Http::timeout(5)->get("https://packagist.org/packages/{$name}.json");
+
+            if ($response->failed()) {
+                return null;
+            }
+
+            return $response->json('package.downloads.total');
+        });
     }
 }

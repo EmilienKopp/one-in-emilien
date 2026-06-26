@@ -131,5 +131,86 @@
                 "body": "Ask for JSON and laravel-depth outputs a structured tree you can pipe into reports, dashboards, or CI checks. Write it straight to a file. The same data that powers the human-readable tree — entry points, cycles, orphans, route metadata — fully available for automation."
             }
         ]
+    },
+    "laravel-enum-friendly": {
+        "name": "laravel-enum-friendly",
+        "tagline": "Everything PHP enums should have shipped with.",
+        "description": "A trait you drop into any enum and immediately get 25+ methods for form integration, TypeScript generation, validation rules, safe coercion, filtering, and more. Built on a dependency-free core so the same utilities work outside Laravel too — in Symfony, CLI tools, microservices, or plain PHP.",
+        "repository": "https://github.com/EmilienKopp/EnumFriendly",
+        "packagist": "https://packagist.org/packages/splitstack/laravel-enum-friendly",
+        "sections": [
+            {
+                "image": "/oss/enum-friendly/extended-enum.png",
+                "alt": "ExtendedEnum trait added to a Laravel enum",
+                "title": "One trait. Twenty-five methods.",
+                "code": "enum UserStatus: string\n{\n    use ExtendedEnum;\n\n    case ACTIVE = 'active';\n    case INACTIVE = 'inactive';\n    case PENDING = 'pending';\n    case SUSPENDED = 'suspended';\n}\n\nUserStatus::collect();          // Laravel Collection\nUserStatus::readable();         // ['Active', 'Inactive', ...]\nUserStatus::hasValue('active'); // true\nUserStatus::random();           // 'pending'",
+                "body": "Add the ExtendedEnum trait to any backed or unbacked enum and unlock the full method surface instantly. No configuration, no service provider setup beyond installation, no base class to extend. If you already have enums, you're one use statement away."
+            },
+            {
+                "image": "/oss/enum-friendly/form-integration.png",
+                "alt": "toSelectOptions() returning a Laravel Collection for use in a Blade or Inertia form",
+                "title": "Form-ready, out of the box.",
+                "code": "// Blade\n@foreach(UserStatus::toSelectOptions() as $option)\n    <option value=\"{{ $option['value'] }}\">{{ $option['label'] }}</option>\n@endforeach\n\n// Inertia / Vue / Svelte\n// pass UserStatus::toSelectOptions() as a prop — it's already a Collection",
+                "body": "toSelectOptions() returns a Laravel Collection of value/label pairs ready to drop into any select element — Blade, Inertia, Livewire, or API response. No manual array_column(), no custom mappers. The enum is the source of truth for your frontend too."
+            },
+            {
+                "image": "/oss/enum-friendly/validation.png",
+                "alt": "UserStatus::rules() used inside a Laravel Form Request",
+                "title": "Validation rules — generated, not written.",
+                "code": "public function rules(): array\n{\n    return [\n        // generates ['required', 'string', 'in:active,inactive,pending,suspended']\n        'status' => UserStatus::rules(['required']),\n\n        // or use Laravel's native Enum rule\n        'priority' => ['required', Priority::rule()],\n    ];\n}",
+                "body": "Call rules() on any enum to get a complete Laravel validation rule array — type constraint and in: check included, derived directly from the enum cases. No magic strings, no drift between your enum definition and your validation logic."
+            },
+            {
+                "image": "/oss/enum-friendly/typescript.png",
+                "alt": "toTypeScript() output used to generate a TypeScript union type",
+                "title": "TypeScript sync — no manual type files.",
+                "code": "UserStatus::toTypeScript();\n// [\n//   'type'   => 'UserStatus',\n//   'values' => ['active', 'inactive', 'pending', 'suspended']\n// ]\n\n// pipe into a generator to produce:\n// export type UserStatus = 'active' | 'inactive' | 'pending' | 'suspended';",
+                "body": "toTypeScript() outputs a structured representation of your enum that a generator script can turn into TypeScript union types. Keep your PHP enum as the single source of truth and generate frontend types from it — no duplication, no drift."
+            },
+            {
+                "image": "/oss/enum-friendly/core.png",
+                "alt": "EnumFriendly Core trait used in a plain PHP project with no framework",
+                "title": "Framework-agnostic core — use it anywhere.",
+                "code": "// In a Symfony project, CLI tool, or plain PHP\nuse Splitstack\\EnumFriendly\\Traits\\EnumFriendly;\n\nenum Priority: int\n{\n    use EnumFriendly;\n\n    case LOW = 1;\n    case MEDIUM = 2;\n    case HIGH = 3;\n}\n\nPriority::values();   // [1, 2, 3]\nPriority::readable(); // ['Low', 'Medium', 'High']",
+                "body": "The full utility layer is extracted into a dependency-free core package — no Laravel, no Symfony, nothing. Use the same enum methods in any PHP 8.1+ project. The Laravel package builds on top of it, adding Collections, validation rules, and Artisan commands without changing the core API."
+            }
+        ]
+    },
+
+    "splitstack": {
+        "name": "splitstack",
+        "tagline": "Start every project with the hard parts already done.",
+        "description": "A Laravel + Svelte 5 starter template with end-to-end type safety, built-in multi-tenancy, DDD architecture, and real-time DB events — no broker required. Not a boilerplate that gives you a running app. A typed pipeline from database to UI, with the structural decisions already made.",
+        "repository": "https://github.com/EmilienKopp/splitstack",
+        "sections": [
+            {
+                "image": "/oss/splitstack/translucid.png",
+                "alt": "Translucid watchCollection in a Svelte component reacting to PostgreSQL NOTIFY",
+                "title": "Real-time — powered by PostgreSQL, not Redis.",
+                "code": "// 1. Add the trait\nclass Order extends Model {\n    use HasTranslucid;\n}\n\n// 2. Install the PG trigger once\nTranslucid::observe(Order::class);\n\n// 3. React in Svelte — no polling, no broker\nconst stop = watchCollection('orders', {\n    onCreated(payload) { orders = [payload.data, ...orders]; },\n});\nonDestroy(stop);",
+                "body": "Translucid uses PostgreSQL's native LISTEN/NOTIFY to push DB changes to your frontend the moment they happen — no Redis, no Pusher, no extra process to manage. Add the trait, install the trigger once, and your Svelte components react to row-level events. Multi-tenant aware: each tenant's events are scoped to their own private channel."
+            },
+            {
+                "image": "/oss/splitstack/ddd-layer.png",
+                "alt": "DDD application layer folder structure with Actions, UseCases, Queries, DTOs",
+                "title": "DDD architecture — scaffolded, not theorized.",
+                "code": "// Scaffold the full layer in one command\nphp artisan split:make OrderAction\n\n// app/Application/Actions/CreateOrder.php\n// app/Domain/DTOs/OrderDTO.php\n// app/Infrastructure/Repositories/OrderRepository.php\n\n// DTOs get fromValidatable(), fromArray(), toArray() for free\n$dto = OrderDTO::fromValidatable($request);\n\n// Repositories auto-bound by naming convention\n// OrderRepository ↔ OrderRepositoryInterface — no manual registration",
+                "body": "Actions, UseCases, Queries, DTOs, Entities, Value Objects, and Repositories — all scaffolded by convention, not manually wired. Repositories are auto-bound to their interfaces by naming convention. DTOs extend BaseDTO and get serialization helpers for free. The structure enforces the right dependency direction from day one."
+            },
+            {
+                "image": "/oss/splitstack/perspective.png",
+                "alt": "Perspective class resolving role-variant UI config in a Svelte component",
+                "title": "RBAC UI — config-driven, not conditional.",
+                "code": "// Define once\nexport default new Perspective<UserTableConfig>(\n    {\n        admin:  () => ({ headers: adminHeaders, actions: ['Edit', 'Delete'] }),\n        viewer: () => ({ headers: viewerHeaders, actions: [] }),\n    },\n    () => ({ headers: defaultHeaders, actions: [] })\n);\n\n// Resolve anywhere — no if/else chains\nconst config = usersPerspective.for(currentUser.role);",
+                "body": "Perspective is a typed RBAC config system that eliminates scattered role conditionals from your components. Define what each role sees once, resolve it by role string anywhere. Navigation, table columns, available actions, visible sections — all driven by config, all statically typed."
+            },
+            {
+                "image": "/oss/splitstack/in-repo-packages.png",
+                "alt": "packages/splitstack directory listing Translucid, Stashable, Metamon, EnumFriendly",
+                "title": "In-repo packages — extract when ready.",
+                "code": "packages/splitstack/\n├── translucid/          # PG LISTEN/NOTIFY real-time eventing\n├── laravel-stashable/   # Attribute-driven repository caching\n│   #[WithCache(ttl: 300, key: 'orders.{id}')]\n│   public function findById(int $id): Order { … }\n├── laravel-metamon/     # Typed JSON metadata on Eloquent models\n│   $model->meta('settings.theme', 'dark');\n└── laravel-enum-friendly/ # Enum utilities (also a standalone package)",
+                "body": "Splitstack ships with four internal packages that live in packages/splitstack/ and are usable as standalone Composer packages. Stashable gives you attribute-driven repository caching with tenant-aware cache keys. Metamon turns any JSON column into a dot-notation metadata API. Each can be extracted and published independently as your project grows."
+            }
+        ]
     }
 }

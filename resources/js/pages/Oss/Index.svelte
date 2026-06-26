@@ -3,10 +3,13 @@
     import PortfolioLayout from '@/layouts/PortfolioLayout.svelte';
     import ContentSection from '@/components/portfolio/ContentSection.svelte';
 
+    import { formatDownloads } from '@/lib/utils';
+
     interface OssListing {
         slug: string;
         name: string;
         tagline: string;
+        downloads: number | null;
     }
 
     let { packages }: { packages: OssListing[] } = $props();
@@ -33,6 +36,11 @@
                             {pkg.name}
                         </h3>
                         <p>{pkg.tagline}</p>
+                        {#if pkg.downloads !== null}
+                            <p class="mt-auto pt-2 text-sm opacity-70">
+                                {formatDownloads(pkg.downloads)} downloads
+                            </p>
+                        {/if}
                     </Link>
                 {/each}
             </div>
