@@ -11,14 +11,14 @@
                 "alt": "HasReadOnlyMode trait added to an existing Eloquent model",
                 "title": "Retrofit any model — no rewrite needed.",
                 "code": "class Order extends Model {\n    use HasReadOnlyMode;\n}\n\nOrder::fromView()->where('status', 'shipped')->get();\n$order->readonly()->update(['status' => 'paid']); // throws",
-                "body": "Add the HasReadOnlyMode trait to any existing Eloquent model and unlock two new access patterns: call ->readonly() to block all write operations on an instance, or ::fromView() to redirect reads to a dedicated view — without touching your schema, your migrations, or your class hierarchy."
+                "body": "Add a single trait to any existing Eloquent model and unlock two new access patterns: block all write operations on an instance, or redirect reads to a dedicated view — without touching your schema, your migrations, or your class hierarchy."
             },
             {
                 "image": "/oss/rome/read-only-model.png",
                 "alt": "ReadOnlyModel class definition extending Rome's base class",
                 "title": "ReadOnlyModel — Eloquent, but honest.",
                 "code": "class RevenueByMonth extends ReadOnlyModel {\n    protected $view = 'v_revenue_by_month';\n}\n\nRevenueByMonth::where('month', '>=', '2024-01')->get();\nRevenueByMonth::create([...]); // throws",
-                "body": "Extend ReadOnlyModel instead of Model and your class declares its intent: this data is read from a view, never written back. No accidental inserts, no phantom dirty states. Your domain stays clean."
+                "body": "Extend the read-only base class instead of the standard model and your class declares its intent: this data is read from a view, never written back. No accidental inserts, no phantom dirty states. Your domain stays clean."
             },
             {
                 "image": "/oss/rome/refresh.png",
@@ -41,21 +41,21 @@
                 "alt": "HasHybridResponses trait used in a Laravel controller",
                 "title": "Hybrid responses — zero branching.",
                 "code": "class ProjectController extends Controller {\n    use HasHybridResponses;\n\n    public function index() {\n        $data = ['projects' => Project::all()];\n        return $this->respond()->component('Projects/Index', $data);\n        // Inertia request → renders component\n        // API request     → returns JSON\n    }\n}",
-                "body": "Add the HasHybridResponses trait to any controller and call $this->respond(). Chain ->component() for SPA requests, ->route() for redirects. When an API client hits the same endpoint, it gets plain JSON back. The controller doesn't branch — inertia-split does."
+                "body": "Add a single trait to any controller and return a hybrid response. Chain a component for SPA requests, or a route for redirects. When an API client hits the same endpoint, it gets plain JSON back. The controller doesn't branch — inertia-split does."
             },
             {
                 "image": "/oss/inertia-split/inertia-component-attribute.png",
                 "alt": "#[InertiaComponent] PHP attribute on an existing controller method",
                 "title": "Incremental migration — annotate, don't rewrite.",
                 "code": "class UserController extends Controller {\n    #[InertiaComponent('Users/Show')]\n    public function show(User $user): array {\n        return ['user' => $user]; // unchanged\n        // Inertia → renders Users/Show with props\n        // API     → returns JSON as before\n    }\n}",
-                "body": "Already have a working Laravel API? Add #[InertiaComponent('Page/Name')] above any method and leave the body untouched. Inertia requests get a rendered component with your data as props. API clients get the same JSON they always got. Methods without the attribute are completely unaffected."
+                "body": "Already have a working Laravel API? Annotate any method with a single attribute and leave the body untouched. Inertia requests get a rendered component with your data as props. API clients get the same JSON they always got. Methods without the attribute are completely unaffected."
             },
             {
                 "image": "/oss/inertia-split/facade.png",
                 "alt": "Split facade usage example",
                 "title": "Three ways to use it — pick yours.",
                 "code": "// Trait\n$this->respond()->component('Page', $data);\n\n// Extended base controller\nclass MyController extends HybridController { ... }\n\n// Facade\nSplit::respond()->component('Page', $data);",
-                "body": "Use the HasHybridResponses trait, extend HybridController to skip the use declaration entirely, or reach for the Split facade from anywhere in your application. Same behaviour, your preferred style."
+                "body": "Use the trait, extend the base controller to skip the use declaration entirely, or reach for the facade from anywhere in your application. Same behaviour, your preferred style."
             }
         ]
     },
@@ -71,28 +71,28 @@
                 "alt": "Diagram showing a notification resolving when its expected action fires",
                 "title": "The concept — pending state, not just a message.",
                 "code": "// 1. User is notified\n$user->notify(\n    (new GithubSetupReminder)->forAction('github.install', ['user_id' => $user->id])\n);\n\n// 2. Somewhere else entirely — webhook, CLI, OAuth callback\nInstallGithubApp::execute(['user_id' => 5, 'installation_id' => 88]);\n// └─ fires ActionExecuted → notification stamps resolved_at ✓",
-                "body": "A notification declares an action_key. When that action executes — via a webhook, a CLI command, an OAuth callback, anywhere — an ActionExecuted event fires, the listener finds the matching notification, and stamps resolved_at. The controller, the handler, and the notification have no knowledge of each other."
+                "body": "A notification declares the action it's waiting on. When that action executes — via a webhook, a CLI command, an OAuth callback, anywhere — an event fires, the listener finds the matching notification, and stamps it resolved. The controller, the handler, and the notification have no knowledge of each other."
             },
             {
                 "image": "/oss/nudge/resolvable-action.png",
                 "alt": "ResolvableAction implementation with DispatchesActionExecuted trait",
                 "title": "Actions — implement, call, forget.",
                 "code": "class InstallGithubApp implements ResolvableAction {\n    use DispatchesActionExecuted;\n\n    public function actionKey(): string {\n        return 'github.install';\n    }\n\n    protected function handle(array $params): void {\n        // your logic — ActionExecuted fires automatically after this\n    }\n}",
-                "body": "Implement ResolvableAction, use the DispatchesActionExecuted trait, and put your logic in handle(). Call execute() publicly. The ActionExecuted event is dispatched automatically after handle() returns — and only if it succeeds. You never touch the notification layer from inside the action."
+                "body": "Implement the resolvable-action contract, pull in the dispatching trait, and put your logic in the handler. Call it publicly. The event is dispatched automatically after the handler returns — and only if it succeeds. You never touch the notification layer from inside the action."
             },
             {
                 "image": "/oss/nudge/actionable-notification.png",
                 "alt": "ActionableNotification with forAction() and useActionKey() usage examples",
                 "title": "Notifications — two ways to bind an action.",
                 "code": "// Option A — action key at call site\n$user->notify(\n    (new SetupReminder)->forAction('github.install', ['user_id' => $user->id])\n);\n\n// Option B — action key baked into the class\nclass SetupReminder extends ActionableNotification {\n    public function useActionKey(): ?string {\n        return 'github.install';\n    }\n}",
-                "body": "Extend ActionableNotification and supply the action key either at the call site with forAction(), or baked into the class via useActionKey(). Param matching is subset-based: store only the params that must match, and the resolver ignores everything else."
+                "body": "Extend the actionable notification and supply the action key either at the call site, or baked into the class itself. Param matching is subset-based: store only the params that must match, and the resolver ignores everything else."
             },
             {
                 "image": "/oss/nudge/querying.png",
                 "alt": "HasResolvableNotifications trait with pendingNotifications and resolvedNotifications scopes",
                 "title": "Query pending and resolved — out of the box.",
                 "code": "class User extends Authenticatable {\n    use HasResolvableNotifications;\n}\n\n$user->pendingNotifications()->get();\n$user->resolvedNotifications()->get();",
-                "body": "Add HasResolvableNotifications to your notifiable model and get pendingNotifications() and resolvedNotifications() scopes instantly. Or query DatabaseNotification directly on resolved_at. The migration adds the column to your existing notifications table — no new table, no new model."
+                "body": "Add a single trait to your notifiable model and get pending- and resolved-notification scopes instantly. Or query the resolved timestamp directly. The migration adds the column to your existing notifications table — no new table, no new model."
             }
         ]
     },
@@ -107,7 +107,7 @@
                 "alt": "php artisan depth:trace QueryService terminal output",
                 "title": "One command. Your entire dependency tree.",
                 "code": "php artisan depth:trace QueryService\n\n# JSON output\nphp artisan depth:trace QueryService --json\n\n# Write to file\nphp artisan depth:trace QueryService --output=storage/app/depth-report.txt",
-                "body": "Run php artisan depth:trace QueryService and laravel-depth scans your codebase, builds a reverse dependency index from constructor type hints, and traces every caller upward to its entry point — controller, job, command, or listener. No runtime, no container inspection, pure static analysis."
+                "body": "Point the trace command at any class and laravel-depth scans your codebase, builds a reverse dependency index from constructor type hints, and traces every caller upward to its entry point — controller, job, command, or listener. No runtime, no container inspection, pure static analysis."
             },
             {
                 "image": "/oss/depth/tree-output.png",
@@ -121,7 +121,7 @@
                 "alt": "depth:trace with --uses and --grep filter flags",
                 "title": "Filter by what they use, not just what they're named.",
                 "code": "# Only classes whose source contains '@deprecated'\nphp artisan depth:trace Repository --grep='@deprecated'\n\n# Only classes using a specific contract or trait\nphp artisan depth:trace Repository --uses=Auditable --uses=TenantScoped",
-                "body": "Narrow results with --grep to match plain text in source files, or --uses to filter by trait, interface, parent class, or method parameter type. Useful when auditing a codebase you didn't write — find every class that uses a deprecated contract or inherits from a base you're about to replace."
+                "body": "Narrow results to match plain text in source files, or filter by trait, interface, parent class, or method parameter type. Useful when auditing a codebase you didn't write — find every class that uses a deprecated contract or inherits from a base you're about to replace."
             },
             {
                 "image": "/oss/depth/json-output.png",
