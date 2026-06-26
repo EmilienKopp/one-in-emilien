@@ -1,0 +1,135 @@
+{
+    "laravel-rome": {
+        "name": "laravel-rome",
+        "tagline": "Database views as first-class Eloquent citizens.",
+        "description": "Laravel Rome brings read-only models backed by database views into your Eloquent layer — with zero query duplication, native multi-tenant support, and a driver abstraction that speaks your dialect. When your reporting logic belongs in the database, Rome makes sure Eloquent knows it.",
+        "repository": "https://github.com/splitstack/laravel-rome",
+        "packagist": "https://packagist.org/packages/splitstack/laravel-rome",
+        "sections": [
+            {
+                "image": "/oss/rome/has-read-only-mode.png",
+                "alt": "HasReadOnlyMode trait added to an existing Eloquent model",
+                "title": "Retrofit any model — no rewrite needed.",
+                "code": "class Order extends Model {\n    use HasReadOnlyMode;\n}\n\nOrder::fromView()->where('status', 'shipped')->get();\n$order->readonly()->update(['status' => 'paid']); // throws",
+                "body": "Add the HasReadOnlyMode trait to any existing Eloquent model and unlock two new access patterns: call ->readonly() to block all write operations on an instance, or ::fromView() to redirect reads to a dedicated view — without touching your schema, your migrations, or your class hierarchy."
+            },
+            {
+                "image": "/oss/rome/read-only-model.png",
+                "alt": "ReadOnlyModel class definition extending Rome's base class",
+                "title": "ReadOnlyModel — Eloquent, but honest.",
+                "code": "class RevenueByMonth extends ReadOnlyModel {\n    protected $view = 'v_revenue_by_month';\n}\n\nRevenueByMonth::where('month', '>=', '2024-01')->get();\nRevenueByMonth::create([...]); // throws",
+                "body": "Extend ReadOnlyModel instead of Model and your class declares its intent: this data is read from a view, never written back. No accidental inserts, no phantom dirty states. Your domain stays clean."
+            },
+            {
+                "image": "/oss/rome/refresh.png",
+                "alt": "Materialized view refresh API usage",
+                "title": "Materialized view refresh, on your terms.",
+                "code": "// In a scheduled job or Artisan command\nRome::refresh(RevenueByMonth::class);\n\n// Or via the facade\nRome::refreshAll();",
+                "body": "Schedule or trigger refresh cycles from Laravel — no raw SQL scattered across your codebase. Rome exposes a clean API to keep your materialized views fresh, integrated with the job and scheduler infrastructure you already have."
+            }
+        ]
+    },
+    "inertia-split": {
+        "name": "inertia-split",
+        "tagline": "One controller. One route. Inertia and JSON, both.",
+        "description": "inertia-split lets you serve an Inertia SPA and a JSON API from the same Laravel controller action — no branching logic, no duplicate routes, no separate API layer. Build hybrid endpoints from day one, or annotate an existing API controller method by method as you adopt Inertia incrementally.",
+        "repository": "https://github.com/EmilienKopp/inertia-split",
+        "packagist": "https://packagist.org/packages/splitstack/inertia-split",
+        "sections": [
+            {
+                "image": "/oss/inertia-split/hybrid-response.png",
+                "alt": "HasHybridResponses trait used in a Laravel controller",
+                "title": "Hybrid responses — zero branching.",
+                "code": "class ProjectController extends Controller {\n    use HasHybridResponses;\n\n    public function index() {\n        $data = ['projects' => Project::all()];\n        return $this->respond()->component('Projects/Index', $data);\n        // Inertia request → renders component\n        // API request     → returns JSON\n    }\n}",
+                "body": "Add the HasHybridResponses trait to any controller and call $this->respond(). Chain ->component() for SPA requests, ->route() for redirects. When an API client hits the same endpoint, it gets plain JSON back. The controller doesn't branch — inertia-split does."
+            },
+            {
+                "image": "/oss/inertia-split/inertia-component-attribute.png",
+                "alt": "#[InertiaComponent] PHP attribute on an existing controller method",
+                "title": "Incremental migration — annotate, don't rewrite.",
+                "code": "class UserController extends Controller {\n    #[InertiaComponent('Users/Show')]\n    public function show(User $user): array {\n        return ['user' => $user]; // unchanged\n        // Inertia → renders Users/Show with props\n        // API     → returns JSON as before\n    }\n}",
+                "body": "Already have a working Laravel API? Add #[InertiaComponent('Page/Name')] above any method and leave the body untouched. Inertia requests get a rendered component with your data as props. API clients get the same JSON they always got. Methods without the attribute are completely unaffected."
+            },
+            {
+                "image": "/oss/inertia-split/facade.png",
+                "alt": "Split facade usage example",
+                "title": "Three ways to use it — pick yours.",
+                "code": "// Trait\n$this->respond()->component('Page', $data);\n\n// Extended base controller\nclass MyController extends HybridController { ... }\n\n// Facade\nSplit::respond()->component('Page', $data);",
+                "body": "Use the HasHybridResponses trait, extend HybridController to skip the use declaration entirely, or reach for the Split facade from anywhere in your application. Same behaviour, your preferred style."
+            }
+        ]
+    },
+    "laravel-nudge": {
+        "name": "laravel-nudge",
+        "tagline": "Give notifications a lifecycle. They resolve themselves.",
+        "description": "A notification is not just a message — it is a pending state tied to an expected future action. laravel-nudge lets a notification declare the action it is waiting on, and when that action runs anywhere in your application, the notification resolves itself. No manual wiring. No coupling between the sender, the handler, and the notification.",
+        "repository": "https://github.com/EmilienKopp/laravel-nudge",
+        "packagist": "https://packagist.org/packages/splitstack/laravel-nudge",
+        "sections": [
+            {
+                "image": "/oss/nudge/concept.png",
+                "alt": "Diagram showing a notification resolving when its expected action fires",
+                "title": "The concept — pending state, not just a message.",
+                "code": "// 1. User is notified\n$user->notify(\n    (new GithubSetupReminder)->forAction('github.install', ['user_id' => $user->id])\n);\n\n// 2. Somewhere else entirely — webhook, CLI, OAuth callback\nInstallGithubApp::execute(['user_id' => 5, 'installation_id' => 88]);\n// └─ fires ActionExecuted → notification stamps resolved_at ✓",
+                "body": "A notification declares an action_key. When that action executes — via a webhook, a CLI command, an OAuth callback, anywhere — an ActionExecuted event fires, the listener finds the matching notification, and stamps resolved_at. The controller, the handler, and the notification have no knowledge of each other."
+            },
+            {
+                "image": "/oss/nudge/resolvable-action.png",
+                "alt": "ResolvableAction implementation with DispatchesActionExecuted trait",
+                "title": "Actions — implement, call, forget.",
+                "code": "class InstallGithubApp implements ResolvableAction {\n    use DispatchesActionExecuted;\n\n    public function actionKey(): string {\n        return 'github.install';\n    }\n\n    protected function handle(array $params): void {\n        // your logic — ActionExecuted fires automatically after this\n    }\n}",
+                "body": "Implement ResolvableAction, use the DispatchesActionExecuted trait, and put your logic in handle(). Call execute() publicly. The ActionExecuted event is dispatched automatically after handle() returns — and only if it succeeds. You never touch the notification layer from inside the action."
+            },
+            {
+                "image": "/oss/nudge/actionable-notification.png",
+                "alt": "ActionableNotification with forAction() and useActionKey() usage examples",
+                "title": "Notifications — two ways to bind an action.",
+                "code": "// Option A — action key at call site\n$user->notify(\n    (new SetupReminder)->forAction('github.install', ['user_id' => $user->id])\n);\n\n// Option B — action key baked into the class\nclass SetupReminder extends ActionableNotification {\n    public function useActionKey(): ?string {\n        return 'github.install';\n    }\n}",
+                "body": "Extend ActionableNotification and supply the action key either at the call site with forAction(), or baked into the class via useActionKey(). Param matching is subset-based: store only the params that must match, and the resolver ignores everything else."
+            },
+            {
+                "image": "/oss/nudge/querying.png",
+                "alt": "HasResolvableNotifications trait with pendingNotifications and resolvedNotifications scopes",
+                "title": "Query pending and resolved — out of the box.",
+                "code": "class User extends Authenticatable {\n    use HasResolvableNotifications;\n}\n\n$user->pendingNotifications()->get();\n$user->resolvedNotifications()->get();",
+                "body": "Add HasResolvableNotifications to your notifiable model and get pendingNotifications() and resolvedNotifications() scopes instantly. Or query DatabaseNotification directly on resolved_at. The migration adds the column to your existing notifications table — no new table, no new model."
+            }
+        ]
+    },
+    "laravel-depth": {
+        "name": "laravel-depth",
+        "tagline": "Know the blast radius before you touch anything.",
+        "description": "laravel-depth is a static analysis tool for Laravel that traces dependency caller trees through constructor injection. Give it a class suffix and it walks backward through your entire codebase — showing you exactly what depends on what, where the entry points are, and which classes have no callers at all. Built for architects doing audits, and developers about to refactor something they didn't write.",
+        "repository": "https://github.com/EmilienKopp/laravel-depth",
+        "sections": [
+            {
+                "image": "/oss/depth/trace-command.png",
+                "alt": "php artisan depth:trace QueryService terminal output",
+                "title": "One command. Your entire dependency tree.",
+                "code": "php artisan depth:trace QueryService\n\n# JSON output\nphp artisan depth:trace QueryService --json\n\n# Write to file\nphp artisan depth:trace QueryService --output=storage/app/depth-report.txt",
+                "body": "Run php artisan depth:trace QueryService and laravel-depth scans your codebase, builds a reverse dependency index from constructor type hints, and traces every caller upward to its entry point — controller, job, command, or listener. No runtime, no container inspection, pure static analysis."
+            },
+            {
+                "image": "/oss/depth/tree-output.png",
+                "alt": "Tree output showing callers, entry points, and orphan classes",
+                "title": "Entry points, cycles, and orphans — all flagged.",
+                "code": "App\\Services\\FooQueryService\n └── App\\UseCases\\FooUseCase\n      └── App\\Http\\Controllers\\FooController\n          [ENTRY: GET api/foo → api, auth]\n\n⚠  ORPHAN: App\\Services\\OrphanQueryService",
+                "body": "Traversal stops at configurable entry-point suffixes and enriches controller nodes with their route method, URI, and middleware stack. Cycles are marked to avoid infinite recursion. Classes with no callers are surfaced as orphans — the dead code your codebase forgot to remove."
+            },
+            {
+                "image": "/oss/depth/filter-flags.png",
+                "alt": "depth:trace with --uses and --grep filter flags",
+                "title": "Filter by what they use, not just what they're named.",
+                "code": "# Only classes whose source contains '@deprecated'\nphp artisan depth:trace Repository --grep='@deprecated'\n\n# Only classes using a specific contract or trait\nphp artisan depth:trace Repository --uses=Auditable --uses=TenantScoped",
+                "body": "Narrow results with --grep to match plain text in source files, or --uses to filter by trait, interface, parent class, or method parameter type. Useful when auditing a codebase you didn't write — find every class that uses a deprecated contract or inherits from a base you're about to replace."
+            },
+            {
+                "image": "/oss/depth/json-output.png",
+                "alt": "JSON output from depth:trace with route and middleware metadata",
+                "title": "Machine-readable output for your own tooling.",
+                "code": "{\n  \"App\\\\Services\\\\FooQueryService\": {\n    \"callers\": {\n      \"App\\\\UseCases\\\\FooUseCase\": {\n        \"callers\": {\n          \"App\\\\Http\\\\Controllers\\\\FooController\": {\n            \"entry\": true,\n            \"method\": \"GET\",\n            \"route\": \"api/foo\",\n            \"middlewares\": [\"api\", \"auth\"]\n          }\n        }\n      }\n    }\n  }\n}",
+                "body": "Pass --json and laravel-depth outputs a structured tree you can pipe into reports, dashboards, or CI checks. Write to a file with --output. The same data that powers the human-readable tree — entry points, cycles, orphans, route metadata — fully available for automation."
+            }
+        ]
+    }
+}
