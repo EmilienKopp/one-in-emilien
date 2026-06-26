@@ -66,7 +66,7 @@
                 </div>
             </svelte:fragment>
 
-            <div class="flex w-full max-w-6xl flex-col gap-24">
+            <div class="mx-6 flex w-full flex-col gap-24">
                 <p class="mx-auto max-w-2xl text-center text-lg">
                     {pkg.description}
                 </p>
@@ -91,7 +91,7 @@
                                     target.style.display = 'none';
                                 }}
                             /> -->
-                            <div class="mockup-code shiki-mockup">
+                            <div class="shiki-mockup mockup-code">
                                 {#await codeToHtml( section.code, { theme: 'github-dark', lang: 'php' }, ) then html}
                                     {@html html}
                                 {/await}
