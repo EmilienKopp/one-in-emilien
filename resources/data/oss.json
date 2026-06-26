@@ -128,7 +128,7 @@
                 "alt": "JSON output from depth:trace with route and middleware metadata",
                 "title": "Machine-readable output for your own tooling.",
                 "code": "{\n  \"App\\\\Services\\\\FooQueryService\": {\n    \"callers\": {\n      \"App\\\\UseCases\\\\FooUseCase\": {\n        \"callers\": {\n          \"App\\\\Http\\\\Controllers\\\\FooController\": {\n            \"entry\": true,\n            \"method\": \"GET\",\n            \"route\": \"api/foo\",\n            \"middlewares\": [\"api\", \"auth\"]\n          }\n        }\n      }\n    }\n  }\n}",
-                "body": "Pass --json and laravel-depth outputs a structured tree you can pipe into reports, dashboards, or CI checks. Write to a file with --output. The same data that powers the human-readable tree — entry points, cycles, orphans, route metadata — fully available for automation."
+                "body": "Ask for JSON and laravel-depth outputs a structured tree you can pipe into reports, dashboards, or CI checks. Write it straight to a file. The same data that powers the human-readable tree — entry points, cycles, orphans, route metadata — fully available for automation."
             }
         ]
     }
