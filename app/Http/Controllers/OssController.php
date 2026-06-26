@@ -26,7 +26,7 @@ class OssController extends Controller
      */
     protected function packages(): array
     {
-        $json = file_get_contents(storage_path('app/private/oss.json'));
+        $json = file_get_contents(resource_path('data/oss.json'));
 
         return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
     }
