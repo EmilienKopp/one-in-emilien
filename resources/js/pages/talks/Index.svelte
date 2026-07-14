@@ -1,9 +1,8 @@
 <script lang="ts">
-    import { fade, fly } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import { Link } from '@inertiajs/svelte';
     import Logo from '@/components/shared/Logo.svelte';
     import ThemeToggle from '@/components/ui/theme-toggle/ThemeToggle.svelte';
-    import { quadInOut } from 'svelte/easing';
 
     interface Talk {
         slug: string;
@@ -26,16 +25,19 @@
     class="lg:pt-auto flex h-full min-h-screen w-full flex-col items-center justify-center bg-background"
 >
     {#await sleep(100) then}
-        <div
-            transition:fade={{ duration: 2000, easing: quadInOut }}
-            class="lg:-mb-20"
-        >
+        <div class="lg:-mb-20">
             <Logo class="w-56 lg:h-96 lg:w-96" />
         </div>
 
         <ul class="w-fit text-left">
             {#each talks as talk, i}
-                <li in:fly|global={{ duration: 600, delay: 500 + i * 200, x: -1500 }}>
+                <li
+                    in:fly|global={{
+                        duration: 600,
+                        delay: 500 + i * 200,
+                        x: -1500,
+                    }}
+                >
                     <a
                         href={`/talks/${talk.slug}`}
                         class="mt-10 block w-fit font-mono text-sm font-bold text-foreground lg:text-2xl"
