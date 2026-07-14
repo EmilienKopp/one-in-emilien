@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             laravel({
-                input: ['resources/js/app.ts'],
+                input: ['resources/js/app.ts', 'resources/js/talks.ts'],
                 ssr: 'resources/js/ssr.ts',
                 refresh: true,
             }),
@@ -38,6 +38,17 @@ export default defineConfig(({ mode }) => {
                 preprocess: vitePreprocess(),
             }),
         ],
+        optimizeDeps: {
+            // esbuild's dep optimizer doesn't apply resolve.alias, so it needs
+            // its own alias for the `$app/environment` import in @animotion/core.
+            esbuildOptions: {
+                alias: {
+                    '$app/environment': path.resolve(
+                        './resources/js/shims/app-environment.js',
+                    ),
+                },
+            },
+        },
         resolve: {
             alias: {
                 $lib: path.resolve('./resources/js/lib'),
@@ -48,6 +59,11 @@ export default defineConfig(({ mode }) => {
                 $layouts: path.resolve('./resources/js/layouts'),
                 $routes: path.resolve('./resources/js/routes'),
                 $actions: path.resolve('./resources/js/actions'),
+                // @animotion/core ships a SvelteKit `$app/environment` import;
+                // map it to a shim so it works outside SvelteKit.
+                '$app/environment': path.resolve(
+                    './resources/js/shims/app-environment.js',
+                ),
                 '@': path.resolve('./resources/js'),
             },
         },

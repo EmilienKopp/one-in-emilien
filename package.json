@@ -37,6 +37,9 @@
         "zod": "^4.1.12"
     },
     "dependencies": {
+        "@animotion/core": "^1.4.0",
+        "@fontsource/atkinson-hyperlegible": "^5.2.8",
+        "@fontsource/monaspace-neon": "^5.2.5",
         "@inertiajs/svelte": "^3.0.3",
         "@mdi/js": "^7.4.47",
         "@sveltejs/vite-plugin-svelte": "^6.1.0",
@@ -46,6 +49,7 @@
         "laravel-vite-plugin": "^2.0.0",
         "lucide-svelte": "^0.468.0",
         "picomatch": "^4.0.4",
+        "qrcode": "^1.5.4",
         "shiki": "^4.2.0",
         "tailwind-merge": "^3.3.1",
         "tailwind-variants": "^3.1.1",

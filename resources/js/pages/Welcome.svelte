@@ -23,9 +23,9 @@
                 </Link>
             </li>
             <li in:fly={{duration: 600, delay: 1800, x: -1500}}>
-                <span class="lg:text-2xl text-muted-foreground text-sm font-bold mt-10 font-mono block w-fit">
-                    /blog: 🚧 Under construction 🚧
-                </span>
+                <Link href="/talks" class="lg:text-2xl text-foreground text-sm font-bold mt-10 font-mono block w-fit">
+                    /talks: Conference talks &amp; slides
+                </Link>
             </li>
             <!-- <li in:fly={{duration: 600, delay: 1800, x: -1500}}>
                 <Link href="/teach" class="lg:text-2xl text-foreground text-sm font-bold mt-10 font-mono block w-fit">
@@ -48,6 +48,8 @@
 </div>
 
 <style>
+    @reference '../../css/app.css';
+
     li a::after {
         display: block;
         content: "";

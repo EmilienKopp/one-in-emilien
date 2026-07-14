@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'talks' => [
+        'survey_url' => env('TALKS_SURVEY_URL'),
+    ],
+
 ];
