@@ -37,6 +37,26 @@ Route::prefix('oss')->group(function () {
     Route::get('/{package}', [OssController::class, 'show'])->name('oss.show');
 });
 
+Route::prefix('talks')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('talks/Index', [
+            'talks' => [
+                [
+                    'slug' => 'views-are-great',
+                    'title' => 'Views Are Great',
+                    'description' => 'Database views, Eloquent, and laravel-rome',
+                ],
+            ],
+        ]);
+    })->name('talks.index');
+
+    Route::get('/views-are-great', function () {
+        return Inertia::render('talks/deck/views-are-great/Index', [
+            'surveyUrl' => config('services.talks.survey_url'),
+        ])->rootView('talks');
+    })->name('talks.views-are-great');
+});
+
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
