@@ -1,5 +1,5 @@
 <script>
-    import { Slide, Transition } from "@animotion/core";
+    import { Slide, Transition } from '@animotion/core';
 </script>
 
 <Slide class="h-full place-content-center place-items-center text-center">
@@ -22,7 +22,7 @@
                 ... and in ...
             </p>
             <div class="flex flex-wrap items-center justify-center gap-4">
-                {#each ["PostgREST", "Metabase", "Grafana", "dbt"] as tool}
+                {#each ['PostgREST', 'Metabase', 'Grafana', 'dbt'] as tool}
                     <span
                         class="rounded-xl border border-red-500/30 bg-red-500/10 px-6 py-3 text-4xl font-black tracking-tight text-white"
                     >
@@ -38,10 +38,10 @@
             <span class="text-red-500">read the same aggregation</span>.
         </p>
     </Transition>
-    <Transition class="mt-6">
+    <!-- <Transition class="mt-6">
         <p class="text-3xl font-light text-white/60">
             Define it once. <span class="text-white">Never</span> re-implement
             the same joins and sums in a second place.
         </p>
-    </Transition>
+    </Transition> -->
 </Slide>

@@ -1,9 +1,9 @@
 <script>
-    import { Slide, Transition, Code, Action } from "@animotion/core";
-    import { codeTheme, codeOptions } from "./code.js";
+    import { Slide, Transition, Code, Action } from '@animotion/core';
+    import { codeTheme, codeOptions } from './code.js';
 
     let code;
-    let phase = $state("wish"); // wish | php | join
+    let phase = $state('wish'); // wish | php | join
 
     const initialCode = `
         // "Just sort active subscriptions by how much they've used."
@@ -36,7 +36,7 @@
     <Action
         undo={() => {
             code.update`${initialCode}`;
-            phase = "wish";
+            phase = 'wish';
         }}
         do={async () => {
             await code.update`
@@ -47,13 +47,13 @@
                         ->flatMap->usageRecords->sum('quantity'));
                 // …goodbye database-level pagination.
             `;
-            phase = "php";
+            phase = 'php';
         }}
     ></Action>
 
     <!-- Escape hatch B: join + groupBy just to enable ORDER BY -->
     <Action
-        undo={() => (phase = "php")}
+        undo={() => (phase = 'php')}
         do={async () => {
             await code.update`
                 // …or reach for joins, just to ORDER BY.
@@ -63,7 +63,13 @@
                     ->groupBy(/* every selected column */)
                     ->orderByRaw('SUM(usage_records.quantity) DESC');
             `;
-            phase = "join";
+            phase = 'join';
+        }}
+    ></Action>
+
+    <Action
+        do={async () => {
+            await code.selectLines`6`;
         }}
     ></Action>
 </Slide>

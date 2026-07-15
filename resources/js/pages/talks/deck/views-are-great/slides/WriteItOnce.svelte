@@ -1,6 +1,6 @@
 <script>
-    import { Slide, Transition, Code } from "@animotion/core";
-    import { codeTheme, codeOptions } from "./code.js";
+    import { Slide, Transition, Code } from '@animotion/core';
+    import { codeTheme, codeOptions } from './code.js';
 
     let code;
 </script>

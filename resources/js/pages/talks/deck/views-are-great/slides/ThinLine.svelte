@@ -1,6 +1,6 @@
 <script>
-    import { Slide, Transition, Code } from "@animotion/core";
-    import { codeTheme, codeOptions } from "./code.js";
+    import { Slide, Transition, Code } from '@animotion/core';
+    import { codeTheme, codeOptions } from './code.js';
 
     let phpCode;
     let sqlCode;
@@ -64,11 +64,11 @@
         </Transition>
     </div>
 
-    <Transition class="mt-12">
+    <!-- <Transition class="mt-12">
         <p class="text-center text-3xl font-light text-white/60">
             The only difference: did you give it a
             <span class="text-white">name</span> and put it in the
             <span class="text-red-500">database</span>?
         </p>
-    </Transition>
+    </Transition> -->
 </Slide>

@@ -1,7 +1,7 @@
 <script>
-    import { Slide, Transition } from "@animotion/core";
+    import { Slide, Transition } from '@animotion/core';
 
-    const repo = "github.com/EmilienKopp/laravel-rome";
+    const repo = 'github.com/EmilienKopp/laravel-rome';
 </script>
 
 <Slide class="h-full place-content-center place-items-center text-center">
@@ -33,7 +33,7 @@
                 <p class="mt-3 text-2xl font-light text-white/50">{repo}</p>
 
                 <ul
-                    class="mt-6 space-y-2 text-xl font-light text-white/55 list-none"
+                    class="mt-6 list-none space-y-2 text-xl font-light text-white/55"
                 >
                     <li>
                         <span class="text-red-500">›</span>
@@ -54,5 +54,13 @@
                 </ul>
             </div>
         </div>
+    </Transition>
+
+    <Transition>
+        <p class="mt-3 mt-12 text-6xl font-light text-white/60">
+            Starting tomorrow, <span class="font-bold text-red-500"
+                >stop being scared</span
+            > of your database.
+        </p>
     </Transition>
 </Slide>

@@ -1,30 +1,34 @@
 <script>
-    import { Slide, Transition } from "@animotion/core";
-    import QrCode from "@/components/talks/QrCode.svelte";
-    import { page } from "@inertiajs/svelte";
+    import { Slide, Transition } from '@animotion/core';
+    import QrCode from '@/components/talks/QrCode.svelte';
+    import { page } from '@inertiajs/svelte';
 
-    const repo = "github.com/EmilienKopp/laravel-rome";
+    const repo = 'github.com/EmilienKopp/laravel-rome';
     const surveyUrl = $derived(page.props.surveyUrl);
+
+    let showSurvey = $state(false);
 </script>
 
 <Slide class="h-full place-content-center place-items-center text-center">
     <Transition visible class="mt-8">
-        <p class="text-9xl">🙏</p>
+        <div class:hidden={showSurvey}>
+            <p class="text-9xl">🙏</p>
 
-        <p class="text-7xl font-black tracking-tight">
-            Thank <span class="text-red-500">you</span>.
-        </p>
+            <p class="text-7xl font-black tracking-tight">
+                Thank <span class="text-red-500">you</span>.
+            </p>
 
-        <p class="text-2xl font-light text-white/50">
-            Built with
-            <span class="text-white/80">Laravel</span> ·
-            <span class="text-white/80">Inertia</span> ·
-            <span class="text-white/80">Svelte</span>
-            — slides powered by
-            <span class="text-white/80">Animotion</span>.
-        </p>
+            <p class="text-2xl font-light text-white/50">
+                Built with
+                <span class="text-white/80">Laravel</span> ·
+                <span class="text-white/80">Inertia</span> ·
+                <span class="text-white/80">Svelte</span>
+                — slides powered by
+                <span class="text-white/80">Animotion</span>.
+            </p>
+        </div>
 
-        <div class="flex items-center gap-12 mt-24">
+        <div class="mt-24 flex items-center gap-12">
             <img
                 src="/rome-qr.svg"
                 alt="GitHub repo QR code"
@@ -60,10 +64,13 @@
     </Transition>
 
     {#if surveyUrl}
-        <Transition visible class="mt-8">
-            <p class="text-2xl font-light text-white/50">
-                <span class="text-white">Try it out</span> and let me know what
-                you think!
+        <Transition
+            class="mt-8"
+            do={() => (showSurvey = true)}
+            undo={() => (showSurvey = false)}
+        >
+            <p class="mt-18 text-2xl font-light text-white/50">
+                <span class="text-white">Leave some feedback!</span>
             </p>
             <div>
                 <QrCode {surveyUrl} size={160} />
@@ -77,4 +84,16 @@
             </div>
         </Transition>
     {/if}
+
+    <Transition>
+        <p class="mt-12 text-2xl font-light text-white/50">
+            Slides available at
+            <a
+                href="https://one-in-emilien.com/talks/views-are-great"
+                target="_blank"
+                class="text-white/80 hover:text-white/100"
+                >one-in-emilien.com/talks/views-are-great</a
+            >
+        </p>
+    </Transition>
 </Slide>
