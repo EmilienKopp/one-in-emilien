@@ -8,11 +8,11 @@
 
 <Slide class="h-full place-content-center place-items-center">
     <Transition visible>
-        <p class="text-center text-6xl font-semibold text-white/80">
+        <p class="text-center text-5xl font-semibold text-white/80">
             Get <span class="text-red-400">per-outcome call duration</span> for each
             candidate.
         </p>
-        <p class="mt-4 text-center text-4xl font-light text-white/50">
+        <p class="mt-4 text-center text-2xl font-light text-white/50">
             You have 10 000 candidates and 300 000 calls. <br />Result must be
             sortable and paginated.
         </p>
