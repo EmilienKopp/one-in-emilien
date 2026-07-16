@@ -1,6 +1,6 @@
 <script>
-    import { Slide, Transition, Code } from "@animotion/core";
-    import { codeTheme, codeOptions } from "./code.js";
+    import { Slide, Transition, Code } from '@animotion/core';
+    import { codeTheme, codeOptions } from './code.js';
 
     // A model whose table is a view — that's the whole setup.
     const viewSqlDefinition = `
@@ -36,7 +36,7 @@
 <Slide class="h-full place-content-center place-items-center">
     <Transition visible>
         <p class="text-center text-7xl font-black tracking-tight">
-            Database <span class="text-red-500">views</span> fix both of these.
+            Database <span class="text-red-500">views</span> fix this.
         </p>
     </Transition>
 

@@ -5,11 +5,13 @@
 <Slide class="h-full place-content-center place-items-center text-center">
     <Transition visible>
         <p class="text-9xl font-black tracking-tight">
-            One <span class="text-red-500">definition</span>.
+            Side <span class="text-red-500">effect</span>
         </p>
     </Transition>
     <Transition class="mt-6">
-        <p class="text-6xl font-black text-white/90">Consumed everywhere.</p>
+        <p class="text-6xl font-black text-white/90">
+            Defined once -> consumed everywhere
+        </p>
     </Transition>
     <Transition class="mt-12">
         <p class="text-2xl font-light tracking-wide text-white/50">

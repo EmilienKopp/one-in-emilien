@@ -6,15 +6,14 @@
     import DeepJoin from './slides/DeepJoin.svelte';
     import ViewsFixThis from './slides/ViewsFixThis.svelte';
     import WhatIsAView from './slides/WhatIsAView.svelte';
+    import TableVsView from './slides/TableVsView.svelte';
     import NeverHaveIEver from './slides/NeverHaveIEver.svelte';
     import TruePower from './slides/TruePower.svelte';
     import TruePowerWindowFunction from './slides/TruePowerWindowFunction.svelte';
     import TruePowerFilter from './slides/TruePowerFilter.svelte';
-    import TruePowerRecursiveCTE from './slides/TruePowerRecursiveCTE.svelte';
+    import TruePowerFilterSolution from './slides/TruePowerFilterSolution.svelte';
     import Composability from './slides/Composability.svelte';
     import ViewsAreGreat from './slides/ViewsAreGreat.svelte';
-    import OrDoWe from './slides/OrDoWe.svelte';
-    import ThinLine from './slides/ThinLine.svelte';
     import Stigma from './slides/Stigma.svelte';
     import RealQuirks from './slides/RealQuirks.svelte';
     import WhatWeNeed from './slides/WhatWeNeed.svelte';
@@ -37,18 +36,20 @@
     <Title />
     <!-- Poll the room here: "who knows what a view is?" — skip if most do. -->
     <WhatIsAView />
+    <TableVsView />
     <NeverHaveIEver />
     <FlattenToSort />
-    <DeepJoin />
-    <ViewsFixThis />
-    <TruePower />
-    <TruePowerWindowFunction />
+    <!-- <DeepJoin /> -->
+    <!-- <ViewsFixThis /> -->
+    <!-- <TruePowerWindowFunction /> -->
     <TruePowerFilter />
+    <TruePower />
+    <TruePowerFilterSolution />
     <!-- <TruePowerRecursiveCTE /> -->
     <Composability />
     <ViewsAreGreat />
-    <OrDoWe />
-    <ThinLine />
+    <!-- <OrDoWe /> -->
+    <!-- <ThinLine /> -->
     <Stigma />
     <RealQuirks />
     <WhatWeNeed />
