@@ -1,9 +1,12 @@
 <script>
     import { Slide, Transition, Code } from '@animotion/core';
     import { codeTheme, codeOptions } from './code.js';
+    import AchievementBadge from './AchievementBadge.svelte';
+    import { Howl } from 'howler';
 
     let sqlCode;
     let phpCode;
+    const sound = new Howl({ src: ['/sounds/tadadadam.mp3'] });
 </script>
 
 <Slide class="h-full place-content-center place-items-center">
@@ -57,16 +60,17 @@ GROUP BY candidate_id`}
         </div>
     </Transition>
 
-    <Transition class="mt-8 w-full max-w-5xl">
-        <div
-            class="rounded-xl border border-green-500/40 bg-green-950/40 px-8 py-6 text-left"
-        >
-            <p class="text-3xl font-bold text-green-400">
-                ✅ Achievement unlocked: Advanced SQL Enjoyer
-            </p>
-            <p class="mt-3 text-2xl text-green-300/80">
-                Avoided breaking your server by letting the database do its job.
-            </p>
-        </div>
+    <Transition
+        do={() => {
+            sound.play();
+        }}
+    >
+        <AchievementBadge
+            title="🏅 Advanced SQL Enjoyer"
+            description="Avoided breaking your server by letting the database do its job."
+            variant="success"
+            tilt={3}
+            show={true}
+        />
     </Transition>
 </Slide>

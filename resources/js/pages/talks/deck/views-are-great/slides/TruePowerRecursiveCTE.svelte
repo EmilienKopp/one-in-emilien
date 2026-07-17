@@ -1,6 +1,7 @@
 <script>
     import { Slide, Transition, Action, Code } from '@animotion/core';
     import { codeTheme, codeOptions } from './code.js';
+    import AchievementBadge from './AchievementBadge.svelte';
 
     let ormCode;
     let sqlCode;
@@ -65,23 +66,18 @@
         </div>
     </Transition>
 
-    <!-- Error pops up -->
-    <Transition class="mt-8 w-full max-w-5xl">
-        <div
-            class:hidden={phase === 'sql'}
-            class="rounded-xl border border-red-500/40 bg-red-950/40 px-8 py-6 text-left"
-        >
-            <p class="text-3xl font-bold text-red-400">
-                🏆 Congratulations! Achievement unlocked: Stack Overflow
-            </p>
-            <p class="mt-3 font-mono text-2xl text-red-300/80">
-                PHP Fatal error: Maximum function nesting level of '256'
-                reached, aborting!
-            </p>
-        </div>
-    </Transition>
+    <AchievementBadge
+        title="🏆 Congratulations! Achievement unlocked: Stack Overflow"
+        description="PHP Fatal error: Maximum function nesting level of '256' reached, aborting!"
+        variant="error"
+        tilt={-6}
+        show={phase === 'error'}
+    />
 
-    <!-- Clear screen, reveal the SQL view -->
+    <!-- Step 2: achievement pops up -->
+    <Action do={() => (phase = 'error')} undo={() => (phase = 'orm')} />
+
+    <!-- Step 3: clear screen, reveal the SQL view -->
     <Action
         do={async () => {
             phase = 'sql';

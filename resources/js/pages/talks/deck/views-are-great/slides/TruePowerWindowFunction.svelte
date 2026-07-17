@@ -1,10 +1,13 @@
 <script>
     import { Slide, Transition, Action, Code } from '@animotion/core';
     import { codeTheme, codeOptions } from './code.js';
+    import AchievementBadge from './AchievementBadge.svelte';
+    import { Howl } from 'howler';
 
     let ormCode;
     let sqlCode;
     let phase = $state('orm'); // orm | error | sql
+    const sound = new Howl({ src: ['/sounds/tadadadam.mp3'] });
 
     const ormSnippet = `
         $candidates = Candidate::all();
@@ -70,23 +73,24 @@
         </div>
     </Transition>
 
-    <!-- Error pops up -->
-    <Transition class="mt-8 w-full max-w-5xl">
-        <div
-            class:hidden={phase === 'sql'}
-            class="rounded-xl border border-red-500/40 bg-red-950/40 px-8 py-6 text-left"
-        >
-            <p class="text-3xl font-bold text-red-400">
-                🏆 Congratulations! Achievement unlocked: Out of Memory
-            </p>
-            <p class="mt-3 font-mono text-2xl text-red-300/80">
-                PHP Fatal error: Allowed memory size of 134217728 bytes
-                exhausted (tried to allocate 20480 bytes)
-            </p>
-        </div>
-    </Transition>
+    <AchievementBadge
+        title="Out of Memory"
+        description="PHP Fatal error: Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes)"
+        variant="error"
+        tilt={5}
+        show={phase === 'error'}
+    />
 
-    <!-- Clear screen, reveal the SQL view -->
+    <!-- Step 2: achievement pops up -->
+    <Action
+        do={() => {
+            phase = 'error';
+            sound.play();
+        }}
+        undo={() => (phase = 'orm')}
+    />
+
+    <!-- Step 3: clear screen, reveal the SQL view -->
     <Action
         do={async () => {
             phase = 'sql';

@@ -177,6 +177,37 @@
         ]
     },
 
+    "laravel-typewriter": {
+        "name": "laravel-typewriter",
+        "tagline": "DDD-friendly unified TypeScript tooling for Laravel.",
+        "description": "laravel-typewriter generates TypeScript types for your entire Laravel backend in one command — DTO/Value Object types from laravel-data classes, route types via Wayfinder, and a typed DataPacket envelope that carries data, defaults, metadata, and source/target routing from PHP to your frontend with end-to-end type safety.",
+        "repository": "https://github.com/EmilienKopp/laravel-typewriter",
+        "packagist": "https://packagist.org/packages/splitstack/laravel-typewriter",
+        "sections": [
+            {
+                "image": "/oss/typewriter/datapacket.png",
+                "alt": "DataPacket typed envelope passing data from PHP controller to Svelte component",
+                "title": "DataPacket — a typed envelope from PHP to the frontend.",
+                "code": "// Controller\nreturn inertia('Orders/Index', [\n    'orders' => new OrderPacket(\n        data: OrderData::from($order),\n        meta: ['total' => $orders->total()],\n    ),\n]);\n\n// Svelte — fully typed, no casting\nconst { data, meta } = $props<{ orders: DataPacket<OrderData> }>();",
+                "body": "DataPacket is a typed transport envelope for Inertia responses. It carries a typed payload, per-key defaults validated against that payload, out-of-band metadata, and BackedEnum source/target scalars — so the frontend always knows where data came from and where it's going, without magic strings on either side."
+            },
+            {
+                "image": "/oss/typewriter/make-packet.png",
+                "alt": "php artisan make:packet scaffolding a typed packet and companion Data class",
+                "title": "Scaffold typed packets and Data classes in one command.",
+                "code": "php artisan make:packet OrderPacket --data=OrderData\n\n// Generates:\n// app/Domain/Data/OrderData.php  — #[TypeScript] Data class\n// app/Domain/Packets/OrderPacket.php — typed DataPacket subclass",
+                "body": "One Artisan command scaffolds a companion pair: a laravel-data Data class annotated for TypeScript export, and a typed DataPacket subclass wired to it. Run the typewriter generator and your frontend types update automatically — no manual type files, no drift."
+            },
+            {
+                "image": "/oss/typewriter/generate.png",
+                "alt": "php artisan typewriter:generate output showing generated TypeScript files",
+                "title": "One command. DTOs, routes, and packet types — all generated.",
+                "code": "php artisan typewriter:generate\n\n# Generates:\n# resources/js/types/generated.d.ts  — DTO & Value Object types\n# resources/js/types/routes.d.ts     — Wayfinder route types (optional)\n# resources/js/utils/DataPacket.ts   — typed packet utility",
+                "body": "typewriter:generate wraps spatie/laravel-typescript-transformer and Wayfinder into a single pass. DTO types, route types, and the DataPacket utility all land in predictable locations. Wire it into your CI or a file watcher and your TypeScript stays in sync with your PHP domain automatically."
+            }
+        ]
+    },
+
     "splitstack": {
         "name": "splitstack",
         "tagline": "Start every project with the hard parts already done.",

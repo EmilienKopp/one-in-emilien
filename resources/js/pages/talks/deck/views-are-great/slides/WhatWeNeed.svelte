@@ -1,8 +1,9 @@
 <script>
-    import { Slide, Transition, Action, Code } from "@animotion/core";
-    import { codeTheme, codeOptions } from "./code.js";
+    import { Slide, Transition, Action, Code } from '@animotion/core';
+    import { codeTheme, codeOptions } from './code.js';
 
     let code;
+    let phase = $state('intro'); // intro | code
 </script>
 
 <Slide class="h-full place-content-center place-items-center">
@@ -18,8 +19,24 @@
         </p>
     </Transition>
 
+    <Transition class="mt-10 w-full max-w-5xl px-8 py-6">
+        <div class:hidden={phase !== 'intro'}>
+            <p class="text-center text-4xl font-light text-white/70">
+                Remember this?
+            </p>
+            <div style="transform:rotate(-2deg)">
+                <img
+                    src="/images/callback.png"
+                    alt="Callback to previous slide about one little sortable join"
+                    class="mx-auto max-h-[400px] object-contain"
+                />
+            </div>
+        </div>
+    </Transition>
+
     <Transition
         do={async () => {
+            phase = 'code';
             await code.update`
                 use Splitstack\\Rome\\Models\\ReadOnlyModel;
 
@@ -33,7 +50,8 @@
                 ActiveSubscriptionUsage::orderBy('total_usage')->paginate(); // ✅ works
             `;
         }}
-        class="mt-12 w-full max-w-4xl rounded-xl border border-white/10 bg-white/[0.03] px-8 py-6"
+        undo={() => (phase = 'intro')}
+        class="mt-4 w-full max-w-4xl rounded-xl border border-white/10 bg-white/[0.03] px-8 py-6"
     >
         <Code
             bind:this={code}
@@ -61,6 +79,7 @@
                 ActiveSubscriptionUsage::orderBy('total_usage')->paginate(); // ✅ works
                 $row->proxied()->update(['price' => 42]); // ✅ explicit, intentional
             `;
+
             code.selectLines`6,12`;
         }}
         undo={async () => {
@@ -76,6 +95,7 @@
                 $row->update(['price' => 42]);            // ❌ ReadOnlyModelException
                 ActiveSubscriptionUsage::orderBy('total_usage')->paginate(); // ✅ works
             `;
+
             code.selectLines`*`;
         }}
     />

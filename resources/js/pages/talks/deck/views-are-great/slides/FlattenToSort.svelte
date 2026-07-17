@@ -21,6 +21,7 @@
     </Transition>
 
     <Transition
+        visible
         class="mt-10 w-full max-w-5xl rounded-xl border border-white/10 bg-white/[0.03] px-8 py-6"
     >
         <Code
@@ -33,7 +34,7 @@
     </Transition>
 
     <!-- Escape hatch A: pull everything and sort in memory -->
-    <Action
+    <!-- <Action
         undo={() => {
             code.update`${initialCode}`;
             phase = 'wish';
@@ -49,7 +50,7 @@
             `;
             phase = 'php';
         }}
-    ></Action>
+    ></Action> -->
 
     <!-- Escape hatch B: join + groupBy just to enable ORDER BY -->
     <Action
@@ -72,4 +73,13 @@
             await code.selectLines`6`;
         }}
     ></Action>
+
+    <!-- One line -> or you could just use a database view -->
+    <Transition>
+        <p class="mt-10 text-center text-5xl font-semibold text-white/80">
+            Or you could just use a <span class="text-red-400"
+                >database view</span
+            >.
+        </p>
+    </Transition>
 </Slide>
