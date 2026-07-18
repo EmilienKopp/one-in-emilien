@@ -11,21 +11,40 @@
 
 <Slide class="h-full place-content-center place-items-center text-center">
     <Transition visible class="mt-8">
-        <div class:hidden={showSurvey}>
-            <p class="text-9xl">🙏</p>
+        <div class="flex items-center gap-3">
+            <div>
+                <p class="text-9xl">🙏</p>
 
-            <p class="text-7xl font-black tracking-tight">
-                Thank <span class="text-red-500">you</span>.
-            </p>
+                <p class="text-7xl font-black tracking-tight">
+                    Thank <span class="text-red-500">you</span>.
+                </p>
 
-            <p class="text-2xl font-light text-white/50">
-                Built with
-                <span class="text-white/80">Laravel</span> ·
-                <span class="text-white/80">Inertia</span> ·
-                <span class="text-white/80">Svelte</span>
-                — slides powered by
-                <span class="text-white/80">Animotion</span>.
-            </p>
+                <p class="text-2xl font-light text-white/50">
+                    Built with
+                    <span class="text-white/80">Laravel</span> ·
+                    <span class="text-white/80">Inertia</span> ·
+                    <span class="text-white/80">Svelte</span>
+                    — slides powered by
+                    <span class="text-white/80">Animotion</span>.
+                </p>
+            </div>
+            {#if surveyUrl}
+                <div class="ml-12 flex flex-col items-center gap-3">
+                    <p class="mt-18 text-2xl font-light text-white/50">
+                        <span class="text-white">Leave some feedback!</span>
+                    </p>
+                    <div>
+                        <QrCode {surveyUrl} size={160} />
+                        <a
+                            href={surveyUrl}
+                            target="_blank"
+                            class="mt-3 block text-xl font-light text-white/50 hover:text-white/80"
+                        >
+                            Take the survey
+                        </a>
+                    </div>
+                </div>
+            {/if}
         </div>
 
         <div class="mt-24 flex items-center gap-12">
@@ -61,31 +80,6 @@
                 </ul>
             </div>
         </div>
-    </Transition>
-
-    {#if surveyUrl}
-        <Transition
-            class="mt-8"
-            do={() => (showSurvey = true)}
-            undo={() => (showSurvey = false)}
-        >
-            <p class="mt-18 text-2xl font-light text-white/50">
-                <span class="text-white">Leave some feedback!</span>
-            </p>
-            <div>
-                <QrCode {surveyUrl} size={160} />
-                <a
-                    href={surveyUrl}
-                    target="_blank"
-                    class="mt-3 block text-xl font-light text-white/50 hover:text-white/80"
-                >
-                    Take the survey
-                </a>
-            </div>
-        </Transition>
-    {/if}
-
-    <Transition>
         <p class="mt-12 text-2xl font-light text-white/50">
             Slides available at
             <a
