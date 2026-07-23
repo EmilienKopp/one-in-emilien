@@ -9,7 +9,12 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) => {
-        const pages = import.meta.glob('./pages/**/*.svelte', { eager: true });
+        // Talk decks live in their own entry (talks.ts) — keep animotion
+        // and its reveal.js CSS out of the main bundle.
+        const pages = import.meta.glob(
+            ['./pages/**/*.svelte', '!./pages/talks/deck/**'],
+            { eager: true },
+        );
         const page = pages[`./pages/${name}.svelte`] as any;
 
         return { default: page.default};

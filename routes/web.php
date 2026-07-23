@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OssController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -11,9 +12,50 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/dev', function () {
-    return Inertia::render('Dev/Index');
-})->name('dev');
+// Route::get('/dev', function () {
+//     return Inertia::render('Dev/Index');
+// })->name('dev');
+
+Route::prefix('dev')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Dev/Index');
+    })->name('dev.index');
+
+    Route::get('/showcase', function () {
+        return Inertia::render('Dev/Showcase');
+    })->name('dev.showcase');
+});
+
+if (! app()->isProduction()) {
+    Route::get('/dev/snippets', function () {
+        return Inertia::render('Dev/Snippets');
+    })->name('dev.snippets');
+}
+
+Route::prefix('oss')->group(function () {
+    Route::get('/', [OssController::class, 'index'])->name('oss.index');
+    Route::get('/{package}', [OssController::class, 'show'])->name('oss.show');
+});
+
+Route::prefix('talks')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('talks/Index', [
+            'talks' => [
+                [
+                    'slug' => 'views-are-great',
+                    'title' => 'Views Are Great',
+                    'description' => 'Database views, Eloquent, and laravel-rome',
+                ],
+            ],
+        ]);
+    })->name('talks.index');
+
+    Route::get('/views-are-great', function () {
+        return Inertia::render('talks/deck/views-are-great/Index', [
+            'surveyUrl' => config('services.talks.survey_url'),
+        ])->rootView('talks');
+    })->name('talks.views-are-great');
+});
 
 Route::get('/contact', function () {
     return Inertia::render('Contact');

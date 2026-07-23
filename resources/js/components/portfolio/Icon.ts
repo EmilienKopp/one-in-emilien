@@ -1,7 +1,6 @@
 import {
     mdiAccount,
     mdiApplicationCogOutline,
-    mdiChatProcessing,
     mdiChatQuestionOutline,
     mdiClose,
     mdiEmail,
@@ -12,23 +11,25 @@ import {
     mdiPiggyBank,
     mdiRobotHappy,
     mdiRocket,
+    mdiRulerSquare,
     mdiTranslate,
     mdiWeb,
-} from '@mdi/js'
+} from '@mdi/js';
 
 export const mdi: { [key: string]: string } = {
-    'account': mdiAccount,
+    account: mdiAccount,
     'application-cog-outline': mdiApplicationCogOutline,
-    'close': mdiClose,
-    'handshake': mdiHandshake,
-    'menu': mdiMenu,
+    close: mdiClose,
+    handshake: mdiHandshake,
+    menu: mdiMenu,
     'piggy-bank': mdiPiggyBank,
     'robot-happy': mdiRobotHappy,
-    'translate': mdiTranslate,
-    'web': mdiWeb,
-    'email': mdiEmail,
-    'rocket': mdiRocket,
-    'github': mdiGithub,
-    'linkedin': mdiLinkedin,
+    translate: mdiTranslate,
+    web: mdiWeb,
+    email: mdiEmail,
+    rocket: mdiRocket,
+    github: mdiGithub,
+    linkedin: mdiLinkedin,
     'chat-question-outline': mdiChatQuestionOutline,
-}
+    'ruler-square': mdiRulerSquare,
+};

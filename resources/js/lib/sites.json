@@ -1,85 +1,96 @@
 [
     {
-      "title": "Page Turner",
-      "image": "/images/page-turner-wide.png",
-      "url": "https://teach-buddy.vercel.app/",
-      "tags": [
-        "Web app",
-        "Educational",
-        "SvelteKit",
-        "AI"
-      ],
-      "personal": true
+        "title": "Shadow One CRM",
+        "client": "Shadow One Ltd.",
+        "url": "https://eu.myshadow.one",
+        "image": "/images/shadowone-scrsht.png",
+        "tags": [
+            "SaaS",
+            "Laravel",
+            "Inertia",
+            "Multi-tenant",
+            "AI",
+            "Realtime",
+            "VoIP",
+            "Chrome Extension"
+        ],
+        "description": "Full re-architecture of a Salesforce-based recruiting platform into a multi-tenant Laravel CRM — each organisation on its own isolated database. Features AI-powered CV parsing, a fully customisable recruitment kanban, real-time updates, and deep analytics, complemented by a VoIP desktop app and a Chrome extension. Built over one year by two engineers, on strict Clean Architecture and DDD layering with hard dependency boundaries across domain, application, infrastructure, and HTTP.",
+        "responsibilities": [
+            "Co-architect (2 devs total)",
+            "Full-stack Development",
+            "Salesforce Migration",
+            "Multi-tenant Architecture",
+            "AI Integration",
+            "VoIP Desktop App",
+            "Chrome Extension",
+            "Analytics Engine"
+        ]
     },
     {
-      "title": "Laravel Blueprint Generator",
-      "image": "/images/blueprint-generator.png",
-      "url": "https://abroads-blueprint-generator.netlify.app/",
-      "tags": [
-        "Single Page App",
-        "Svelte",
-        "IT tools"
-      ],
-      "personal": true
+        "title": "Page Turner",
+        "image": "/images/page-turner-wide.png",
+        "url": "https://teach-buddy.vercel.app/",
+        "tags": ["Web app", "Educational", "SvelteKit", "AI"],
+        "personal": true
     },
     {
-      "title": "Asphelt - Svelte Component Library",
-      "image": "/images/asphelt.png",
-      "url": "https://asphelt.vercel.app",
-      "tags": [
-        "Component Library",
-        "Svelte",
-        "UI",
-        "Storybook"
-      ],
-      "personal": true
+        "title": "Laravel Blueprint Generator",
+        "image": "/images/blueprint-generator.png",
+        "url": "https://abroads-blueprint-generator.netlify.app/",
+        "tags": ["Single Page App", "Svelte", "IT tools"],
+        "personal": true
     },
     {
-      "title": "NAiN",
-      "url": "https://nain.studio",
-      "image": "/images/nain.png",
-      "tags": [
-        "Web app",
-        "Educational",
-        "SvelteKit",
-        "AI",
-        "Realtime"
-      ],
-      "client": "AiO株式会社",
-      "responsibilities": [
-        "Technical Lead",
-        "Frontend Development",
-        "Backend Development",
-        "Database Design",
-        "AI Integration",
-        "Client Hearing and Feedback"
-      ],
-      "description": "A solution to provide enhanced corporate training experience with AI and realtime communication."
+        "title": "Asphelt - Svelte Component Library",
+        "image": "/images/asphelt.png",
+        "url": "https://asphelt.vercel.app",
+        "tags": ["Component Library", "Svelte", "UI", "Storybook"],
+        "personal": true
     },
     {
-      "title": "123 Surveys",
-      "url": "https://123surveys.com/",
-      "image": "/images/123surveys.png",
-      "tags": [
-        "SaaS",
-        "Laravel",
-        "Svelte",
-        "AI",
-        "Realtime",
-        "Analytics"
-      ],
-      "client": "123Surveys",
-      "responsibilities": [
-        "Sole Architect",
-        "Full-stack Development",
-        "AI Integration",
-        "Payment System",
-        "Analytics Engine",
-        "Email Infrastructure"
-      ],
-      "description": "A full-featured survey platform with AI-powered question suggestions, real-time analytics dashboards, and credit-based monetization—built solo with 60k lines of code over 6 months."
+        "title": "123 Surveys",
+        "url": "https://123surveys.com/",
+        "image": "/images/123surveys.png",
+        "tags": ["SaaS", "Laravel", "Svelte", "AI", "Realtime", "Analytics"],
+        "client": "123Surveys",
+        "responsibilities": [
+            "Sole Architect",
+            "Full-stack Development",
+            "AI Integration",
+            "Payment System",
+            "Analytics Engine",
+            "Email Infrastructure"
+        ],
+        "description": "A full-featured survey platform with AI-powered question suggestions, real-time analytics dashboards, and credit-based monetization—built solo with 60k lines of code over 6 months."
+    },
+    {
+        "title": "La Mobiguette",
+        "client": "La Mobiguette",
+        "url": "https://lamobiguette.fr",
+        "image": "/images/lamobiguette-scrsht.png",
+        "tags": ["Laravel", "Svelte", "Inertia", "Inline Editing"],
+        "description": "Website for a non-profit French travelling \"guinguette\" — a retro caravan bringing music, local food, and conviviality to villages. Built around a slug-based inline content edition system: site owners edit text directly on the page, changes are batched in a global store and persisted in a single action — no CMS, no admin panel, zero UI overhead.",
+        "responsibilities": [
+            "Sole Architect",
+            "Full-stack Development",
+            "Inline Content Edition System",
+            "Slug-based Content Management"
+        ]
+    },
+    {
+        "title": "NAiN",
+        "url": "https://nain.studio",
+        "image": "/images/nain.png",
+        "tags": ["Web app", "Educational", "SvelteKit", "AI", "Realtime"],
+        "client": "AiO株式会社",
+        "responsibilities": [
+            "Technical Lead",
+            "Frontend Development",
+            "Backend Development",
+            "Database Design",
+            "AI Integration",
+            "Client Hearing and Feedback"
+        ],
+        "description": "A solution to provide enhanced corporate training experience with AI and realtime communication between trainees, facilitators, HR and management. Training sessions are fully customizable questionaires with rich data aggregation, word clouds, answer trends, and AI analysis."
     }
-    
-    
-  ]
-  
+]

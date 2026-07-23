@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 // Contact form email submission
 Route::post('/email', [EmailController::class, 'send'])->name('api.email.send');
+Route::get('/email', function () {
+    return response()->json(['email' => config('mail.from.address')]);
+})->name('api.email.get');
 
 // Webhook endpoints
 Route::prefix('webhook')->group(function () {

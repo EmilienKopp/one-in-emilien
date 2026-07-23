@@ -18,7 +18,7 @@
 </script>
 
 
-<div class="mx-1 badge {variant ? variants[variant] : ""}">
+<div class="mx-1 badge {variant ? variants[variant] : ""} p-1">
   {@render children()}
 </div>
 

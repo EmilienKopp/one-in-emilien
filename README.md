@@ -55,7 +55,13 @@ cp .env.example .env
 Edit `.env` and configure:
 - `ANTHROPIC_API_KEY` - For AI chat functionality
 
-### 3. Start Development Server
+### 3. Quick DB (if Sail won't build)
+
+```bash
+docker run -d --name oe-db -e POSTGRES_DB=laravel -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:17-alpine
+```
+
+### 4. Start Development Server
 
 ```bash
 # Start local development (default)

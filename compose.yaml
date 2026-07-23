@@ -1,15 +1,12 @@
-# Local Development Docker Compose
-# Usage: docker compose -f compose.local.yaml up -d
-# Or: ./vendor/bin/sail --file compose.local.yaml up -d
-
 services:
     laravel.test:
         build:
-            context: './vendor/laravel/sail/runtimes/8.4'
+            context: ./vendor/laravel/sail/runtimes/8.4
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: 'sail-8.4/app'
+                NODE_VERSION: '20'
+        image: sail-8.4/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -27,11 +24,10 @@ services:
             - sail
         depends_on:
             - pgsql
+            - mongodb
             - redis
-            - mailpit
-
     pgsql:
-        image: 'postgres:17-alpine'
+        image: 'postgres:18-alpine'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -55,7 +51,25 @@ services:
                 - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
-
+    mongodb:
+        image: 'mongodb/mongodb-atlas-local:latest'
+        environment:
+            - 'MONGODB_INITDB_ROOT_USERNAME=${MONGODB_USERNAME:-}'
+            - 'MONGODB_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-}'
+        volumes:
+            - 'sail-mongodb:/data/db'
+        ports:
+            - '${FORWARD_MONGODB_PORT:-27017}:27017'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mongosh
+                - 'mongodb://localhost:27017/admin'
+                - '--eval=db.runCommand({ping:1})'
+            retries: 3
+            timeout: 5s
     redis:
         image: 'redis:alpine'
         ports:
@@ -71,21 +85,13 @@ services:
                 - ping
             retries: 3
             timeout: 5s
-
-    mailpit:
-        image: 'axllent/mailpit:latest'
-        ports:
-            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
-            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
-        networks:
-            - sail
-
 networks:
     sail:
         driver: bridge
-
 volumes:
     sail-pgsql:
+        driver: local
+    sail-mongodb:
         driver: local
     sail-redis:
         driver: local

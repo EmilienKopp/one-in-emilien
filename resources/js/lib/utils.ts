@@ -14,3 +14,10 @@ export function urlIsActive(urlToCheck: string, currentUrl: string) {
 export function toUrl(href: string | { url: string }) {
 	return typeof href === 'string' ? href : href?.url;
 }
+
+export function formatDownloads(count: number) {
+	return new Intl.NumberFormat(undefined, {
+		notation: 'compact',
+		maximumFractionDigits: 1,
+	}).format(count);
+}
