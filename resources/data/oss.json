@@ -11,28 +11,28 @@
                 "alt": "HasReadOnlyMode trait added to an existing Eloquent model",
                 "title": "Retrofit any model — no rewrite needed.",
                 "code": "class Order extends Model {\n    use HasReadOnlyMode;\n}\n\nOrder::fromView()->where('status', 'shipped')->get();\n$order->readonly()->update(['status' => 'paid']); // throws",
-                "body": "Add a single trait to any existing Eloquent model and unlock two new access patterns: block all write operations on an instance, or redirect reads to a dedicated view — without touching your schema, your migrations, or your class hierarchy."
+                "body": "Add `HasReadOnlyMode` to any existing Eloquent model and unlock two new access patterns: block all write operations on an instance, or redirect reads to a dedicated view — without touching your schema, your migrations, or your class hierarchy."
             },
             {
                 "image": "/oss/rome/read-only-model.png",
                 "alt": "ReadOnlyModel class definition extending Rome's base class",
                 "title": "ReadOnlyModel — Eloquent, but honest.",
                 "code": "class RevenueByMonth extends ReadOnlyModel {\n    protected $view = 'v_revenue_by_month';\n}\n\nRevenueByMonth::where('month', '>=', '2024-01')->get();\nRevenueByMonth::create([...]); // throws",
-                "body": "Extend the read-only base class instead of the standard model and your class declares its intent: this data is read from a view, never written back. No accidental inserts, no phantom dirty states. Your domain stays clean."
+                "body": "Extend `ReadOnlyModel` instead of the standard model and your class declares its intent: this data is read from a view, never written back. No accidental inserts, no phantom dirty states. Your domain stays clean."
             },
             {
                 "image": "/oss/rome/refresh.png",
                 "alt": "Materialized view refresh API usage",
                 "title": "Materialized view refresh, on your terms.",
                 "code": "// In a scheduled job or Artisan command\nRome::refresh(RevenueByMonth::class);\n\n// Or via the facade\nRome::refreshAll();",
-                "body": "Schedule or trigger refresh cycles from Laravel — no raw SQL scattered across your codebase. Rome exposes a clean API to keep your materialized views fresh, integrated with the job and scheduler infrastructure you already have."
+                "body": "Schedule or trigger refresh cycles from Laravel — no raw SQL scattered across your codebase. `Rome::refresh()` and `Rome::refreshAll()` keep your materialized views fresh, integrated with the job and scheduler infrastructure you already have."
             }
         ]
     },
     "inertia-split": {
         "name": "inertia-split",
         "tagline": "One controller. One route. Inertia and JSON, both.",
-        "description": "inertia-split lets you serve an Inertia SPA and a JSON API from the same Laravel controller action — no branching logic, no duplicate routes, no separate API layer. Build hybrid endpoints from day one, or annotate an existing API controller method by method as you adopt Inertia incrementally.",
+        "description": "`inertia-split` lets you serve an Inertia SPA and a JSON API from the same Laravel controller action — no branching logic, no duplicate routes, no separate API layer. Build hybrid endpoints from day one, or annotate an existing API controller method by method as you adopt Inertia incrementally.",
         "repository": "https://github.com/EmilienKopp/inertia-split",
         "packagist": "https://packagist.org/packages/splitstack/inertia-split",
         "sections": [
@@ -41,28 +41,28 @@
                 "alt": "HasHybridResponses trait used in a Laravel controller",
                 "title": "Hybrid responses — zero branching.",
                 "code": "class ProjectController extends Controller {\n    use HasHybridResponses;\n\n    public function index() {\n        $data = ['projects' => Project::all()];\n        return $this->respond()->component('Projects/Index', $data);\n        // Inertia request → renders component\n        // API request     → returns JSON\n    }\n}",
-                "body": "Add a single trait to any controller and return a hybrid response. Chain a component for SPA requests, or a route for redirects. When an API client hits the same endpoint, it gets plain JSON back. The controller doesn't branch — inertia-split does."
+                "body": "Add `HasHybridResponses` to any controller and return a hybrid response. Chain a component for SPA requests, or a route for redirects. When an API client hits the same endpoint, it gets plain JSON back. The controller doesn't branch — `inertia-split` does."
             },
             {
                 "image": "/oss/inertia-split/inertia-component-attribute.png",
                 "alt": "#[InertiaComponent] PHP attribute on an existing controller method",
                 "title": "Incremental migration — annotate, don't rewrite.",
                 "code": "class UserController extends Controller {\n    #[InertiaComponent('Users/Show')]\n    public function show(User $user): array {\n        return ['user' => $user]; // unchanged\n        // Inertia → renders Users/Show with props\n        // API     → returns JSON as before\n    }\n}",
-                "body": "Already have a working Laravel API? Annotate any method with a single attribute and leave the body untouched. Inertia requests get a rendered component with your data as props. API clients get the same JSON they always got. Methods without the attribute are completely unaffected."
+                "body": "Already have a working Laravel API? Annotate any method with `#[InertiaComponent]` and leave the body untouched. Inertia requests get a rendered component with your data as props. API clients get the same JSON they always got. Methods without the attribute are completely unaffected."
             },
             {
                 "image": "/oss/inertia-split/facade.png",
                 "alt": "Split facade usage example",
                 "title": "Three ways to use it — pick yours.",
                 "code": "// Trait\n$this->respond()->component('Page', $data);\n\n// Extended base controller\nclass MyController extends HybridController { ... }\n\n// Facade\nSplit::respond()->component('Page', $data);",
-                "body": "Use the trait, extend the base controller to skip the use declaration entirely, or reach for the facade from anywhere in your application. Same behaviour, your preferred style."
+                "body": "Use the trait, extend `HybridController` to skip the `use` declaration entirely, or reach for the `Split` facade from anywhere in your application. Same behaviour, your preferred style."
             }
         ]
     },
     "laravel-nudge": {
         "name": "laravel-nudge",
         "tagline": "Give notifications a lifecycle. They resolve themselves.",
-        "description": "A notification is not just a message — it is a pending state tied to an expected future action. laravel-nudge lets a notification declare the action it is waiting on, and when that action runs anywhere in your application, the notification resolves itself. No manual wiring. No coupling between the sender, the handler, and the notification.",
+        "description": "`laravel-nudge` lets a notification declare the action it is waiting on, and when that action runs anywhere in your application, the notification resolves itself. No manual wiring. No coupling between the sender, the handler, and the notification.",
         "repository": "https://github.com/EmilienKopp/laravel-nudge",
         "packagist": "https://packagist.org/packages/splitstack/laravel-nudge",
         "sections": [
@@ -71,35 +71,35 @@
                 "alt": "Diagram showing a notification resolving when its expected action fires",
                 "title": "The concept — pending state, not just a message.",
                 "code": "// 1. User is notified\n$user->notify(\n    (new GithubSetupReminder)->forAction('github.install', ['user_id' => $user->id])\n);\n\n// 2. Somewhere else entirely — webhook, CLI, OAuth callback\nInstallGithubApp::execute(['user_id' => 5, 'installation_id' => 88]);\n// └─ fires ActionExecuted → notification stamps resolved_at ✓",
-                "body": "A notification declares the action it's waiting on. When that action executes — via a webhook, a CLI command, an OAuth callback, anywhere — an event fires, the listener finds the matching notification, and stamps it resolved. The controller, the handler, and the notification have no knowledge of each other."
+                "body": "A notification declares the action it's waiting on. When that action executes — via a webhook, a CLI command, an OAuth callback, anywhere — an `ActionExecuted` event fires, the listener finds the matching notification, and stamps it `resolved_at`. The controller, the handler, and the notification have no knowledge of each other."
             },
             {
                 "image": "/oss/nudge/resolvable-action.png",
                 "alt": "ResolvableAction implementation with DispatchesActionExecuted trait",
                 "title": "Actions — implement, call, forget.",
                 "code": "class InstallGithubApp implements ResolvableAction {\n    use DispatchesActionExecuted;\n\n    public function actionKey(): string {\n        return 'github.install';\n    }\n\n    protected function handle(array $params): void {\n        // your logic — ActionExecuted fires automatically after this\n    }\n}",
-                "body": "Implement the resolvable-action contract, pull in the dispatching trait, and put your logic in the handler. Call it publicly. The event is dispatched automatically after the handler returns — and only if it succeeds. You never touch the notification layer from inside the action."
+                "body": "Implement `ResolvableAction`, pull in `DispatchesActionExecuted`, and put your logic in the handler. Call it publicly. The `ActionExecuted` event is dispatched automatically after the handler returns — and only if it succeeds. You never touch the notification layer from inside the action."
             },
             {
                 "image": "/oss/nudge/actionable-notification.png",
                 "alt": "ActionableNotification with forAction() and useActionKey() usage examples",
                 "title": "Notifications — two ways to bind an action.",
                 "code": "// Option A — action key at call site\n$user->notify(\n    (new SetupReminder)->forAction('github.install', ['user_id' => $user->id])\n);\n\n// Option B — action key baked into the class\nclass SetupReminder extends ActionableNotification {\n    public function useActionKey(): ?string {\n        return 'github.install';\n    }\n}",
-                "body": "Extend the actionable notification and supply the action key either at the call site, or baked into the class itself. Param matching is subset-based: store only the params that must match, and the resolver ignores everything else."
+                "body": "Extend `ActionableNotification` and supply the action key either via `forAction()` at the call site, or baked in via `useActionKey()` on the class itself. Param matching is subset-based: store only the params that must match, and the resolver ignores everything else."
             },
             {
                 "image": "/oss/nudge/querying.png",
                 "alt": "HasResolvableNotifications trait with pendingNotifications and resolvedNotifications scopes",
                 "title": "Query pending and resolved — out of the box.",
                 "code": "class User extends Authenticatable {\n    use HasResolvableNotifications;\n}\n\n$user->pendingNotifications()->get();\n$user->resolvedNotifications()->get();",
-                "body": "Add a single trait to your notifiable model and get pending- and resolved-notification scopes instantly. Or query the resolved timestamp directly. The migration adds the column to your existing notifications table — no new table, no new model."
+                "body": "Add `HasResolvableNotifications` to your notifiable model and get `pendingNotifications()` and `resolvedNotifications()` scopes instantly. The migration adds `resolved_at` to your existing notifications table — no new table, no new model."
             }
         ]
     },
     "laravel-depth": {
         "name": "laravel-depth",
         "tagline": "Know the blast radius before you touch anything.",
-        "description": "laravel-depth is a static analysis tool for Laravel that traces dependency caller trees through constructor injection. Give it a class suffix and it walks backward through your entire codebase — showing you exactly what depends on what, where the entry points are, and which classes have no callers at all. Built for architects doing audits, and developers about to refactor something they didn't write.",
+        "description": "`laravel-depth` is a static analysis tool for Laravel that traces dependency caller trees through constructor injection. Give it a class suffix and it walks backward through your entire codebase — showing you exactly what depends on what, where the entry points are, and which classes have no callers at all. Built for architects doing audits, and developers about to refactor something they didn't write.",
         "repository": "https://github.com/EmilienKopp/laravel-depth",
         "sections": [
             {
@@ -107,7 +107,7 @@
                 "alt": "php artisan depth:trace QueryService terminal output",
                 "title": "One command. Your entire dependency tree.",
                 "code": "php artisan depth:trace QueryService\n\n# JSON output\nphp artisan depth:trace QueryService --json\n\n# Write to file\nphp artisan depth:trace QueryService --output=storage/app/depth-report.txt",
-                "body": "Point the trace command at any class and laravel-depth scans your codebase, builds a reverse dependency index from constructor type hints, and traces every caller upward to its entry point — controller, job, command, or listener. No runtime, no container inspection, pure static analysis."
+                "body": "Point `depth:trace` at any class and `laravel-depth` scans your codebase, builds a reverse dependency index from constructor type hints, and traces every caller upward to its entry point — controller, job, command, or listener. No runtime, no container inspection, pure static analysis."
             },
             {
                 "image": "/oss/depth/tree-output.png",
@@ -121,14 +121,14 @@
                 "alt": "depth:trace with --uses and --grep filter flags",
                 "title": "Filter by what they use, not just what they're named.",
                 "code": "# Only classes whose source contains '@deprecated'\nphp artisan depth:trace Repository --grep='@deprecated'\n\n# Only classes using a specific contract or trait\nphp artisan depth:trace Repository --uses=Auditable --uses=TenantScoped",
-                "body": "Narrow results to match plain text in source files, or filter by trait, interface, parent class, or method parameter type. Useful when auditing a codebase you didn't write — find every class that uses a deprecated contract or inherits from a base you're about to replace."
+                "body": "Narrow results with `--grep` to match plain text in source files, or `--uses` to filter by trait, interface, parent class, or method parameter type. Useful when auditing a codebase you didn't write — find every class that uses a deprecated contract or inherits from a base you're about to replace."
             },
             {
                 "image": "/oss/depth/json-output.png",
                 "alt": "JSON output from depth:trace with route and middleware metadata",
                 "title": "Machine-readable output for your own tooling.",
                 "code": "{\n  \"App\\\\Services\\\\FooQueryService\": {\n    \"callers\": {\n      \"App\\\\UseCases\\\\FooUseCase\": {\n        \"callers\": {\n          \"App\\\\Http\\\\Controllers\\\\FooController\": {\n            \"entry\": true,\n            \"method\": \"GET\",\n            \"route\": \"api/foo\",\n            \"middlewares\": [\"api\", \"auth\"]\n          }\n        }\n      }\n    }\n  }\n}",
-                "body": "Ask for JSON and laravel-depth outputs a structured tree you can pipe into reports, dashboards, or CI checks. Write it straight to a file. The same data that powers the human-readable tree — entry points, cycles, orphans, route metadata — fully available for automation."
+                "body": "Pass `--json` and `laravel-depth` outputs a structured tree you can pipe into reports, dashboards, or CI checks. Write it straight to a file with `--output`. The same data that powers the human-readable tree — entry points, cycles, orphans, route metadata — fully available for automation."
             }
         ]
     },
@@ -144,28 +144,28 @@
                 "alt": "ExtendedEnum trait added to a Laravel enum",
                 "title": "One trait. Twenty-five methods.",
                 "code": "enum UserStatus: string\n{\n    use ExtendedEnum;\n\n    case ACTIVE = 'active';\n    case INACTIVE = 'inactive';\n    case PENDING = 'pending';\n    case SUSPENDED = 'suspended';\n}\n\nUserStatus::collect();          // Laravel Collection\nUserStatus::readable();         // ['Active', 'Inactive', ...]\nUserStatus::hasValue('active'); // true\nUserStatus::random();           // 'pending'",
-                "body": "Add the ExtendedEnum trait to any backed or unbacked enum and unlock the full method surface instantly. No configuration, no service provider setup beyond installation, no base class to extend. If you already have enums, you're one use statement away."
+                "body": "Add `ExtendedEnum` to any backed or unbacked enum and unlock the full method surface instantly. No configuration, no service provider setup beyond installation, no base class to extend. If you already have enums, you're one `use` statement away."
             },
             {
                 "image": "/oss/enum-friendly/form-integration.png",
                 "alt": "toSelectOptions() returning a Laravel Collection for use in a Blade or Inertia form",
                 "title": "Form-ready, out of the box.",
                 "code": "// Blade\n@foreach(UserStatus::toSelectOptions() as $option)\n    <option value=\"{{ $option['value'] }}\">{{ $option['label'] }}</option>\n@endforeach\n\n// Inertia / Vue / Svelte\n// pass UserStatus::toSelectOptions() as a prop — it's already a Collection",
-                "body": "toSelectOptions() returns a Laravel Collection of value/label pairs ready to drop into any select element — Blade, Inertia, Livewire, or API response. No manual array_column(), no custom mappers. The enum is the source of truth for your frontend too."
+                "body": "`toSelectOptions()` returns a Laravel Collection of value/label pairs ready to drop into any select element — Blade, Inertia, Livewire, or API response. No manual `array_column()`, no custom mappers. The enum is the source of truth for your frontend too."
             },
             {
                 "image": "/oss/enum-friendly/validation.png",
                 "alt": "UserStatus::rules() used inside a Laravel Form Request",
                 "title": "Validation rules — generated, not written.",
                 "code": "public function rules(): array\n{\n    return [\n        // generates ['required', 'string', 'in:active,inactive,pending,suspended']\n        'status' => UserStatus::rules(['required']),\n\n        // or use Laravel's native Enum rule\n        'priority' => ['required', Priority::rule()],\n    ];\n}",
-                "body": "Call rules() on any enum to get a complete Laravel validation rule array — type constraint and in: check included, derived directly from the enum cases. No magic strings, no drift between your enum definition and your validation logic."
+                "body": "Call `rules()` on any enum to get a complete Laravel validation rule array — type constraint and `in:` check included, derived directly from the enum cases. No magic strings, no drift between your enum definition and your validation logic."
             },
             {
                 "image": "/oss/enum-friendly/typescript.png",
                 "alt": "toTypeScript() output used to generate a TypeScript union type",
                 "title": "TypeScript sync — no manual type files.",
                 "code": "UserStatus::toTypeScript();\n// [\n//   'type'   => 'UserStatus',\n//   'values' => ['active', 'inactive', 'pending', 'suspended']\n// ]\n\n// pipe into a generator to produce:\n// export type UserStatus = 'active' | 'inactive' | 'pending' | 'suspended';",
-                "body": "toTypeScript() outputs a structured representation of your enum that a generator script can turn into TypeScript union types. Keep your PHP enum as the single source of truth and generate frontend types from it — no duplication, no drift."
+                "body": "`toTypeScript()` outputs a structured representation of your enum that a generator script can turn into TypeScript union types. Keep your PHP enum as the single source of truth and generate frontend types from it — no duplication, no drift."
             },
             {
                 "image": "/oss/enum-friendly/core.png",
@@ -180,7 +180,7 @@
     "laravel-typewriter": {
         "name": "laravel-typewriter",
         "tagline": "DDD-friendly unified TypeScript tooling for Laravel.",
-        "description": "laravel-typewriter generates TypeScript types for your entire Laravel backend in one command — DTO/Value Object types from laravel-data classes, route types via Wayfinder, and a typed DataPacket envelope that carries data, defaults, metadata, and source/target routing from PHP to your frontend with end-to-end type safety.",
+        "description": "`laravel-typewriter` generates TypeScript types for your entire Laravel backend in one command — DTO/Value Object types from `laravel-data` classes, route types via Wayfinder, and a typed `DataPacket` envelope that carries data, defaults, metadata, and source/target routing from PHP to your frontend with end-to-end type safety.",
         "repository": "https://github.com/EmilienKopp/laravel-typewriter",
         "packagist": "https://packagist.org/packages/splitstack/laravel-typewriter",
         "sections": [
@@ -189,21 +189,21 @@
                 "alt": "DataPacket typed envelope passing data from PHP controller to Svelte component",
                 "title": "DataPacket — a typed envelope from PHP to the frontend.",
                 "code": "// Controller\nreturn inertia('Orders/Index', [\n    'orders' => new OrderPacket(\n        data: OrderData::from($order),\n        meta: ['total' => $orders->total()],\n    ),\n]);\n\n// Svelte — fully typed, no casting\nconst { data, meta } = $props<{ orders: DataPacket<OrderData> }>();",
-                "body": "DataPacket is a typed transport envelope for Inertia responses. It carries a typed payload, per-key defaults validated against that payload, out-of-band metadata, and BackedEnum source/target scalars — so the frontend always knows where data came from and where it's going, without magic strings on either side."
+                "body": "`DataPacket` is a typed transport envelope for Inertia responses. It carries a typed payload, per-key defaults validated against that payload, out-of-band metadata, and `BackedEnum` source/target scalars — so the frontend always knows where data came from and where it's going, without magic strings on either side."
             },
             {
                 "image": "/oss/typewriter/make-packet.png",
                 "alt": "php artisan make:packet scaffolding a typed packet and companion Data class",
                 "title": "Scaffold typed packets and Data classes in one command.",
                 "code": "php artisan make:packet OrderPacket --data=OrderData\n\n// Generates:\n// app/Domain/Data/OrderData.php  — #[TypeScript] Data class\n// app/Domain/Packets/OrderPacket.php — typed DataPacket subclass",
-                "body": "One Artisan command scaffolds a companion pair: a laravel-data Data class annotated for TypeScript export, and a typed DataPacket subclass wired to it. Run the typewriter generator and your frontend types update automatically — no manual type files, no drift."
+                "body": "One Artisan command scaffolds a companion pair: a `laravel-data` Data class annotated with `#[TypeScript]` for export, and a typed `DataPacket` subclass wired to it. Run the typewriter generator and your frontend types update automatically — no manual type files, no drift."
             },
             {
                 "image": "/oss/typewriter/generate.png",
                 "alt": "php artisan typewriter:generate output showing generated TypeScript files",
                 "title": "One command. DTOs, routes, and packet types — all generated.",
                 "code": "php artisan typewriter:generate\n\n# Generates:\n# resources/js/types/generated.d.ts  — DTO & Value Object types\n# resources/js/types/routes.d.ts     — Wayfinder route types (optional)\n# resources/js/utils/DataPacket.ts   — typed packet utility",
-                "body": "typewriter:generate wraps spatie/laravel-typescript-transformer and Wayfinder into a single pass. DTO types, route types, and the DataPacket utility all land in predictable locations. Wire it into your CI or a file watcher and your TypeScript stays in sync with your PHP domain automatically."
+                "body": "`typewriter:generate` wraps `spatie/laravel-typescript-transformer` and Wayfinder into a single pass. DTO types, route types, and the `DataPacket` utility all land in predictable locations. Wire it into your CI or a file watcher and your TypeScript stays in sync with your PHP domain automatically."
             }
         ]
     },
@@ -219,28 +219,28 @@
                 "alt": "Translucid watchCollection in a Svelte component reacting to PostgreSQL NOTIFY",
                 "title": "Real-time — powered by PostgreSQL, not Redis.",
                 "code": "// 1. Add the trait\nclass Order extends Model {\n    use HasTranslucid;\n}\n\n// 2. Install the PG trigger once\nTranslucid::observe(Order::class);\n\n// 3. React in Svelte — no polling, no broker\nconst stop = watchCollection('orders', {\n    onCreated(payload) { orders = [payload.data, ...orders]; },\n});\nonDestroy(stop);",
-                "body": "Translucid uses PostgreSQL's native LISTEN/NOTIFY to push DB changes to your frontend the moment they happen — no Redis, no Pusher, no extra process to manage. Add the trait, install the trigger once, and your Svelte components react to row-level events. Multi-tenant aware: each tenant's events are scoped to their own private channel."
+                "body": "Translucid uses PostgreSQL's native `LISTEN`/`NOTIFY` to push DB changes to your frontend the moment they happen — no Redis, no Pusher, no extra process to manage. Add the trait, install the trigger once, and your Svelte components react to row-level events. Multi-tenant aware: each tenant's events are scoped to their own private channel."
             },
             {
                 "image": "/oss/splitstack/ddd-layer.png",
                 "alt": "DDD application layer folder structure with Actions, UseCases, Queries, DTOs",
                 "title": "DDD architecture — scaffolded, not theorized.",
                 "code": "// Scaffold the full layer in one command\nphp artisan split:make OrderAction\n\n// app/Application/Actions/CreateOrder.php\n// app/Domain/DTOs/OrderDTO.php\n// app/Infrastructure/Repositories/OrderRepository.php\n\n// DTOs get fromValidatable(), fromArray(), toArray() for free\n$dto = OrderDTO::fromValidatable($request);\n\n// Repositories auto-bound by naming convention\n// OrderRepository ↔ OrderRepositoryInterface — no manual registration",
-                "body": "Actions, UseCases, Queries, DTOs, Entities, Value Objects, and Repositories — all scaffolded by convention, not manually wired. Repositories are auto-bound to their interfaces by naming convention. DTOs extend BaseDTO and get serialization helpers for free. The structure enforces the right dependency direction from day one."
+                "body": "Actions, UseCases, Queries, DTOs, Entities, Value Objects, and Repositories — all scaffolded by convention, not manually wired. Repositories are auto-bound to their interfaces by naming convention. DTOs extend `BaseDTO` and get `fromValidatable()`, `fromArray()`, and `toArray()` for free. The structure enforces the right dependency direction from day one."
             },
             {
                 "image": "/oss/splitstack/perspective.png",
                 "alt": "Perspective class resolving role-variant UI config in a Svelte component",
                 "title": "RBAC UI — config-driven, not conditional.",
                 "code": "// Define once\nexport default new Perspective<UserTableConfig>(\n    {\n        admin:  () => ({ headers: adminHeaders, actions: ['Edit', 'Delete'] }),\n        viewer: () => ({ headers: viewerHeaders, actions: [] }),\n    },\n    () => ({ headers: defaultHeaders, actions: [] })\n);\n\n// Resolve anywhere — no if/else chains\nconst config = usersPerspective.for(currentUser.role);",
-                "body": "Perspective is a typed RBAC config system that eliminates scattered role conditionals from your components. Define what each role sees once, resolve it by role string anywhere. Navigation, table columns, available actions, visible sections — all driven by config, all statically typed."
+                "body": "`Perspective` is a typed RBAC config system that eliminates scattered role conditionals from your components. Define what each role sees once, resolve it by role string anywhere. Navigation, table columns, available actions, visible sections — all driven by config, all statically typed."
             },
             {
                 "image": "/oss/splitstack/in-repo-packages.png",
                 "alt": "packages/splitstack directory listing Translucid, Stashable, Metamon, EnumFriendly",
                 "title": "In-repo packages — extract when ready.",
                 "code": "packages/splitstack/\n├── translucid/          # PG LISTEN/NOTIFY real-time eventing\n├── laravel-stashable/   # Attribute-driven repository caching\n│   #[WithCache(ttl: 300, key: 'orders.{id}')]\n│   public function findById(int $id): Order { … }\n├── laravel-metamon/     # Typed JSON metadata on Eloquent models\n│   $model->meta('settings.theme', 'dark');\n└── laravel-enum-friendly/ # Enum utilities (also a standalone package)",
-                "body": "Splitstack ships with four internal packages that live in packages/splitstack/ and are usable as standalone Composer packages. Stashable gives you attribute-driven repository caching with tenant-aware cache keys. Metamon turns any JSON column into a dot-notation metadata API. Each can be extracted and published independently as your project grows."
+                "body": "Splitstack ships with four internal packages that live in `packages/splitstack/` and are usable as standalone Composer packages. Stashable gives you attribute-driven repository caching with tenant-aware cache keys. Metamon turns any JSON column into a dot-notation metadata API. Each can be extracted and published independently as your project grows."
             }
         ]
     },
@@ -248,7 +248,7 @@
     "laravel-siphon": {
         "name": "laravel-siphon",
         "tagline": "Keep data consistent across environments and versions",
-        "description": "laravel-siphon is two tools in one: a DB seeder that copies rows from a remote database into your local environment using raw or relationship-aware modes, and an API toolchain that turns OpenAPI 3.x specifications into fake payloads, Pest or PHPUnit test files, smoke tests, and Laravel validation rules — all from the command line.",
+        "description": "`laravel-siphon` helps your data and API contracts stay consistent across environments. Seed your local database with real rows from a remote source using raw or relationship-aware modes, and generate fake payloads, Pest or PHPUnit test files, smoke tests, and Laravel validation rules straight from any OpenAPI 3.x specification — yours or a third-party one. When an external API you depend on silently changes a shape or drops a field, you find out in CI, not in production.",
         "repository": "https://github.com/EmilienKopp/laravel-siphon",
         "packagist": "https://packagist.org/packages/splitstack/laravel-siphon",
         "sections": [
@@ -257,28 +257,28 @@
                 "alt": "db:siphon command running in relational mode with --depth and --models flags",
                 "title": "Seed from production — relationship-aware.",
                 "code": "# Bulk copy without relationship awareness\nphp artisan db:siphon --mode=raw --rows=50\n\n# Walk Eloquent relationships recursively, 3 levels deep\nphp artisan db:siphon \\\n  --mode=relational \\\n  --rows=10 \\\n  --relation-rows=20 \\\n  --depth=3 \\\n  --models=\"App\\\\Models\\\\User\"",
-                "body": "DB Siphon reads from a separate database connection you configure via environment variables — pointing at a read-only remote user. Raw mode bulk-copies rows from all or specified tables. Relational mode walks your Eloquent model graph, pulling root rows and their HasMany, BelongsTo, BelongsToMany, and polymorphic relationships recursively up to a configurable depth. A dry-run flag previews what would be inserted without touching your local database."
+                "body": "Raw mode bulk-copies rows from all or specified tables. Relational mode walks your Eloquent model graph, pulling root rows and their `HasMany`, `BelongsTo`, `BelongsToMany`, and polymorphic relationships recursively up to a configurable depth. A `--dry-run` flag previews what would be inserted without touching your local database."
             },
             {
                 "image": "/oss/siphon/payloads.png",
                 "alt": "siphon:payloads output showing generated request and response bodies per endpoint",
                 "title": "Fake payloads from your OpenAPI spec.",
                 "code": "php artisan siphon:payloads --api=payments\nphp artisan siphon:payloads --api=payments --path=/orders --method=POST\nphp artisan siphon:payloads --api=payments --tag=Orders --only-required\nphp artisan siphon:payloads --api=payments --format=pretty-json --output=storage/fake/payments.json",
-                "body": "Point siphon:payloads at any registered API spec and it generates realistic fake request and response bodies for every endpoint. Fields are resolved in priority order: enum values, format directives (uuid, date-time, email, and 20+ others), example values from the spec, name-based heuristics (60+ patterns including sku, phone, price), and a generic fallback. Output to the terminal or straight to a JSON file for use in tests or documentation."
+                "body": "Point `siphon:payloads` at any registered API spec and it generates realistic fake request and response bodies for every endpoint. Fields are resolved in priority order: enum values, format directives (`uuid`, `date-time`, `email`, and 20+ others), example values from the spec, name-based heuristics (60+ patterns including `sku`, `phone`, `price`), and a generic fallback."
             },
             {
                 "image": "/oss/siphon/generate-tests.png",
                 "alt": "Generated Pest test file from siphon:generate-tests for an Orders API",
                 "title": "Pest and PHPUnit tests — generated from the spec.",
                 "code": "php artisan siphon:generate-tests --api=payments\nphp artisan siphon:generate-tests --api=payments --tag=Orders --framework=phpunit\n\n// Generated Pest test:\ntest('Create Order', function () {\n    $response = Http::withHeaders($this->headers)\n        ->post($this->baseUrl . '/orders', [\n            'customer_id' => 'f47ac10b-58cc-4372-a567-0e02b2c3d479',\n            'items'       => [['sku' => 'SKU-1234-abc', 'qty' => 2]],\n        ]);\n\n    expect($response->successful())->toBeTrue();\n    expect($response->json())->toHaveKey('id');\n});",
-                "body": "siphon:generate-tests produces ready-to-run test files organized by OpenAPI tag, with realistic fake data already filled in. Choose Pest or PHPUnit output, filter by tag or path, and control whether required-only or all fields are included. Tests land in tests/Siphon/ and can be isolated in CI with --group=siphon (Pest) or --testsuite=Siphon (PHPUnit)."
+                "body": "`siphon:generate-tests` produces ready-to-run test files organized by OpenAPI tag, with realistic fake data already filled in. The real value is awareness: when a remote API you depend on silently changes a response shape, renames a field, or drops a property, these tests surface the breakage in CI before your code ever sees it. Choose Pest or PHPUnit output, filter by tag or path, and isolate in CI with `--group=siphon` or `--testsuite=Siphon`."
             },
             {
                 "image": "/oss/siphon/validate-spec.png",
                 "alt": "#[ValidateSpec] attribute on a Laravel FormRequest class merging spec rules automatically",
                 "title": "Spec-driven validation — one attribute.",
                 "code": "// Convert your spec to a Laravel rules file once\nphp artisan siphon:convert --api=payments\n\n// Then bind it to any FormRequest or controller method\n#[ValidateSpec(base_path('siphon/payments.php'), 'POST /orders')]\nclass StoreOrderRequest extends FormRequest { }\n\n// Or schedule live API contract checks\nSchedule::command('siphon:smoke-test --definition=siphon/payments.php')\n         ->hourly()\n         ->emailOutputOnFailure('ops@example.com');",
-                "body": "siphon:convert translates an OpenAPI spec into a PHP file of Laravel validation rules, keyed by route. The #[ValidateSpec] attribute then merges those rules into any FormRequest or controller method automatically — no duplication, no drift between your spec and your validation. The same definition file powers siphon:smoke-test, which hits live endpoints and validates responses against the rules on a schedule."
+                "body": "`siphon:convert` translates an OpenAPI spec into a PHP file of Laravel validation rules, keyed by route. The `#[ValidateSpec]` attribute then merges those rules into any FormRequest or controller method automatically — no duplication, no drift between your spec and your validation. The same definition file powers `siphon:smoke-test`, which hits live endpoints and validates responses against the rules on a schedule."
             }
         ]
     }

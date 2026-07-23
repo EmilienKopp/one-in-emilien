@@ -4,7 +4,7 @@
     import { index as ossIndex } from '@/routes/oss';
     import ContentSection from '@/components/portfolio/ContentSection.svelte';
     import { codeToHtml } from 'shiki';
-    import { formatDownloads } from '@/lib/utils';
+    import { formatDownloads, renderInlineCode } from '@/lib/utils';
 
     interface OssSection {
         image: string;
@@ -71,7 +71,7 @@
 
             <div class="mx-6 flex w-full flex-col gap-24">
                 <p class="mx-auto max-w-2xl text-center text-lg">
-                    {pkg.description}
+                    {@html renderInlineCode(pkg.description)}
                 </p>
 
                 {#each pkg.sections as section, index}
@@ -109,7 +109,7 @@
                             <h3 class="gradient-text text-3xl font-extrabold">
                                 {section.title}
                             </h3>
-                            <p class="text-lg">{section.body}</p>
+                            <p class="text-lg">{@html renderInlineCode(section.body)}</p>
                         </div>
                     </div>
                 {/each}
