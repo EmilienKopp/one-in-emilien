@@ -6,7 +6,7 @@
     import { type Snippet } from 'svelte';
 
     interface Props {
-      children?: Snippet;
+        children?: Snippet;
     }
 
     let { children }: Props = $props();
@@ -40,14 +40,19 @@
 
     {#if isScrolled}
         <div transition:fade>
-            <button
+            <jelly-icon-button
                 id="backtotop"
-                class="fixed right-8 bottom-8 z-7000 rounded-full bg-blue-500 p-2! text-white hover:bg-blue-600"
+                tabindex="-1"
+                onkeydown={(e: KeyboardEvent) =>
+                    e.key === 'Enter' && scrollToTop()}
+                variant="platinum"
+                class="fixed right-8 bottom-8 z-[999]"
                 onclick={scrollToTop}
+                role="button"
             >
                 <span class="sr-only">Back to top</span>
                 ↑
-            </button>
+            </jelly-icon-button>
         </div>
     {/if}
 </main>

@@ -1,5 +1,7 @@
 <script lang="ts">
     import PortfolioLayout from '@/layouts/PortfolioLayout.svelte';
+    import { Link } from '@inertiajs/svelte';
+    import { index as ossIndex } from '@/routes/oss';
     import ContentSection from '@/components/portfolio/ContentSection.svelte';
     import { codeToHtml } from 'shiki';
     import { formatDownloads } from '@/lib/utils';
@@ -32,6 +34,7 @@
 </svelte:head>
 
 <PortfolioLayout>
+    <Link href={ossIndex()} class="inline-block px-4 pt-6 text-xs text-muted-foreground/40 hover:text-muted-foreground/70 transition-colors">← back</Link>
     <div class="snap flex snap-y snap-proximity flex-col gap-32 px-4 md:px-8">
         <ContentSection title={pkg.name} id={slug}>
             <svelte:fragment slot="lead">{pkg.tagline}</svelte:fragment>
