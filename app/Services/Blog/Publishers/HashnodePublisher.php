@@ -2,6 +2,7 @@
 
 namespace App\Services\Blog\Publishers;
 
+use App\Exceptions\MissingApiKeyException;
 use App\Services\Blog\BlogPost;
 use App\Services\Blog\Contracts\BlogPublisher;
 use Illuminate\Http\Client\RequestException;
@@ -23,6 +24,10 @@ class HashnodePublisher implements BlogPublisher
 
     public function publish(BlogPost $post): string
     {
+        if (! config('services.hashnode.api_key')) {
+            throw new MissingApiKeyException('Hashnode');
+        }
+
         $tags = array_map(
             fn (string $tag) => ['name' => $tag, 'slug' => str($tag)->slug()->toString()],
             $post->tags

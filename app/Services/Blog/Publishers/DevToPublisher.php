@@ -2,6 +2,7 @@
 
 namespace App\Services\Blog\Publishers;
 
+use App\Exceptions\MissingApiKeyException;
 use App\Services\Blog\BlogPost;
 use App\Services\Blog\Contracts\BlogPublisher;
 use Illuminate\Support\Facades\Http;
@@ -22,6 +23,10 @@ class DevToPublisher implements BlogPublisher
 
     public function publish(BlogPost $post): string
     {
+        if (! config('services.devto.api_key')) {
+            throw new MissingApiKeyException('dev.to');
+        }
+
         $payload = array_filter([
             'title' => $post->title,
             'body_markdown' => $post->body,
