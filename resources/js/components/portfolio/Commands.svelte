@@ -49,6 +49,7 @@
             <li><strong>T</strong>: <strong>T</strong>oggle Dark/Light mode</li>
             <li><strong>H</strong>: <strong>H</strong>ide controls</li>
             <li class="hidden md:block">... or try clicking on parts of my face</li>
+            <li class="mt-2 border-t pt-2 font-normal italic opacity-60">🥚 Challenge: how many easter eggs can you find?</li>
         </ul>
     </div>    
 {/if}

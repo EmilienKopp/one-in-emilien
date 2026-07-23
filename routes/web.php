@@ -65,6 +65,10 @@ Route::get('/privacy', function () {
     return Inertia::render('Privacy');
 })->name('privacy');
 
+Route::get('/rickroll', function () {
+    return Inertia::render('Rickroll');
+})->name('rickroll');
+
 // Admin routes (protected)
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/', function () {

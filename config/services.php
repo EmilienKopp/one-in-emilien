@@ -39,4 +39,13 @@ return [
         'survey_url' => env('TALKS_SURVEY_URL'),
     ],
 
+    'hashnode' => [
+        'api_key' => env('HASHNODE_API_KEY'),
+        'publication_id' => env('HASHNODE_PUBLICATION_ID'),
+    ],
+
+    'devto' => [
+        'api_key' => env('DEVTO_API_KEY'),
+    ],
+
 ];

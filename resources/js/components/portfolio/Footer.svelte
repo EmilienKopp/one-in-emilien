@@ -2,6 +2,7 @@
 	import Icon from "./Icon.svelte";
 	import ShadowBox from "./ShadowBox.svelte";
 	import ShadowButton from "./ShadowButton.svelte";
+	import { Link } from "@inertiajs/svelte";
 
 	import type { FooterLink } from "@/lib";
 
@@ -38,4 +39,7 @@
 			{/each}
 		</ul>
 	</ShadowBox>
+	<Link href="/login" class="absolute bottom-4 text-xs text-muted-foreground/30 hover:text-muted-foreground/60 transition-colors">
+		Admin login
+	</Link>
 </footer>
