@@ -281,5 +281,86 @@
                 "body": "`siphon:convert` translates an OpenAPI spec into a PHP file of Laravel validation rules, keyed by route. The `#[ValidateSpec]` attribute then merges those rules into any FormRequest or controller method automatically — no duplication, no drift between your spec and your validation. The same definition file powers `siphon:smoke-test`, which hits live endpoints and validates responses against the rules on a schedule."
             }
         ]
+    },
+    "laravel-conveyor": {
+        "name": "laravel-conveyor",
+        "tagline": "A lightweight saga pattern for Laravel.",
+        "description": "`laravel-conveyor` brings explicit compensation contracts to Actions, UseCases, and Sequences. When a workflow mixes DB writes with external calls (Stripe charges, S3 puts, webhooks), no single transaction can keep it consistent. Conveyor makes the undo logic structural: DB rollback stays with the transaction, and `undo()` handles everything the database can't reach, cascading in reverse through every step that ran.",
+        "repository": "https://github.com/EmilienKopp/laravel-conveyor",
+        "packagist": "https://packagist.org/packages/splitstack/laravel-conveyor",
+        "sections": [
+            {
+                "image": "/oss/conveyor/action.png",
+                "alt": "Action class declaring handle() and undo() for external compensation",
+                "title": "Actions — one thing, and its own undo.",
+                "code": "class ChargeStripe extends Action {\n    public function __construct(private readonly StripeClient $stripe) {}\n\n    public function handle(...$args): string {\n        [$order] = $args;\n        return $this->stripe->charge($order->total); // returns chargeId\n    }\n\n    public function undo(mixed $result = null): void {\n        $this->stripe->refund($result); // $result is what handle() returned\n    }\n}",
+                "body": "An Action is an atomic unit that declares its own compensation. `handle()` does the work and `undo()` reverses the external side effects, receiving whatever `handle()` returned so there's no DB lookup to rebuild state. A DB-only Action declares an empty `undo()` — the explicit answer to the compensation question, since the transaction already owns rollback."
+            },
+            {
+                "image": "/oss/conveyor/usecase.png",
+                "alt": "UseCase orchestrating Actions with step() inside executeWithEvents()",
+                "title": "UseCases — orchestrate Actions, own the transaction.",
+                "code": "class PlaceOrder extends UseCase {\n    public function handle(...$args): Order {\n        [$customer, $amount] = $args;\n\n        return $this->executeWithEvents(function () use ($customer, $amount): Order {\n            $order    = $this->step($this->createOrder, $customer, $amount);\n            $chargeId = $this->step($this->chargeStripe, $order);\n            $order->recordEvent('order.placed', ['orderId' => $order->id]);\n            return $order;\n        });\n    }\n}",
+                "body": "A UseCase orchestrates Actions inside a DB transaction and is itself undoable, so a parent Sequence can cascade compensation down to every Action it ran. `step()` executes an Action and registers it for potential rollback. Domain events recorded inside `executeWithEvents()` dispatch only after the outermost transaction commits, never on failure."
+            },
+            {
+                "image": "/oss/conveyor/steps.png",
+                "alt": "Step adapter wrapping a legacy service and declaring compensation",
+                "title": "Steps — adapt any class, even legacy code.",
+                "code": "class AwardLoyaltyStep implements Steppable, Undoable {\n    use IsSteppable;\n\n    public function __construct(private readonly LegacyLoyaltyService $loyalty) {}\n\n    public function handle(CheckoutPayload $payload): void {\n        $this->loyalty->execute($payload->customer, 10);\n    }\n\n    public function undo(mixed $result = null): void {\n        $this->loyalty->revoke($result->customer, 10);\n    }\n}",
+                "body": "A Step adapts any existing class — including code closed for modification — into the pipeline. It pulls what the callee needs from a typed `SequencePayload`, calls it, and declares compensation as its own behavior. Steps can declare `requires()` to skip themselves (and never be tracked for undo) when payload keys are absent."
+            },
+            {
+                "image": "/oss/conveyor/sequence.png",
+                "alt": "Sequence chaining steps(), skippable(), and delegate() before run()",
+                "title": "Sequences — the error boundary for the whole flow.",
+                "code": "return $this\n    ->transacts()\n    ->steps([$this->placeOrder, $this->awardLoyalty])\n    ->skippable($this->bookShipment, fn(CheckoutPayload $p) => $p->get('shippable', true))\n    ->delegate($this->notifyWarehouse)   // runs on the queue, self-compensating\n    ->run($payload);",
+                "body": "A Sequence chains UseCases and Steps and owns the error boundary. Call `transacts()` to wrap everything in one DB transaction, with inner UseCase transactions becoming savepoints. On failure at any step, the outer transaction rolls back every write and `undo()` cascades in reverse through completed steps. `delegate()` pushes non-critical work (webhooks, syncs) to the queue where it compensates itself."
+            }
+        ]
+    },
+    "laravel-domainable": {
+        "name": "laravel-domainable",
+        "tagline": "DDD entities in Laravel — without the mapping code.",
+        "description": "`laravel-domainable` lets you adopt DDD principles in Eloquent without writing and maintaining a separate entity class for every model. A model hands back a domain Entity: a runtime, read-only view of itself that exposes only the methods you opt into with `#[Domain]`. Infrastructure like `save()`, `newQuery()`, and relations can't leak into domain code, and invariants run automatically after every domain call.",
+        "repository": "https://github.com/EmilienKopp/laravel-domainable",
+        "packagist": "https://packagist.org/packages/splitstack/laravel-domainable",
+        "sections": [
+            {
+                "image": "/oss/domainable/entity.png",
+                "alt": "Model using the Domainable trait with #[Domain] methods and an invariant",
+                "title": "One model, one domain surface.",
+                "code": "class Order extends Model implements ProvidesEntity {\n    use Domainable;\n\n    #[Domain]\n    public function cancel(): void {\n        $this->cancelled_at = now();\n    }\n\n    #[Domain]\n    public function applyDiscount(int $amount): static {\n        $this->total -= $amount;\n        return $this;\n    }\n}",
+                "body": "Add the `Domainable` trait and `ProvidesEntity` contract to a model, mark domain methods with `#[Domain]`, and you're done — no hand-written entity class, no mapping code to maintain. The domain surface is additive and opt-in per method. Everything else stays regular Eloquent, untouched."
+            },
+            {
+                "image": "/oss/domainable/as-entity.png",
+                "alt": "asEntity() returning a proxy that blocks infrastructure calls",
+                "title": "asEntity() — infrastructure can't leak.",
+                "code": "$order = Order::find($id)->asEntity(); // an Entity, never the raw model\n\n$order->total;             // read-only attribute access\n$order->cancel();          // allowed: marked #[Domain]. Invariants run after.\n$order->applyDiscount(50); // fluent: returns the entity, never the model\n\n$order->save();            // 💥 BadMethodCallException\n$order->newQuery();        // 💥 BadMethodCallException",
+                "body": "`asEntity()` crosses into the domain view: a proxy that exposes read-only attributes and your `#[Domain]` methods, and nothing else. `save()`, `newQuery()`, relations, and arbitrary setters throw `BadMethodCallException`. A `#[Domain]` method returning `$this` gives the entity back, so fluency works without ever handing out the raw model."
+            },
+            {
+                "image": "/oss/domainable/invariants.png",
+                "alt": "Invariant::make with a rule, message, and hydration policy",
+                "title": "Invariants — rules that enforce themselves.",
+                "code": "protected function totalIsNonNegative(): Invariant {\n    return Invariant::make(\n        rule: fn () => $this->total >= 0,\n        message: 'total below zero',\n        touches: ['total'],\n        policy: HydrationPolicy::Quarantine,\n    );\n}",
+                "body": "An invariant is a rule that must hold for the entity to be valid. It runs automatically after every domain call, and `asEntity()` asserts before handing the entity back, so a strict invariant can never be escaped. Hydration policies decide what a failure does: `Strict` throws, `Quarantine` flags the entity without throwing, `Lenient` accepts, and `AutoCorrect` writes a default value."
+            },
+            {
+                "image": "/oss/domainable/repository.png",
+                "alt": "BaseRepository returning entities and owning persistence",
+                "title": "Repositories hydrate entities, own persistence.",
+                "code": "class OrderRepository extends BaseRepository {\n    protected string $for = Order::class;\n}\n\n$orders = new OrderRepository();\n$order  = $orders->find($id); // an Entity, never the raw model\n$order->cancel();\n\n$orders->save($order);        // ✅ repository handles persistence\n$orders->withQuarantined();   // opt in to invalid-state entities",
+                "body": "A repository is the hydrate direction: `find()` and `all()` return entities, never raw models, so the rest of your domain never touches infrastructure. Persistence goes through the repository (`$orders->save($entity)`), not the entity. Quarantined entities that loaded in an invalid state can be included, excluded, or fetched unsafely for inspection and repair."
+            },
+            {
+                "image": "/oss/domainable/type-safety.png",
+                "alt": "entity:interface artisan command generating a typed domain contract",
+                "title": "Type safety — generated from what you declared.",
+                "code": "php artisan entity:interface \"App\\Models\\Order\" --write\n\n/**\n * @property-read int    $total\n * @property-read string $status\n */\ninterface OrderEntity {\n    public function cancel(): void;\n    public function applyDiscount(int $amount): self;\n}",
+                "body": "The entity is a magic-method proxy, so two generators buy back static type safety from the same `#[Domain]` methods and attributes you already declared. `entity:interface` writes a typed domain contract the model implements and `asEntity()` returns; `entity:annotations` adds ide-helper-style docblocks in place. No duplication, no drift."
+            }
+        ]
     }
 }
