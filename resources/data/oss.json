@@ -362,5 +362,35 @@
                 "body": "The entity is a magic-method proxy, so two generators buy back static type safety from the same `#[Domain]` methods and attributes you already declared. `entity:interface` writes a typed domain contract the model implements and `asEntity()` returns; `entity:annotations` adds ide-helper-style docblocks in place. No duplication, no drift."
             }
         ]
+    },
+    "invariants": {
+        "name": "invariants",
+        "tagline": "Framework-free invariant enforcement with hydration policies.",
+        "description": "`splitstack/invariants` is a zero-dependency PHP 8.4 library for enforcing domain invariants with pluggable hydration policies. Use it manually with `Invariant::make()->assert()`, or opt into reflection-based auto-discovery to run every invariant on a class with a single `assertInvariants()` call. Extracted from `laravel-domainable` so it works anywhere PHP runs — no framework required.",
+        "repository": "https://github.com/EmilienKopp/invariants",
+        "packagist": "https://packagist.org/packages/splitstack/invariants",
+        "sections": [
+            {
+                "image": "/oss/invariants/manual.png",
+                "alt": "Invariant::make() called manually with a rule and assert()",
+                "title": "Manual-first: assert where you need it.",
+                "code": "use Splitstack\\Invariants\\Invariant;\n\n$email = $user->email;\nInvariant::make(\n    rule: fn () => $email !== '' && str_contains($email, '@'),\n    message: 'Email must be valid',\n)->assert();\n\n// Touched rule: reads a property off a subject\nInvariant::make(\n    rule: fn ($v) => $v >= 0,\n    message: 'Balance cannot be negative',\n    touches: ['balance'],\n)->assert($account);",
+                "body": "No trait, no base class, no magic. Call `Invariant::make()` anywhere and chain `assert()` to throw on violation. A *touchless* rule captures its value in the closure; a *touched* rule reads named properties off the subject. Strict by default — no configuration needed to get a `DomainException` when a rule breaks."
+            },
+            {
+                "image": "/oss/invariants/auto-discovery.png",
+                "alt": "AssertsInvariants trait with assertInvariants() running all invariant methods",
+                "title": "Auto-discovery — one call, all rules.",
+                "code": "use Splitstack\\Invariants\\Concerns\\AssertsInvariants;\nuse Splitstack\\Invariants\\Contracts\\EnforcesInvariants;\n\nclass Account implements EnforcesInvariants\n{\n    use AssertsInvariants;\n\n    public function __construct(public int $balance = 0) {}\n\n    protected function balanceNonNegative(): Invariant\n    {\n        return Invariant::make(\n            rule: fn ($v) => $v >= 0,\n            message: 'Balance cannot be negative',\n            touches: ['balance'],\n        );\n    }\n}\n\n(new Account(balance: -5))->assertInvariants(); // throws",
+                "body": "Add the `AssertsInvariants` trait and implement `EnforcesInvariants`. Any method that returns an `Invariant` is discovered by reflection and executed when you call `assertInvariants()`. No list to maintain — add a rule method and it runs automatically. Discovery is explicit: the package never intercepts your calls for you."
+            },
+            {
+                "image": "/oss/invariants/policies.png",
+                "alt": "HydrationPolicy enum showing Strict, Lenient, Quarantine, and AutoCorrect",
+                "title": "Hydration policies — failure on your terms.",
+                "code": "// Quarantine: flag without throwing\nInvariant::make(\n    rule: fn ($v) => $v >= 0,\n    message: 'Balance cannot be negative',\n    touches: ['balance'],\n    policy: HydrationPolicy::Quarantine,\n)->assert($account);\n$account->isQuarantined(); // true\n\n// AutoCorrect: repair in place\nInvariant::make(\n    rule: fn ($v) => $v >= 0,\n    message: 'Balance cannot be negative',\n    default: 0,\n    touches: ['balance'],\n    policy: HydrationPolicy::AutoCorrect,\n)->assert($account); // balance is now 0",
+                "body": "Four policies decide what a violated invariant does. `Strict` throws a `DomainException`. `Lenient` silently ignores the violation. `Quarantine` flags the subject via `quarantine()` without throwing — useful for batch processing where you want to separate invalid instances rather than crash. `AutoCorrect` rewrites each touched property to a supplied default — perfect for repairing legacy data in place."
+            }
+        ]
     }
 }
