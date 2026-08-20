@@ -46,6 +46,11 @@ Route::prefix('talks')->group(function () {
                     'title' => 'Views Are Great',
                     'description' => 'Database views, Eloquent, and laravel-rome',
                 ],
+                [
+                    'slug' => 'wordpress-jeopardized',
+                    'title' => 'WordPress Jeopardized My Laravel App',
+                    'description' => 'Infrastructure resilience through visibility — a true story.',
+                ],
             ],
         ]);
     })->name('talks.index');
@@ -55,6 +60,10 @@ Route::prefix('talks')->group(function () {
             'surveyUrl' => config('services.talks.survey_url'),
         ])->rootView('talks');
     })->name('talks.views-are-great');
+
+    Route::get('/wordpress-jeopardized', function () {
+        return Inertia::render('talks/deck/wordpress-jeopardized/Index')->rootView('talks');
+    })->name('talks.wordpress-jeopardized');
 });
 
 Route::get('/contact', function () {
