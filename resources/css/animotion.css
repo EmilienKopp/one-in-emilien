@@ -11,6 +11,11 @@
 @import 'tailwindcss/theme';
 @import 'tailwindcss/utilities';
 
+/* daisyui (mockup-window, mockup-code, …) */
+@plugin "daisyui" {
+	themes: dark --default;
+}
+
 /* scan deck pages/components for utility classes */
 @source '../js/pages/talks/deck/**/*.svelte';
 @source '../js/components/talks/**/*.svelte';
@@ -94,6 +99,31 @@
 .reveal pre.shiki-magic-move-container {
 	font-size: 1.6rem;
 	line-height: 1.6;
+}
+
+/*
+ * daisyUI mockup-code — undo reveal's `pre`/`code` styling (block code,
+ * 0.55em font, margins, shadow) so the terminal prefixes render inline.
+ */
+.reveal .mockup-code pre {
+	display: block;
+	width: 100%;
+	margin: 0;
+	box-shadow: none;
+	font-size: 1.4rem;
+	line-height: 1.9;
+	font-family: 'Monaspace Neon', monospace;
+	text-align: left;
+}
+
+.reveal .mockup-code pre code {
+	display: inline;
+	padding: 0;
+	max-height: none;
+	overflow: visible;
+	background: transparent;
+	font-size: inherit;
+	font-family: inherit;
 }
 
 @keyframes scale-in {
