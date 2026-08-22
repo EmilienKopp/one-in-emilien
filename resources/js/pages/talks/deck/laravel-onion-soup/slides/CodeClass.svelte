@@ -35,10 +35,16 @@
         options = codeOptions,
         /** @type {Selection} which members are visible on first render. */
         show: initial = { props: '*', functions: '*' },
+        /** shrink the code so many-line class views fit inside one slide. */
+        dense = false,
         class: klass = '',
         /** receives the underlying <Code> instance, if you need it directly. */
         ref = () => {},
     } = $props();
+
+    const containerClass = [dense ? 'code-dense' : '', klass]
+        .filter(Boolean)
+        .join(' ');
 
     let code = $state();
 
@@ -107,5 +113,5 @@
     {options}
     autoIndent={false}
     code={compose(initial)}
-    class={klass}
+    class={containerClass}
 />
