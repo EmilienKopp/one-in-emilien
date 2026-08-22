@@ -7,19 +7,14 @@ use Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Prism\Prism\Enums\Provider;
-use Prism\Prism\Facades\Prism;
-use Prism\Prism\ValueObjects\Messages\AssistantMessage;
-use Prism\Prism\ValueObjects\Messages\UserMessage;
+use Laravel\Ai\AnonymousAgent;
+use Laravel\Ai\Messages\AssistantMessage;
+use Laravel\Ai\Messages\UserMessage;
 
 class ChatController extends Controller
 {
-    /**
-     * Handle incoming chat messages and stream AI responses
-     */
     public function message(Request $request)
     {
-        // Validate the incoming request from AI SDK
         $validated = $request->validate([
             'id' => 'required|string',
             'messages' => 'required|array|min:1',
@@ -34,35 +29,37 @@ class ChatController extends Controller
         $conversationId = $validated['id'];
         $sessionId = session()->getId();
 
-        // Get the system prompt
-        $systemPrompt = $this->getSystemPrompt();
+        $rawMessages = $validated['messages'];
+        $lastRaw = Arr::last($rawMessages);
+        $lastUserPrompt = $lastRaw['parts'][0]['text'] ?? '';
 
-        // Transform AI SDK messages to Prism format
-        $prismMessages = $this->transformMessages($validated['messages']);
+        DB::table('chat_conversations')->insert([
+            'session_id' => $sessionId,
+            'role' => 'user',
+            'content' => $lastUserPrompt,
+            'metadata' => json_encode([
+                'conversation_id' => $conversationId,
+                'user_agent' => $request->userAgent(),
+                'ip' => $request->ip(),
+            ]),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
-        // Store user message in database
-        $userMessage = Arr::last($prismMessages);
-        if ($userMessage instanceof UserMessage) {
-            DB::table('chat_conversations')->insert([
-                'session_id' => $sessionId,
-                'role' => 'user',
-                'content' => $userMessage->text(),
-                'metadata' => json_encode([
-                    'conversation_id' => $conversationId,
-                    'user_agent' => $request->userAgent(),
-                    'ip' => $request->ip(),
-                ]),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        $history = collect(array_slice($rawMessages, 0, -1))
+            ->map(fn ($m) => match ($m['role']) {
+                'user' => new UserMessage($m['parts'][0]['text'] ?? ''),
+                'assistant' => new AssistantMessage($m['parts'][0]['text'] ?? ''),
+                default => null,
+            })
+            ->filter()
+            ->values()
+            ->all();
 
         try {
-            return Prism::text()
-                ->using(Provider::OpenAI, 'gpt-4o')
-                ->withSystemPrompt($systemPrompt)
-                ->withMessages($prismMessages)
-                ->asDataStreamResponse();
+            return AnonymousAgent::make($this->getSystemPrompt(), $history, [])
+                ->stream($lastUserPrompt, provider: 'openai', model: 'gpt-4o')
+                ->usingVercelDataProtocol();
         } catch (\Exception $e) {
             Log::error('Chat API error', [
                 'error' => $e->getMessage(),
@@ -78,29 +75,11 @@ class ChatController extends Controller
         }
     }
 
-    /**
-     * Transform AI SDK message format to Prism format
-     */
-    private function transformMessages(array $messages): array
-    {
-        return collect($messages)->map(function ($message) {
-            return match ($message['role']) {
-                'user' => new UserMessage($message['parts'][0]['text'] ?? ''),
-                'assistant' => new AssistantMessage($message['parts'][0]['text'] ?? ''),
-                default => null,
-            };
-        })->toArray();
-    }
-
-    /**
-     * Get the system prompt for the AI
-     */
     private function getSystemPrompt(): string
     {
         $currentYear = date('Y');
         $homeUrl = config('app.url');
 
-        // TODO: Fetch availability data from database if needed
         $availability = 'My availability varies by project. Please use the contact form for specific inquiries.';
 
         return <<<PROMPT
