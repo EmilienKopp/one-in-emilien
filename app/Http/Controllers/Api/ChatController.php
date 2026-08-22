@@ -84,7 +84,7 @@ class ChatController extends Controller
     private function transformMessages(array $messages): array
     {
         return collect($messages)->map(function ($message) {
-            return match($message['role']) {
+            return match ($message['role']) {
                 'user' => new UserMessage($message['parts'][0]['text'] ?? ''),
                 'assistant' => new AssistantMessage($message['parts'][0]['text'] ?? ''),
                 default => null,

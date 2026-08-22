@@ -20,7 +20,11 @@
 </svelte:head>
 
 <PortfolioLayout>
-    <Link href={devIndex()} class="inline-block px-4 pt-6 text-xs text-muted-foreground/40 hover:text-muted-foreground/70 transition-colors">← back</Link>
+    <Link
+        href={devIndex()}
+        class="inline-block px-4 pt-6 text-xs text-muted-foreground/40 transition-colors hover:text-muted-foreground/70"
+        >← back</Link
+    >
     <div class="snap flex snap-y snap-proximity flex-col gap-32 px-4 md:px-8">
         <ContentSection title="Open Source" id="oss">
             <svelte:fragment slot="lead">

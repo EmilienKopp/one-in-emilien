@@ -1,5 +1,5 @@
 <script>
-    import { Slide, Transition } from "@animotion/core";
+    import { Slide, Transition } from '@animotion/core';
 </script>
 
 <Slide class="h-full place-content-center place-items-center text-center">

@@ -4,7 +4,9 @@
 
 <Slide class="h-full place-content-center place-items-center">
     <Transition visible>
-        <p class="mb-10 text-center text-2xl font-light uppercase tracking-[0.3em] text-white/40">
+        <p
+            class="mb-10 text-center text-2xl font-light tracking-[0.3em] text-white/40 uppercase"
+        >
             Step 1 · Reproduce
         </p>
     </Transition>

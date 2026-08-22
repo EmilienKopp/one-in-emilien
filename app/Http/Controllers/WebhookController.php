@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Cache;
 
 class WebhookController extends Controller
 {
@@ -19,16 +19,18 @@ class WebhookController extends Controller
         $token = $request->header('X-Webhook-Token') ?? $request->input('token');
         $expectedToken = config('app.webhook_token');
 
-        if (!$expectedToken) {
+        if (! $expectedToken) {
             Log::error('Webhook token not configured');
+
             return response()->json(['error' => 'Webhook not configured'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        if (!hash_equals($expectedToken, $token ?? '')) {
+        if (! hash_equals($expectedToken, $token ?? '')) {
             Log::warning('Invalid webhook token received', [
                 'ip' => $request->ip(),
                 'user_agent' => $request->userAgent(),
             ]);
+
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -41,8 +43,9 @@ class WebhookController extends Controller
 
             $ref = $request->input('ref', 'unknown');
 
-            if(str($ref)->contains('main')) {
+            if (str($ref)->contains('main')) {
                 \Log::info('Deployment for ref skipped as it matches the main branch', ['ref' => $ref]);
+
                 return response()->json(['message' => 'Deployment skipped: main branch deployment is disabled'], Response::HTTP_I_AM_A_TEAPOT);
             }
 
@@ -51,6 +54,7 @@ class WebhookController extends Controller
             $refCached = Cache::get('last_deployment_ref');
             if ($ref === $refCached) {
                 Log::info('Deployment for ref skipped as it matches the last deployed ref', ['ref' => $ref]);
+
                 return response()->json([
                     'message' => 'Deployment skipped: ref already deployed',
                     'ref' => $ref,

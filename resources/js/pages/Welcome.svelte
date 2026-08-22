@@ -1,29 +1,40 @@
 <script lang="ts">
-    import { fade, fly } from "svelte/transition";
-    import { Link } from "@inertiajs/svelte";
-    import Logo from "@/components/shared/Logo.svelte";
-    import ThemeToggle from "@/components/ui/theme-toggle/ThemeToggle.svelte";
-    import { quadInOut } from "svelte/easing";
+    import { fade, fly } from 'svelte/transition';
+    import { Link } from '@inertiajs/svelte';
+    import Logo from '@/components/shared/Logo.svelte';
+    import ThemeToggle from '@/components/ui/theme-toggle/ThemeToggle.svelte';
+    import { quadInOut } from 'svelte/easing';
 
     function sleep(ms: number) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 </script>
 
-<div class="bg-background h-full w-full flex flex-col items-center justify-center lg:pt-auto min-h-screen">
+<div
+    class="lg:pt-auto flex h-full min-h-screen w-full flex-col items-center justify-center bg-background"
+>
     {#await sleep(100) then}
-        <div transition:fade={{duration: 2000, easing: quadInOut}} class="lg:-mb-20">
-            <Logo class="lg:w-96 lg:h-96 w-56" />
+        <div
+            transition:fade={{ duration: 2000, easing: quadInOut }}
+            class="lg:-mb-20"
+        >
+            <Logo class="w-56 lg:h-96 lg:w-96" />
         </div>
 
-        <ul class="text-left w-fit">
-            <li in:fly={{duration: 600, delay: 1500, x: -1500}}>
-                <Link href="/dev" class="lg:text-2xl text-foreground text-sm font-bold mt-10 font-mono block w-fit">
+        <ul class="w-fit text-left">
+            <li in:fly={{ duration: 600, delay: 1500, x: -1500 }}>
+                <Link
+                    href="/dev"
+                    class="mt-10 block w-fit font-mono text-sm font-bold text-foreground lg:text-2xl"
+                >
                     /dev: Enter engineer portal
                 </Link>
             </li>
-            <li in:fly={{duration: 600, delay: 1800, x: -1500}}>
-                <Link href="/talks" class="lg:text-2xl text-foreground text-sm font-bold mt-10 font-mono block w-fit">
+            <li in:fly={{ duration: 600, delay: 1800, x: -1500 }}>
+                <Link
+                    href="/talks"
+                    class="mt-10 block w-fit font-mono text-sm font-bold text-foreground lg:text-2xl"
+                >
                     /talks: Conference talks &amp; slides
                 </Link>
             </li>
@@ -38,12 +49,10 @@
                 </Link>
             </li> -->
         </ul>
-
     {/await}
-
 </div>
 
-<div class="fixed bottom-5 right-5">
+<div class="fixed right-5 bottom-5">
     <ThemeToggle />
 </div>
 
@@ -52,7 +61,7 @@
 
     li a::after {
         display: block;
-        content: "";
+        content: '';
         width: 0;
         border-bottom: 1px solid hsl(var(--foreground));
         transition: width 0.4s ease-in-out;

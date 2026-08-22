@@ -29,29 +29,30 @@ class DeployCommand extends Command
         $this->info('🚀 Starting deployment...');
 
         // Ask for confirmation unless --force is used
-        if (!$this->option('force') && !$this->confirm('Are you sure you want to deploy?')) {
+        if (! $this->option('force') && ! $this->confirm('Are you sure you want to deploy?')) {
             $this->warn('Deployment cancelled.');
+
             return 1;
         }
 
         // Check if Envoy is installed
         // Check if Envoy is installed
         $envoyPath = base_path('vendor/bin/envoy');
-        if (!file_exists($envoyPath)) {
+        if (! file_exists($envoyPath)) {
             $this->error('Envoy is not installed. Please run: composer require laravel/envoy');
+
             return 1;
         }
 
         // Run the Envoy deployment
         $this->info('Executing Envoy deployment script...');
-        
+
         $process = new Process([
             $envoyPath,
             'run',
             'deploy',
-            '--path=' . base_path()
+            '--path='.base_path(),
         ]);
-
 
         $process->setTimeout(600); // 10 minutes timeout
         $process->setIdleTimeout(60); // 1 minute idle timeout
@@ -63,9 +64,11 @@ class DeployCommand extends Command
             });
 
             $this->info('✅ Deployment completed successfully!');
+
             return 0;
         } catch (\Exception $e) {
-            $this->error('❌ Deployment failed: ' . $e->getMessage());
+            $this->error('❌ Deployment failed: '.$e->getMessage());
+
             return 1;
         }
     }

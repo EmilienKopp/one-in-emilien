@@ -34,7 +34,11 @@
 </svelte:head>
 
 <PortfolioLayout>
-    <Link href={ossIndex()} class="inline-block px-4 pt-6 text-xs text-muted-foreground/40 hover:text-muted-foreground/70 transition-colors">← back</Link>
+    <Link
+        href={ossIndex()}
+        class="inline-block px-4 pt-6 text-xs text-muted-foreground/40 transition-colors hover:text-muted-foreground/70"
+        >← back</Link
+    >
     <div class="snap flex snap-y snap-proximity flex-col gap-32 px-4 md:px-8">
         <ContentSection title={pkg.name} id={slug}>
             <svelte:fragment slot="lead">{pkg.tagline}</svelte:fragment>
@@ -109,7 +113,9 @@
                             <h3 class="gradient-text text-3xl font-extrabold">
                                 {section.title}
                             </h3>
-                            <p class="text-lg">{@html renderInlineCode(section.body)}</p>
+                            <p class="text-lg">
+                                {@html renderInlineCode(section.body)}
+                            </p>
                         </div>
                     </div>
                 {/each}

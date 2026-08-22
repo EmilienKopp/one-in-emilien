@@ -13,7 +13,7 @@
 
 /* daisyui (mockup-window, mockup-code, …) */
 @plugin "daisyui" {
-	themes: dark --default;
+    themes: dark --default;
 }
 
 /* scan deck pages/components for utility classes */
@@ -21,74 +21,74 @@
 @source '../js/components/talks/**/*.svelte';
 
 @layer reset {
-	*,
-	*::before,
-	*::after {
-		padding: 0px;
-		margin: 0px;
-		box-sizing: border-box;
-	}
+    *,
+    *::before,
+    *::after {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+    }
 
-	/* Inertia mounts into #app; Reveal.js needs a full-height ancestor chain */
-	html,
-	body,
-	#app {
-		height: 100%;
-	}
+    /* Inertia mounts into #app; Reveal.js needs a full-height ancestor chain */
+    html,
+    body,
+    #app {
+        height: 100%;
+    }
 }
 
 @layer presentation {
-	/* for animations */
-	.hidden {
-		display: none;
-	}
+    /* for animations */
+    .hidden {
+        display: none;
+    }
 
-	/* view transitions */
-	html {
-		view-transition-name: none;
-	}
+    /* view transitions */
+    html {
+        view-transition-name: none;
+    }
 
-	::view-transition-group(*) {
-		animation-duration: var(--view-transition-duration);
-		animation-timing-function: var(--ease);
-	}
+    ::view-transition-group(*) {
+        animation-duration: var(--view-transition-duration);
+        animation-timing-function: var(--ease);
+    }
 
-	::view-transition-new(*):only-child {
-		animation: scale-in var(--view-transition-duration) var(--ease);
-	}
+    ::view-transition-new(*):only-child {
+        animation: scale-in var(--view-transition-duration) var(--ease);
+    }
 
-	::view-transition-old(*):only-child {
-		animation: scale-out var(--view-transition-duration) var(--ease);
-	}
+    ::view-transition-old(*):only-child {
+        animation: scale-out var(--view-transition-duration) var(--ease);
+    }
 }
 
 @layer overrides {
-	/* minimalist dark / red / white theme */
-	:root {
-		--r-background-color: #0a0a0b;
-		--r-main-color: #ededed;
-		--r-heading-color: #ffffff;
-		--r-heading-font: 'Atkinson Hyperlegible';
-		--r-main-font: 'Atkinson Hyperlegible';
-		--r-link-color: #ef4444;
-		--red: #ef4444;
-	}
+    /* minimalist dark / red / white theme */
+    :root {
+        --r-background-color: #0a0a0b;
+        --r-main-color: #ededed;
+        --r-heading-color: #ffffff;
+        --r-heading-font: 'Atkinson Hyperlegible';
+        --r-main-font: 'Atkinson Hyperlegible';
+        --r-link-color: #ef4444;
+        --red: #ef4444;
+    }
 
-	/* thin red progress bar, no chrome noise */
-	.reveal .progress {
-		color: var(--red);
-		height: 3px;
-	}
+    /* thin red progress bar, no chrome noise */
+    .reveal .progress {
+        color: var(--red);
+        height: 3px;
+    }
 
-	/* dimmed navigation controls */
-	.reveal .controls {
-		color: color-mix(in oklab, white 35%, transparent);
-	}
+    /* dimmed navigation controls */
+    .reveal .controls {
+        color: color-mix(in oklab, white 35%, transparent);
+    }
 
-	::selection {
-		background: var(--red);
-		color: white;
-	}
+    ::selection {
+        background: var(--red);
+        color: white;
+    }
 }
 
 /*
@@ -97,8 +97,8 @@
  * inside @layer (e.g. reveal's `.reveal pre { font-size: 0.55em }`).
  */
 .reveal pre.shiki-magic-move-container {
-	font-size: 1.6rem;
-	line-height: 1.6;
+    font-size: 1.6rem;
+    line-height: 1.6;
 }
 
 /*
@@ -106,51 +106,51 @@
  * 0.55em font, margins, shadow) so the terminal prefixes render inline.
  */
 .reveal .mockup-code pre {
-	display: block;
-	width: 100%;
-	margin: 0;
-	box-shadow: none;
-	font-size: 1.4rem;
-	line-height: 1.9;
-	font-family: 'Monaspace Neon', monospace;
-	text-align: left;
+    display: block;
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    font-size: 1.4rem;
+    line-height: 1.9;
+    font-family: 'Monaspace Neon', monospace;
+    text-align: left;
 }
 
 .reveal .mockup-code pre code {
-	display: inline;
-	padding: 0;
-	max-height: none;
-	overflow: visible;
-	background: transparent;
-	font-size: inherit;
-	font-family: inherit;
+    display: inline;
+    padding: 0;
+    max-height: none;
+    overflow: visible;
+    background: transparent;
+    font-size: inherit;
+    font-family: inherit;
 }
 
 @keyframes scale-in {
-	from {
-		scale: 0;
-		opacity: 0;
-	}
+    from {
+        scale: 0;
+        opacity: 0;
+    }
 }
 
 @keyframes scale-out {
-	to {
-		scale: 0;
-		opacity: 0;
-	}
+    to {
+        scale: 0;
+        opacity: 0;
+    }
 }
 
 @keyframes rotate {
-	from {
-		opacity: 0;
-	}
-	20% {
-		rotate: 0deg;
-	}
-	40% {
-		opacity: 1;
-	}
-	to {
-		rotate: 360deg;
-	}
+    from {
+        opacity: 0;
+    }
+    20% {
+        rotate: 0deg;
+    }
+    40% {
+        opacity: 1;
+    }
+    to {
+        rotate: 360deg;
+    }
 }

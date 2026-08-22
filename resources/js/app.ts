@@ -5,7 +5,6 @@ import { mount } from 'svelte';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) => {
@@ -17,7 +16,7 @@ createInertiaApp({
         );
         const page = pages[`./pages/${name}.svelte`] as any;
 
-        return { default: page.default};
+        return { default: page.default };
     },
     setup({ el, App, props }) {
         if (!el) return;

@@ -178,7 +178,7 @@
                     rows={2}
                     placeholder="What can I do for you today?"
                     disabled={isLoading}
-                    class="w-full resize-none textarea placeholder:opacity-50"
+                    class="textarea w-full resize-none placeholder:opacity-50"
                     tabindex="-1"
                 ></textarea>
                 <div class="flex items-center justify-between">

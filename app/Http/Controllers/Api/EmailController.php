@@ -5,15 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Mail\ContactFormSubmission;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
     /**
      * Send contact form email
      *
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function send(Request $request)
@@ -24,7 +23,7 @@ class EmailController extends Controller
             'company_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255',
             'inquiry' => 'required|string|max:500',
-            'message' => 'nullable|string|max:5000'
+            'message' => 'nullable|string|max:5000',
         ]);
 
         try {
@@ -38,24 +37,24 @@ class EmailController extends Controller
             Log::info('Contact form submitted', [
                 'customer_name' => $validated['customer_name'],
                 'email' => $validated['email'],
-                'inquiry' => $validated['inquiry']
+                'inquiry' => $validated['inquiry'],
             ]);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Thank you for your message! I will get back to you soon.'
+                'message' => 'Thank you for your message! I will get back to you soon.',
             ], 200);
 
         } catch (\Exception $e) {
             // Log the error
             Log::error('Contact form email failed', [
                 'error' => $e->getMessage(),
-                'data' => $validated
+                'data' => $validated,
             ]);
 
             return response()->json([
                 'success' => false,
-                'message' => 'Sorry, there was an error sending your message. Please try again later.'
+                'message' => 'Sorry, there was an error sending your message. Please try again later.',
             ], 500);
         }
     }
