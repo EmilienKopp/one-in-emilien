@@ -1,15 +1,8 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import { stores } from '$lib/stores.svelte';
 
     let { propContent = '' } = $props();
-    let typingBlock: HTMLSpanElement;
-
-    const n = $derived(
-        stores.typingBlockContent.length
-            ? stores.typingBlockContent.length
-            : 478,
-    );
+    let typingBlock: HTMLSpanElement | undefined = $state();
 </script>
 
 {#key stores.typingBlockContent}
@@ -50,6 +43,7 @@
                         />
                     {`}`}<br />
                     {:else}
+                        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                         {@html stores.typingBlockContent.replace(
                             /\n/g,
                             '<br/>',

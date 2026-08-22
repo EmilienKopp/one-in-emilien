@@ -75,6 +75,7 @@
 
             <div class="mx-6 flex w-full flex-col gap-24">
                 <p class="mx-auto max-w-2xl text-center text-lg">
+                    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                     {@html renderInlineCode(pkg.description)}
                 </p>
 
@@ -100,6 +101,7 @@
                             /> -->
                             <div class="shiki-mockup mockup-code">
                                 {#await codeToHtml( section.code, { theme: 'github-dark', lang: 'php' }, ) then html}
+                                    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                                     {@html html}
                                 {/await}
                             </div>
@@ -114,6 +116,7 @@
                                 {section.title}
                             </h3>
                             <p class="text-lg">
+                                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                                 {@html renderInlineCode(section.body)}
                             </p>
                         </div>

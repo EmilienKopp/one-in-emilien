@@ -200,6 +200,7 @@
                                     <div
                                         class="flex aspect-square size-full items-center justify-center"
                                     >
+                                        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                                         {@html qrCodeSvg}
                                     </div>
                                 </div>

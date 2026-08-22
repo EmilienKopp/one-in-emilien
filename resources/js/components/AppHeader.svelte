@@ -110,10 +110,8 @@
                                         class={`flex items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-medium hover:bg-accent ${activeItemStyles(item.href)}`}
                                     >
                                         {#if item.icon}
-                                            <svelte:component
-                                                this={item.icon}
-                                                class="h-5 w-5"
-                                            />
+                                            {@const Icon = item.icon}
+                                            <Icon class="h-5 w-5" />
                                         {/if}
                                         {item.title}
                                     </Link>
@@ -128,10 +126,8 @@
                                         class="flex items-center space-x-2 text-sm font-medium"
                                     >
                                         {#if item.icon}
-                                            <svelte:component
-                                                this={item.icon}
-                                                class="h-5 w-5"
-                                            />
+                                            {@const Icon = item.icon}
+                                            <Icon class="h-5 w-5" />
                                         {/if}
                                         <span>{item.title}</span>
                                     </a>
@@ -161,10 +157,8 @@
                                     href={item.href}
                                 >
                                     {#if item.icon}
-                                        <svelte:component
-                                            this={item.icon}
-                                            class="mr-2 h-4 w-4"
-                                        />
+                                        {@const Icon = item.icon}
+                                        <Icon class="mr-2 h-4 w-4" />
                                     {/if}
                                     {item.title}
                                 </Link>
@@ -213,8 +207,8 @@
                                                     >{item.title}</span
                                                 >
                                                 {#if item.icon}
-                                                    <svelte:component
-                                                        this={item.icon}
+                                                    {@const Icon = item.icon}
+                                                    <Icon
                                                         class="size-5 opacity-80 group-hover:opacity-100"
                                                     />
                                                 {/if}

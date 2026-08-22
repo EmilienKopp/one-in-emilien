@@ -27,10 +27,7 @@
     const computedClass = $derived(cn('h-4 w-4', className));
 </script>
 
-<svelte:component
-    this={iconComponent()}
-    class={computedClass}
-    {size}
-    {strokeWidth}
-    {color}
-/>
+{#if iconComponent()}
+    {@const DynIcon = iconComponent()}
+    <DynIcon class={computedClass} {size} {strokeWidth} {color} />
+{/if}

@@ -18,21 +18,8 @@
     let submitted = false;
     let response: any = {};
 
-    function clear() {
-        formInput = {
-            customer_name: '',
-            company_name: '',
-            email: '',
-            inquiry: '',
-            message: '',
-        };
-    }
-
-    async function handleSubmit() {
-        submitted = true;
-    }
-
     async function handleConfirm() {
+        // eslint-disable-next-line no-undef
         const supabase = createClient(
             import.meta.env.PUBLIC_SUPABASE_URL,
             import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
@@ -159,13 +146,18 @@
         </dl>
         <div class="col-span-2 flex items-center justify-end gap-4">
             <p class="italic">Are you sure you want to submit?</p>
-            <GradientButton
-                color="red"
-                on:click={() => {
+            <button
+                type="button"
+                class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                onclick={() => {
                     submitted = false;
-                }}>Maybe not</GradientButton
+                }}>Maybe not</button
             >
-            <GradientButton on:click={handleConfirm}>Yes</GradientButton>
+            <button
+                type="button"
+                class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                onclick={handleConfirm}>Yes</button
+            >
         </div>
     {/if}
 </div>

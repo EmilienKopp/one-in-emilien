@@ -8,7 +8,7 @@
         CardTitle,
     } from '$components/ui/card';
     import { home } from '@/routes';
-    import { inertia, Link } from '@inertiajs/svelte';
+    import { Link } from '@inertiajs/svelte';
     import type { Snippet } from 'svelte';
 
     interface Props {

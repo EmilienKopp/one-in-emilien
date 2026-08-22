@@ -44,14 +44,14 @@
 
         // URLs starting with http://, https://, or ftp://
         let replacePattern1 =
-            /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+            /(\b(https?|ftp):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gim;
         replacedText = inputText.replace(
             replacePattern1,
             '<a class="' + linkCSS + '" href="$1" target="_blank">$1</a>',
         );
 
         // URLs starting with "www."
-        let replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+        let replacePattern2 = /(^|[^/])(www\.[\S]+(\b|$))/gim;
         replacedText = replacedText.replace(
             replacePattern2,
             '$1<a class="' +
@@ -61,7 +61,7 @@
 
         // Email addresses
         let replacePattern3 =
-            /(([a-zA-Z0-9\-.]+\@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+))/gim;
+            /(([a-zA-Z0-9-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+))/gim;
         replacedText = replacedText.replace(
             replacePattern3,
             '<a class="' + linkCSS + '" href="mailto:$1">$1</a>',
@@ -148,6 +148,7 @@
                             {#if part.type === 'text'}
                                 <div class="chat-bubble">
                                     {#if message.role === 'assistant'}
+                                        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                                         {@html linkify(part.text)}
                                     {:else}
                                         {part.text}

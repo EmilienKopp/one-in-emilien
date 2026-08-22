@@ -1,7 +1,6 @@
 <script lang="ts">
     import Icon from '@/components/portfolio/Icon.svelte';
     import ContentSection from '@/components/portfolio/ContentSection.svelte';
-    import ContactForm from '$components/ContactForm.svelte';
     import EmailMeButton from '@/components/portfolio/EmailMeButton.svelte';
 </script>
 

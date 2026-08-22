@@ -1,5 +1,6 @@
 <script lang="ts">
     import AppLayout from '@/layouts/AppLayout.svelte';
+    import { dashboard } from '@/routes';
     import { type BreadcrumbItem } from '@/types';
     import PlaceholderPattern from '../components/PlaceholderPattern.svelte';
 

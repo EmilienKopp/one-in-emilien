@@ -59,7 +59,7 @@
 <style>
     @reference '../../css/app.css';
 
-    li a::after {
+    li :global(a)::after {
         display: block;
         content: '';
         width: 0;
@@ -67,11 +67,11 @@
         transition: width 0.4s ease-in-out;
     }
 
-    li a:hover {
+    li :global(a:hover) {
         @apply scale-105 text-foreground;
     }
 
-    li a:hover::after {
+    li :global(a:hover)::after {
         width: 100%;
         transition: width 0.4s ease-in-out;
     }

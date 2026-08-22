@@ -26,6 +26,7 @@
         text = 'sm',
         onclick,
         children,
+        // eslint-disable-next-line svelte/valid-compile
         ...rest
     }: Props = $props();
 

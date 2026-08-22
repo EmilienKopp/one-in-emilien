@@ -1,13 +1,8 @@
 <script lang="ts">
     import InteractiveImage from './InteractiveImage.svelte';
-    import CodeBox from './CodeBox.svelte';
     import Commands from './Commands.svelte';
     import AnimatedSVGTitle from './AnimatedSVGTitle.svelte';
-    import { onMount } from 'svelte';
-    import { stores } from '$lib/stores.svelte';
 
-    const widths = [450, 800];
-    const sizes = '(min-width: 640px) 42vw, 67vw';
     let scrollY: number = $state(0);
 </script>
 

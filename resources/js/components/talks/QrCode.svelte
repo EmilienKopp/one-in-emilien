@@ -28,6 +28,7 @@
             style="width: {size}px; height: {size}px;"
             class="overflow-hidden rounded"
         >
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html svg}
         </div>
     {:else if generatedDataUrl}

@@ -14,11 +14,11 @@
             path.style.strokeDasharray = path.getTotalLength();
             path.style.strokeDashoffset = path.getTotalLength();
         });
-        mask?.querySelectorAll('path').forEach((path: any, i: number) => {
+        mask?.querySelectorAll('path').forEach((path: any) => {
             path.classList.add('fillable');
         });
 
-        window.addEventListener('resize', (e) => {
+        window.addEventListener('resize', () => {
             width = 500 * (windowWidth / 2400);
         });
     });
@@ -41,6 +41,9 @@
             class="w-full"
             bind:this={SVG}
             on:click={resetAnimation}
+            on:keydown={(e) => e.key === 'Enter' && resetAnimation()}
+            role="button"
+            tabindex="0"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -218,11 +221,11 @@
         width: 60%;
     }
 
-    mask {
+    :global(mask) {
         fill: var(--color-text);
     }
 
-    rect {
+    :global(rect) {
         fill: var(--color-background);
     }
 

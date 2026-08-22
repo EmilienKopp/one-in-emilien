@@ -3,7 +3,7 @@
     import { codeTheme, codeOptions } from './code.js';
 
     let code;
-    let phase = $state('wish'); // wish | php | join
+    let __phase = '';
 
     const initialCode = `
         // "Just sort active subscriptions by how much they've used."
@@ -37,7 +37,7 @@
     <!-- <Action
         undo={() => {
             code.update`${initialCode}`;
-            phase = 'wish';
+            _phase = 'wish';
         }}
         do={async () => {
             await code.update`
@@ -48,13 +48,12 @@
                         ->flatMap->usageRecords->sum('quantity'));
                 // …goodbye database-level pagination.
             `;
-            phase = 'php';
+            _phase = 'php';
         }}
     ></Action> -->
 
     <!-- Escape hatch B: join + groupBy just to enable ORDER BY -->
     <Action
-        undo={() => (phase = 'php')}
         do={async () => {
             await code.update`
                 // …or reach for joins, just to ORDER BY.
@@ -64,7 +63,6 @@
                     ->groupBy(/* every selected column */)
                     ->orderByRaw('SUM(usage_records.quantity) DESC');
             `;
-            phase = 'join';
         }}
     ></Action>
 

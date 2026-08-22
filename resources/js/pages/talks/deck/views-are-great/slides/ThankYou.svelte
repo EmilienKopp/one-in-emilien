@@ -5,8 +5,6 @@
 
     const repo = 'github.com/EmilienKopp/laravel-rome';
     const surveyUrl = $derived(page.props.surveyUrl);
-
-    let showSurvey = $state(false);
 </script>
 
 <Slide class="h-full place-content-center place-items-center text-center">

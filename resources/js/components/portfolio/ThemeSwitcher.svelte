@@ -296,7 +296,7 @@
 </ShadowButton>
 
 <style>
-    :global(.fixed-header) #theme-switcher {
-        @apply ml-0 scale-100;
+    :global(.fixed-header #theme-switcher) {
+        @apply scale-100;
     }
 </style>

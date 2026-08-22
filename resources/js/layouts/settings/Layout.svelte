@@ -8,9 +8,7 @@
     import { show } from '@/routes/two-factor';
     import { edit as editPassword } from '@/routes/user-password';
     import type { NavItem } from '@/types';
-    import { Link } from '@inertiajs/svelte';
     import type { Snippet } from 'svelte';
-    import type { Component } from 'svelte';
 
     interface Props {
         children?: Snippet;

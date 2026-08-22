@@ -3,7 +3,6 @@
     import { onMount } from 'svelte';
     import { cubicInOut } from 'svelte/easing';
     import { stores } from '$lib/stores.svelte';
-    import HoverMeButton from './HoverMeButton.svelte';
     import ShadowBox from './ShadowBox.svelte';
     import ShadowButton from './ShadowButton.svelte';
 

@@ -46,7 +46,7 @@
     <h1 class="mb-5 text-center text-xl">Contact Form</h1>
 
     {#if !showConfirmation && !form.recentlySuccessful}
-        <form class="flex flex-col items-end pb-8" on:submit={handleSubmit}>
+        <form class="flex flex-col items-end pb-8" onsubmit={handleSubmit}>
             <fieldset
                 title="Personal Information"
                 class="flex w-full flex-col gap-4 md:grid md:grid-cols-2"
@@ -64,9 +64,9 @@
                         disabled={form.processing}
                     />
                     {#if form.errors.customer_name}
-                        <Helper class="mt-1 text-red-600"
-                            >{form.errors.customer_name}</Helper
-                        >
+                        <p class="mt-1 text-red-600">
+                            {form.errors.customer_name}
+                        </p>
                     {/if}
                 </div>
 
@@ -81,9 +81,9 @@
                         disabled={form.processing}
                     />
                     {#if form.errors.company_name}
-                        <Helper class="mt-1 text-red-600"
-                            >{form.errors.company_name}</Helper
-                        >
+                        <p class="mt-1 text-red-600">
+                            {form.errors.company_name}
+                        </p>
                     {/if}
                 </div>
 
@@ -102,16 +102,14 @@
                         disabled={form.processing}
                     />
                     {#if form.errors.email}
-                        <Helper class="mt-1 text-red-600"
-                            >{form.errors.email}</Helper
-                        >
+                        <p class="mt-1 text-red-600">{form.errors.email}</p>
                     {/if}
                 </div>
                 <div class="col-span-2">
-                    <Helper class="mt-2 text-sm text-[--color-text]">
+                    <p class="mt-2 text-sm text-[--color-text]">
                         We'll never share your details. Your information is kept
                         private and secure.
-                    </Helper>
+                    </p>
                 </div>
             </fieldset>
             <hr class="my-2 w-full text-white" />
@@ -138,7 +136,7 @@
                     >
                 </Select>
                 {#if form.errors.inquiry}
-                    <Helper class="text-red-600">{form.errors.inquiry}</Helper>
+                    <p class="text-red-600">{form.errors.inquiry}</p>
                 {/if}
                 <Label for="message" class="text-[--color-text]">Message</Label>
                 <Textarea
@@ -148,7 +146,7 @@
                     disabled={form.processing}
                 />
                 {#if form.errors.message}
-                    <Helper class="text-red-600">{form.errors.message}</Helper>
+                    <p class="text-red-600">{form.errors.message}</p>
                 {/if}
             </fieldset>
             <div id="buttons" class="mt-5 flex gap-3">
@@ -194,27 +192,24 @@
         </dl>
         <div class="col-span-2 flex items-center justify-end gap-4">
             <p class="italic">Are you sure you want to submit?</p>
-            <GradientButton
+            <button
                 type="button"
-                color="red"
-                on:click={handleCancel}
-                disabled={form.processing}>Maybe not</GradientButton
+                class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 disabled:opacity-50"
+                onclick={handleCancel}
+                disabled={form.processing}>Maybe not</button
             >
-            <GradientButton
+            <button
                 type="button"
-                on:click={handleConfirm}
+                class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:opacity-50"
+                onclick={handleConfirm}
                 disabled={form.processing}
-                >{form.processing ? 'Sending...' : 'Yes'}</GradientButton
+                >{form.processing ? 'Sending...' : 'Yes'}</button
             >
         </div>
     {/if}
 </div>
 
 <style>
-    a {
-        color: orangered;
-        text-decoration: underline;
-    }
     dt {
         font-weight: bold;
     }

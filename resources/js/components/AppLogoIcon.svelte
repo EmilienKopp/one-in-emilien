@@ -4,6 +4,7 @@
         [key: string]: any;
     }
 
+    // eslint-disable-next-line svelte/valid-compile
     let { className, ...restProps }: Props = $props();
 </script>
 
