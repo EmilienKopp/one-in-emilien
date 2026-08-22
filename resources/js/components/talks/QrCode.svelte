@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import QRCode from "qrcode";
+    import { onMount } from 'svelte';
+    import QRCode from 'qrcode';
 
     interface Props {
         surveyUrl: string;
@@ -10,7 +10,7 @@
 
     let { surveyUrl: url, svg = null, size = 200 }: Props = $props();
 
-    let generatedDataUrl = $state("");
+    let generatedDataUrl = $state('');
 
     onMount(async () => {
         if (!svg) {
@@ -26,8 +26,9 @@
     {#if svg}
         <div
             style="width: {size}px; height: {size}px;"
-            class="rounded overflow-hidden"
+            class="overflow-hidden rounded"
         >
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html svg}
         </div>
     {:else if generatedDataUrl}
@@ -40,7 +41,7 @@
         />
     {:else}
         <div
-            class="rounded border border-border bg-muted animate-pulse"
+            class="animate-pulse rounded border border-border bg-muted"
             style="width: {size}px; height: {size}px;"
         ></div>
     {/if}

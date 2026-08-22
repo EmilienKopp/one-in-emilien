@@ -5,8 +5,8 @@
 
 <ContentSection title="Open Source" id="oss">
     <svelte:fragment slot="lead">
-        I build and maintain <span class="gradient-text">packages</span> in the
-        open. Take a look, use them, contribute.
+        I build and maintain <span class="gradient-text">packages</span> in the open.
+        Take a look, use them, contribute.
     </svelte:fragment>
     <Link
         href="/oss"

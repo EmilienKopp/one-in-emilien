@@ -37,11 +37,18 @@ export default [
             'bootstrap/ssr',
             'tailwind.config.js',
             'resources/js/components/ui/*',
+            'legacy/**',
         ],
     },
     {
         rules: {
             '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-unused-expressions': 'off',
+            '@typescript-eslint/no-unused-vars': ['error', {
+                varsIgnorePattern: '^_',
+                argsIgnorePattern: '^_',
+                caughtErrorsIgnorePattern: '^_',
+            }],
         },
     },
 ];

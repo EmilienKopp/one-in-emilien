@@ -37,12 +37,19 @@ ORDER BY revenue DESC;`;
     <div class="grid w-full max-w-6xl grid-cols-2 gap-8">
         <!-- LEFT: raw table -->
         <Transition visible class="flex flex-col gap-4">
-            <p class="text-lg font-light tracking-widest text-white/40 uppercase">
+            <p
+                class="text-lg font-light tracking-widest text-white/40 uppercase"
+            >
                 A table
             </p>
 
             <div class="rounded-xl border border-white/10 bg-white/3 px-5 py-4">
-                <Code lang="sql" theme={codeTheme} code={createTable} options={codeOptions} />
+                <Code
+                    lang="sql"
+                    theme={codeTheme}
+                    code={createTable}
+                    options={codeOptions}
+                />
             </div>
 
             <table class="w-full text-left text-sm">
@@ -77,18 +84,32 @@ ORDER BY revenue DESC;`;
             </table>
 
             <div class="rounded-xl border border-white/10 bg-white/3 px-5 py-4">
-                <Code lang="sql" theme={codeTheme} code={selectQuery} options={codeOptions} />
+                <Code
+                    lang="sql"
+                    theme={codeTheme}
+                    code={selectQuery}
+                    options={codeOptions}
+                />
             </div>
         </Transition>
 
         <!-- RIGHT: view -->
         <Transition class="flex flex-col gap-4">
-            <p class="text-lg font-light tracking-widest text-red-400/70 uppercase">
+            <p
+                class="text-lg font-light tracking-widest text-red-400/70 uppercase"
+            >
                 A view — defined once
             </p>
 
-            <div class="rounded-xl border border-red-500/20 bg-red-500/3 px-5 py-4">
-                <Code lang="sql" theme={codeTheme} code={createView} options={codeOptions} />
+            <div
+                class="rounded-xl border border-red-500/20 bg-red-500/3 px-5 py-4"
+            >
+                <Code
+                    lang="sql"
+                    theme={codeTheme}
+                    code={createView}
+                    options={codeOptions}
+                />
             </div>
 
             <table class="w-full text-left text-sm">
@@ -114,8 +135,15 @@ ORDER BY revenue DESC;`;
                 </tbody>
             </table>
 
-            <div class="rounded-xl border border-red-500/20 bg-red-500/3 px-5 py-4">
-                <Code lang="sql" theme={codeTheme} code={selectView} options={codeOptions} />
+            <div
+                class="rounded-xl border border-red-500/20 bg-red-500/3 px-5 py-4"
+            >
+                <Code
+                    lang="sql"
+                    theme={codeTheme}
+                    code={selectView}
+                    options={codeOptions}
+                />
             </div>
         </Transition>
     </div>

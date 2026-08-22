@@ -1,17 +1,17 @@
 <script>
-    import { Slide, Transition, Action } from "@animotion/core";
+    import { Slide, Transition, Action } from '@animotion/core';
 
     // The DB-views row flips from 💥 to ✅ on the final step.
-    let phase = $state("opinion");
+    let phase = $state('opinion');
 </script>
 
 <Slide class="h-full place-content-center place-items-center">
     <Transition visible>
         <div class="text-center">
-            <h1 class="text-8xl mb-4">
+            <h1 class="mb-4 text-8xl">
                 The <span class="text-red-500">Stigma</span>
             </h1>
-            <p class="text-6xl font-subtle italic tracking-tight">
+            <p class="font-subtle text-6xl tracking-tight italic">
                 “No logic in the DB”
             </p>
             <p class="mt-6 text-3xl font-light text-white/60">
@@ -50,7 +50,7 @@
             <span class="font-semibold text-white">DB views</span>
             <span class="text-white/25">→</span>
             <span>
-                {#if phase === "opinion"}
+                {#if phase === 'opinion'}
                     💥
                 {:else}
                     ✅
@@ -63,5 +63,5 @@
     </div>
 
     <!-- Final step: flip the verdict on views. -->
-    <Action do={() => (phase = "reality")} undo={() => (phase = "opinion")} />
+    <Action do={() => (phase = 'reality')} undo={() => (phase = 'opinion')} />
 </Slide>

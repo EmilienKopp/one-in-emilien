@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fly, fade } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import { quintIn, cubicInOut } from 'svelte/easing';
     import { onMount } from 'svelte';
     import * as Dialog from './dialog.js';
@@ -71,12 +71,14 @@
                         main.style.background = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`;
                     if (header) header.style.background = 'transparent';
                     break;
-                case 'g': //Change background to random color gradient
+                case 'g': {
+                    //Change background to random color gradient
                     const gradient = `linear-gradient(90deg, rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)}), rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)}))`;
                     if (main) main.style.background = gradient;
                     if (header) header.style.background = 'transparent';
                     // document.getElementById('typing').color = '#0000';
                     break;
+                }
                 case 'c':
                     silentInput = '';
                     console.log('Input Cleared');
@@ -160,6 +162,9 @@
         <rect
             id="eyes"
             onclick={toggleSunglasses}
+            onkeydown={(e) => e.key === 'Enter' && toggleSunglasses()}
+            role="button"
+            tabindex="0"
             class="cls-1"
             x="504.46"
             y="367.38"
@@ -169,6 +174,9 @@
         <rect
             id="mouth"
             onclick={toggleChatting}
+            onkeydown={(e) => e.key === 'Enter' && toggleChatting()}
+            role="button"
+            tabindex="0"
             class="cls-1"
             x="550"
             y="595"

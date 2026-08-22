@@ -34,7 +34,11 @@
 </svelte:head>
 
 <PortfolioLayout>
-    <Link href={ossIndex()} class="inline-block px-4 pt-6 text-xs text-muted-foreground/40 hover:text-muted-foreground/70 transition-colors">← back</Link>
+    <Link
+        href={ossIndex()}
+        class="inline-block px-4 pt-6 text-xs text-muted-foreground/40 transition-colors hover:text-muted-foreground/70"
+        >← back</Link
+    >
     <div class="snap flex snap-y snap-proximity flex-col gap-32 px-4 md:px-8">
         <ContentSection title={pkg.name} id={slug}>
             <svelte:fragment slot="lead">{pkg.tagline}</svelte:fragment>
@@ -71,6 +75,7 @@
 
             <div class="mx-6 flex w-full flex-col gap-24">
                 <p class="mx-auto max-w-2xl text-center text-lg">
+                    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                     {@html renderInlineCode(pkg.description)}
                 </p>
 
@@ -96,6 +101,7 @@
                             /> -->
                             <div class="shiki-mockup mockup-code">
                                 {#await codeToHtml( section.code, { theme: 'github-dark', lang: 'php' }, ) then html}
+                                    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                                     {@html html}
                                 {/await}
                             </div>
@@ -109,7 +115,10 @@
                             <h3 class="gradient-text text-3xl font-extrabold">
                                 {section.title}
                             </h3>
-                            <p class="text-lg">{@html renderInlineCode(section.body)}</p>
+                            <p class="text-lg">
+                                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+                                {@html renderInlineCode(section.body)}
+                            </p>
                         </div>
                     </div>
                 {/each}

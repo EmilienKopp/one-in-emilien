@@ -4,21 +4,19 @@
     import type { NavItem } from '@/lib';
     import { slide, fly } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
-    import { onMount, tick } from 'svelte';
-    import { stores } from '$lib/stores.svelte';
+    import { onMount } from 'svelte';
     import ChatWithMeButton from './ChatWithMeButton.svelte';
     import { router } from '@inertiajs/svelte';
-    import ShadowBox from './ShadowBox.svelte';
     import ShadowButton from './ShadowButton.svelte';
 
     let { position = 'top' }: { position: 'top' | 'bottom' } = $props();
 
-    let menuModal: HTMLElement;
+    let menuModal: HTMLElement = $state();
     let header: HTMLElement;
-    let menu: HTMLElement;
+    let menu: HTMLElement = $state();
     let openNavButton: HTMLElement;
-    let closeNavButton: HTMLElement;
-    let modalMenuOpen = false;
+    let closeNavButton: HTMLElement = $state();
+    let modalMenuOpen = $state(false);
     let main: HTMLElement | null;
 
     const navItems: Array<NavItem> = [

@@ -3,7 +3,7 @@
     import type { Method } from '@inertiajs/core';
     import { Link } from '@inertiajs/svelte';
     import type { Snippet } from 'svelte';
-		import { Button } from '$components/ui/button';
+    import { Button } from '$components/ui/button';
 
     interface Props {
         href: string;
@@ -11,8 +11,8 @@
         method?: Method;
         as?: string;
         children?: Snippet;
-				class?: string;
-    };
+        class?: string;
+    }
 
     let {
         href,
@@ -20,7 +20,7 @@
         method,
         as: asElement,
         children,
-        class: className
+        class: className,
     }: Props = $props();
     const classes = $derived(
         cn(

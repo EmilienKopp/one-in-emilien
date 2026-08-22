@@ -1,6 +1,6 @@
 <script>
-    import { Slide, Transition, Code, Action } from "@animotion/core";
-    import { codeTheme, codeOptions } from "./code.js";
+    import { Slide, Transition, Code, Action } from '@animotion/core';
+    import { codeTheme, codeOptions } from './code.js';
 
     let code;
 
@@ -77,15 +77,13 @@
             }}
         ></Action>
 
-        <Action
-            do={() => code.selectLines`6`}
-        ></Action>
+        <Action do={() => code.selectLines`6`}></Action>
     </Transition>
 
     <Transition class="mt-10">
         <p class="text-3xl font-light text-white/60">
             Just to answer:
-            <span class="italic text-white/80">
+            <span class="text-white/80 italic">
                 “show me the reservations this user can see.”
             </span>
         </p>

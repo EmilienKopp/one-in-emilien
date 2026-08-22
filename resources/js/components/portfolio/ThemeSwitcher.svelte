@@ -11,12 +11,16 @@
 
     onMount(() => {
         // Check initial theme from localStorage or system preference
-        const savedTheme = localStorage.getItem('one-in-emilien-theme') || localStorage.getItem('theme');
+        const savedTheme =
+            localStorage.getItem('one-in-emilien-theme') ||
+            localStorage.getItem('theme');
         if (savedTheme) {
             stores.theme = savedTheme as 'light' | 'dark';
         } else {
             // Check system preference
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            const mediaQuery = window.matchMedia(
+                '(prefers-color-scheme: dark)',
+            );
             stores.theme = mediaQuery.matches ? 'dark' : 'light';
         }
 
@@ -26,7 +30,10 @@
         // Listen for system preference changes
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleChange = () => {
-            if (!localStorage.getItem('theme') && !localStorage.getItem('one-in-emilien-theme')) {
+            if (
+                !localStorage.getItem('theme') &&
+                !localStorage.getItem('one-in-emilien-theme')
+            ) {
                 stores.theme = mediaQuery.matches ? 'dark' : 'light';
                 updateTheme();
             }
@@ -289,7 +296,7 @@
 </ShadowButton>
 
 <style>
-    :global(.fixed-header) #theme-switcher {
-        @apply ml-0 scale-100;
+    :global(.fixed-header #theme-switcher) {
+        @apply scale-100;
     }
 </style>

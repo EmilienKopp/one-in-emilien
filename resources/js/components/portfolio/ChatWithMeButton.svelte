@@ -4,6 +4,11 @@
     import Icon from './Icon.svelte';
 </script>
 
-<ShadowButton onclick={() => stores.chatting = !stores.chatting } type="button" title="Chat with me" rounded>
-    <Icon pack="mbi" fill="none" name="chat-question-outline" cssClass="h-6"/>
+<ShadowButton
+    onclick={() => (stores.chatting = !stores.chatting)}
+    type="button"
+    title="Chat with me"
+    rounded
+>
+    <Icon pack="mbi" fill="none" name="chat-question-outline" cssClass="h-6" />
 </ShadowButton>

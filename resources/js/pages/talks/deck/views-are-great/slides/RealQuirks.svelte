@@ -1,5 +1,5 @@
 <script>
-    import { Slide, Transition } from "@animotion/core";
+    import { Slide, Transition } from '@animotion/core';
 </script>
 
 <Slide class="h-full place-content-center place-items-center">
@@ -43,7 +43,7 @@
     </ul>
 
     <Transition class="mt-14">
-        <p class="text-2xl font-light italic text-white/50">
+        <p class="text-2xl font-light text-white/50 italic">
             These are all very valid reasons to hesitate.
         </p>
     </Transition>

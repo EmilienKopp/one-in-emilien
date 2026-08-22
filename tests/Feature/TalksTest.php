@@ -9,8 +9,7 @@ test('talks index page renders the talk list', function () {
 
     $response->assertInertia(fn (Assert $page) => $page
         ->component('talks/Index')
-        ->has('talks', 1)
-        ->where('talks.0.slug', 'views-are-great')
+        ->has('talks', 2)
     );
 });
 

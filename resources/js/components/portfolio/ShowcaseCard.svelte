@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script module lang="ts">
     export interface Props {
         site: ShowcaseSite;
     }
@@ -56,7 +56,7 @@
 
 {#snippet cardButton({ url, title }: { url: string; title: string })}
     <a
-        href={site.url}
+        href={url}
         target="_blank"
         rel="noopener noreferrer"
         class="border border-current px-4 py-2"
