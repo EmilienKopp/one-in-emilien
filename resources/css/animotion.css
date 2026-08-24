@@ -101,6 +101,12 @@
     line-height: 1.6;
 }
 
+/* denser code for class walkthroughs that carry many lines at once */
+.reveal pre.shiki-magic-move-container.code-dense {
+    font-size: 1.15rem;
+    line-height: 1.45;
+}
+
 /*
  * daisyUI mockup-code — undo reveal's `pre`/`code` styling (block code,
  * 0.55em font, margins, shadow) so the terminal prefixes render inline.
