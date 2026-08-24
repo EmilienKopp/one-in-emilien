@@ -33,15 +33,4 @@
             {/each}
         </ul>
     </Transition>
-
-    <Transition visible class="mt-10 flex flex-col items-center gap-5">
-        <p class="text-6xl font-light text-white/70">They could have ...</p>
-        <ul
-            class="flex list-none flex-col items-start gap-5 text-6xl font-light text-red-500"
-        >
-            <li>Deleted the Laravel app</li>
-            <li>Exfiltrated sensitive data</li>
-            <li>Compromised other AWS services</li>
-        </ul>
-    </Transition>
 </Slide>

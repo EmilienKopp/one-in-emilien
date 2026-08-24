@@ -6,7 +6,7 @@
         'Repeated access to the same endpoints',
     ];
 
-    const defenses = ['Rate limits', 'fail2ban', 'Wordfence'];
+    const defenses = ['Rate limits', 'fail2ban', 'Health check automation'];
 </script>
 
 <Slide class="h-full place-content-center place-items-center text-center">
