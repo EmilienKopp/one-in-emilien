@@ -11,7 +11,7 @@
 
     <Transition visible class="mt-8">
         <h1 class="text-[7.5rem] leading-[0.95] font-black tracking-tighter">
-            Don't mix <br />
+            Put social distance between <br />
             <span class="text-blue-600">WordPress</span> and
             <span class="text-[#FF2D20]">Laravel</span>
         </h1>
