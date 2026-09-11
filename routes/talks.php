@@ -18,7 +18,7 @@ Route::get('/', function () use ($path, $embeddedPath, $talksConfig) {
         ->sortByDesc('time')
         ->values();
 
-    $redirects = collect($talksConfig['redirects'])->map(fn($redirect) => [
+    $redirects = collect($talksConfig['redirects'])->map(fn ($redirect) => [
         'slug' => $redirect['path'],
         'description' => $redirect['label'],
         'isRedirect' => true,
@@ -50,5 +50,5 @@ foreach ($embeddedFiles as $file) {
 }
 
 foreach ($talksConfig['redirects'] as $redirect) {
-    Route::get("/{$redirect['path']}", fn() => redirect($redirect['url']));
+    Route::get("/{$redirect['path']}", fn () => redirect($redirect['url']));
 }
