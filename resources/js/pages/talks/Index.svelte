@@ -6,8 +6,10 @@
 
     interface Talk {
         slug: string;
-        title: string;
+        title?: string;
         description: string;
+        isRedirect?: boolean;
+        url?: string;
     }
 
     let { talks }: { talks: Talk[] } = $props();
@@ -40,6 +42,7 @@
                 >
                     <a
                         href={`/talks/${talk.slug}`}
+                        target={talk.isRedirect ? '_blank' : '_self'}
                         class="mt-10 block w-fit font-mono text-sm font-bold text-foreground lg:text-2xl"
                     >
                         /{talk.slug}: {talk.description}
@@ -53,12 +56,12 @@
                     x: -1500,
                 }}
             >
-                <Link
+                <a
                     href="/"
                     class="mt-10 block w-fit font-mono text-sm font-bold text-muted-foreground lg:text-2xl"
                 >
                     ../: Back
-                </Link>
+                </a>
             </li>
         </ul>
     {/await}

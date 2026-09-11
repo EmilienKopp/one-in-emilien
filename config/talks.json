@@ -1,0 +1,9 @@
+{
+    "redirects": [
+        {
+            "path": "tecturn-demo",
+            "url": "https://tecturn.dev/emilien-kopps-team/presentations/2/present",
+            "label": "Tecturn Presentation"
+        }
+    ]
+}
