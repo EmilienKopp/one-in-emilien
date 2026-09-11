@@ -9,10 +9,10 @@ $talksConfig = json_decode(file_get_contents(config_path('talks.json')), true);
 
 $directories = Parsing::collectDirectory($path);
 $embeddedFiles = Parsing::collectEmbeddedFiles($embeddedPath);
-$svelte = Parsing::mapSvelteWithMeta($directories, $path);
-$blade = Parsing::mapEmbeddedWithMeta($embeddedFiles, $embeddedPath);
 
-Route::get('/', function () use ($svelte, $blade, $talksConfig) {
+Route::get('/', function () use ($path, $embeddedPath, $talksConfig) {
+    $svelte = Parsing::mapSvelteWithMeta(Parsing::collectDirectory($path), $path);
+    $blade = Parsing::mapEmbeddedWithMeta(Parsing::collectEmbeddedFiles($embeddedPath), $embeddedPath);
 
     $orderedTalks = $svelte->merge($blade)
         ->sortByDesc('time')

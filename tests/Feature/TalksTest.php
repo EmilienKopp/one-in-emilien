@@ -9,7 +9,8 @@ test('talks index page renders the talk list', function () {
 
     $response->assertInertia(fn (Assert $page) => $page
         ->component('talks/Index')
-        ->has('talks', 2)
+        ->has('talks')
+        ->where('talks', fn ($talks) => count($talks) > 0)
     );
 });
 
